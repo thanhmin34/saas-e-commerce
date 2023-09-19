@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
+const bcrypt = require("bcrypt");
+const User = (sequelize, DataTypes) => {
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -18,11 +19,31 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       phoneNumber: DataTypes.STRING,
       address: DataTypes.STRING,
+      password: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: "User",
     }
   );
+
+  User.beforeCreate(async (user) => {
+    if (user.password) {
+      const saltRounds = 10; // Số lần lặp để tạo salt
+      const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+      user.password = hashedPassword;
+    }
+  });
+
+  User.beforeUpdate(async (user) => {
+    if (user.changed("password")) {
+      const saltRounds = 10; // Số lần lặp để tạo salt
+      const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+      user.password = hashedPassword;
+    }
+  });
+
   return User;
 };
+
+module.exports = User;
