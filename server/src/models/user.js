@@ -20,6 +20,7 @@ const User = (sequelize, DataTypes) => {
       phoneNumber: DataTypes.STRING,
       address: DataTypes.STRING,
       password: DataTypes.STRING,
+      token: DataTypes.STRING,
     },
     {
       sequelize,
@@ -29,7 +30,7 @@ const User = (sequelize, DataTypes) => {
 
   User.beforeCreate(async (user) => {
     if (user.password) {
-      const saltRounds = 10; // Số lần lặp để tạo salt
+      const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(user.password, saltRounds);
       user.password = hashedPassword;
     }
@@ -37,7 +38,7 @@ const User = (sequelize, DataTypes) => {
 
   User.beforeUpdate(async (user) => {
     if (user.changed("password")) {
-      const saltRounds = 10; // Số lần lặp để tạo salt
+      const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(user.password, saltRounds);
       user.password = hashedPassword;
     }
