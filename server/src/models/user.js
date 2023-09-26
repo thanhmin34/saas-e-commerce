@@ -10,6 +10,26 @@ const User = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasOne(models.Wallet, {
+        foreignKey: "customer_id",
+        as: "wallet",
+      });
+      User.hasOne(models.Cart, {
+        foreignKey: "customer_id",
+        as: "cart",
+      });
+      // User.belongsToMany(models.Order, {
+      //   foreignKey: "customer_id",
+      //   as: "order",
+      // });
+      // User.belongsToMany(models.Wishlist, {
+      //   foreignKey: "customer_id",
+      //   as: "wishlist",
+      // });
+      // User.belongsToMany(models.Address, {
+      //   foreignKey: "customer_id",
+      //   as: "address",
+      // });
     }
   }
   User.init(
