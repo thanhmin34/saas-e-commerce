@@ -63,7 +63,7 @@ const registerByEmail = asyncHandler(async (req, res) => {
     });
 
     if (user?.dataValues?.id) {
-      res.status(201).json({
+      return res.status(201).json({
         status: true,
         message: "Create user successfully",
       });

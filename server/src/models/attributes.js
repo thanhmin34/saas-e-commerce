@@ -8,7 +8,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Attributes.belongsToMany(models.ProductsVariations, {
+        through: "ProductsAttribute",
+      });
+      Attributes.belongsTo(models.AttributesValue, {
+        foreignKey: "attribute_code",
+        as: "ProductsAttributeValue",
+      });
     }
   }
   Attributes.init(
