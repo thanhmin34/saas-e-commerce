@@ -27,13 +27,13 @@ const getCartDetails = asyncHandler(async (req, res) => {
       where: { cart_id },
       attributes: ["cart_id"],
       include: [
-        {
-          model: CartItem,
-          as: "listCartItem",
-          attributes: {
-            exclude: fieldExclude,
-          },
-        },
+        // {
+        //   model: CartItem,
+        //   as: "listCartItem",
+        //   attributes: {
+        //     exclude: fieldExclude,
+        //   },
+        // },
         // {
         //   model: PaymentMethod,
         //   as: "cartPaymentMethod",
@@ -41,13 +41,13 @@ const getCartDetails = asyncHandler(async (req, res) => {
         //     exclude: fieldExclude,
         //   },
         // },
-        // {
-        //   model: ShippingMethods,
-        //   as: "cartShippingMethods",
-        //   attributes: {
-        //     exclude: fieldExclude,
-        //   },
-        // },
+        {
+          model: ShippingMethods,
+          as: "cartShippingMethods",
+          attributes: {
+            exclude: fieldExclude,
+          },
+        },
         // {
         //   model: Discount,
         //   as: "cartDiscount",
