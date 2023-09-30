@@ -2,16 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Wishlist extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
-      Wishlist.hasMany(models.Products, {
+      Wishlist.belongsTo(models.User, {
         foreignKey: "id",
-        as: "ProductsWishlist",
+        as: "userWishlist",
+      });
+      Wishlist.belongsToMany(models.Products, {
+        through: "WishlistProducts",
       });
     }
   }

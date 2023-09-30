@@ -1,12 +1,13 @@
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
-const { User } = require("../models");
+const { User, Wallet, Cart } = require("../models");
 const {
   notificationMessageError,
   notificationMessageSuccess,
 } = require("../utils/notificationMessageStatus.js");
 const { generateToken } = require("../config/verifyToken.js");
+const { generateCartId } = require("../utils/generateCartId.js");
 
 // validateField
 const createUserSchema = Joi.object({
@@ -29,11 +30,43 @@ const validateFieldByCreateUser = (data, schema) => {
 // controllers
 const getAllUsers = asyncHandler(async (req, res) => {
   try {
-    const users = await User.findAll();
-    res.json(users);
+    const users = await User.findByPk(6, {
+      include: [
+        {
+          model: Wallet,
+          as: "wallet",
+        },
+      ],
+    });
+    return res.status(200).json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+const getUserInformation = asyncHandler(async (req, res) => {
+  const { params } = req || {};
+  const { userId } = params || {};
+
+  try {
+    const user = await User.findByPk(userId, {
+      attributes: {
+        exclude: ["token", "password", "createdAt", "updatedAt"],
+      },
+      // include: [
+      //   {
+      //     model: Cart,
+      //     as: "userCart",
+      //     attributes: ["cart_id"],
+      //   },
+      // ],
+    });
+    return notificationMessageSuccess(res, {
+      user,
+    });
+  } catch (error) {
+    return notificationMessageError(res, "Internal server error");
   }
 });
 
@@ -113,4 +146,5 @@ module.exports = {
   getAllUsers,
   registerByEmail,
   loginByEmail,
+  getUserInformation,
 };

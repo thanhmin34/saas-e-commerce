@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ProductsVariations.belongsTo(models.Products, {
-        foreignKey: "id",
+        foreignKey: "product_id",
         as: "ProductsChildren",
       });
 
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       quantity: DataTypes.INTEGER,
       image: DataTypes.STRING,
       product_id: DataTypes.INTEGER,
+      config: DataTypes.JSON,
     },
     {
       sequelize,
