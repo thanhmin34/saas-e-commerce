@@ -10,7 +10,6 @@ const auth = async (req, res, next) => {
       .send({ error: "Not authorized to access this resource" });
   }
   const jwtToken = jwt.verify(token, process.env.JWT_SECRET);
-  console.log("jwtToken", jwtToken);
   try {
     const user = await User.findOne({
       where: {
@@ -18,13 +17,17 @@ const auth = async (req, res, next) => {
       },
     });
     if (!user) {
-      throw new Error();
+      return res
+        .status(401)
+        .send({ error: "Not authorized to access this resource" });
     }
     req.user = user;
     req.token = token;
     next();
   } catch (error) {
-    res.status(401).send({ error: "Not authorized to access this resource" });
+    return res
+      .status(401)
+      .send({ error: "Not authorized to access this resource" });
   }
 };
 module.exports = auth;

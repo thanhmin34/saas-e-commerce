@@ -3,11 +3,6 @@ const { Model } = require("sequelize");
 const bcrypt = require("bcrypt");
 const User = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
       User.hasOne(models.Wallet, {
@@ -16,20 +11,20 @@ const User = (sequelize, DataTypes) => {
       });
       User.hasOne(models.Cart, {
         foreignKey: "customer_id",
-        as: "cart",
+        as: "userCart",
       });
-      // User.belongsToMany(models.Order, {
-      //   foreignKey: "customer_id",
-      //   as: "order",
-      // });
-      // User.belongsToMany(models.Wishlist, {
-      //   foreignKey: "customer_id",
-      //   as: "wishlist",
-      // });
-      // User.belongsToMany(models.Address, {
-      //   foreignKey: "customer_id",
-      //   as: "address",
-      // });
+      User.hasMany(models.Order, {
+        foreignKey: "customer_id",
+        as: "userOrder",
+      });
+      User.hasOne(models.Wishlist, {
+        foreignKey: "customer_id",
+        as: "userWishlist",
+      });
+      User.hasMany(models.Address, {
+        foreignKey: "customer_id",
+        as: "userAddress",
+      });
     }
   }
   User.init(

@@ -5,13 +5,27 @@ const auth = require("../middlewares/verifyToken.js");
 const uploadCloud = require("../middlewares/fileUploader.js");
 
 // Define routes
-productsRouter.get("/products", ProductsController.getProducts);
+productsRouter.get(
+  "/products/:productSku",
+  ProductsController.getProductsDetails
+);
 productsRouter.post("/products", auth, ProductsController.CreateProducts);
+productsRouter.put(
+  "/products/:productSku",
+  auth,
+  ProductsController.updateProduct
+);
+productsRouter.delete(
+  "/products/:productSku",
+  auth,
+  ProductsController.deleteProduct
+);
 
+// images
 productsRouter.post(
   "/images",
   auth,
-  uploadCloud.single("file"),
+  uploadCloud.array("file"),
   ProductsController.uploadImageByProduct
 );
 
