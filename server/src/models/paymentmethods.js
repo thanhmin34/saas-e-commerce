@@ -1,23 +1,23 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class PaymentMethod extends Model {
+  class PaymentMethods extends Model {
     static associate(models) {
-      PaymentMethod.hasMany(models.Cart, {
+      PaymentMethods.hasMany(models.Cart, {
         foreignKey: "payment_method_id",
         as: "cartPaymentMethod",
       });
     }
   }
-  PaymentMethod.init(
+  PaymentMethods.init(
     {
       code: DataTypes.STRING,
       name: DataTypes.STRING,
     },
     {
       sequelize,
-      modelName: "PaymentMethod",
+      modelName: "PaymentMethods",
     }
   );
-  return PaymentMethod;
+  return PaymentMethods;
 };
