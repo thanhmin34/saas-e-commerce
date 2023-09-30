@@ -7,12 +7,10 @@ const {
 const { generateCartId } = require("../utils/generateCartId");
 const {
   Cart,
-  CartList,
-  ProductCartList,
   ShippingMethods,
   PaymentMethod,
   Discount,
-  Products,
+  CartItem,
 } = require("../models");
 const mergeCart = asyncHandler(async (req, res) => {
   const {} = req || {};
@@ -30,38 +28,45 @@ const getCartDetails = asyncHandler(async (req, res) => {
       attributes: ["cart_id"],
       include: [
         {
-          model: CartList,
-          as: "cartCartList",
-          attributes: {
-            exclude: fieldExclude,
-          },
-          include: [
-            {
-              model: Products,
-            },
-          ],
-        },
-        {
-          model: PaymentMethod,
-          as: "cartPaymentMethod",
+          model: CartItem,
+          as: "listCartItem",
           attributes: {
             exclude: fieldExclude,
           },
         },
-        {
-          model: ShippingMethods,
-          as: "cartShippingMethods",
-          attributes: {
-            exclude: fieldExclude,
-          },
-        },
-        {
-          model: Discount,
-          as: "cartDiscount",
-          attributes: {
-            exclude: fieldExclude,
-          },
-        },
+        // {
+        //   model: PaymentMethod,
+        //   as: "cartPaymentMethod",
+        //   attributes: {
+        //     exclude: fieldExclude,
+        //   },
+        // },
+        // {
+        //   model: ShippingMethods,
+        //   as: "cartShippingMethods",
+        //   attributes: {
+        //     exclude: fieldExclude,
+        //   },
+        // },
+        // {
+        //   model: Discount,
+        //   as: "cartDiscount",
+        //   attributes: {
+        //     exclude: fieldExclude,
+        //   },
+        // },
+        // {
+        //   model: CartList,
+        //   as: "cartCartList",
+        //   attributes: {
+        //     exclude: fieldExclude,
+        //   },
+        //   include: [
+        //     {
+        //       model: Products,
+        //     },
+        //   ],
+        // },
       ],
     });
 
@@ -91,20 +96,6 @@ const createCart = asyncHandler(async (req, res) => {
   } catch (error) {
     return notificationMessageError(res, error);
   }
-});
-
-const addProductsToCart = asyncHandler(async (req, res) => {
-  const {} = req || {};
-
-  try {
-  } catch (error) {}
-});
-
-const updateProductToCart = asyncHandler(async (req, res) => {
-  const {} = req || {};
-
-  try {
-  } catch (error) {}
 });
 
 module.exports = {

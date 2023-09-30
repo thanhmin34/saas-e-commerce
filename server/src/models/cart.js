@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id",
         as: "userCart",
       });
-      Cart.hasOne(models.CartList, {
+      Cart.hasMany(models.CartItem, {
         foreignKey: "cart_id",
-        as: "cartCartList",
+        as: "listCartItem",
       });
       Cart.belongsTo(models.PaymentMethod, {
         foreignKey: "payment_method_id",
