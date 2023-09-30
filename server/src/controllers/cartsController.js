@@ -8,7 +8,7 @@ const { generateCartId } = require("../utils/generateCartId");
 const {
   Cart,
   ShippingMethods,
-  PaymentMethod,
+  PaymentMethods,
   Discount,
   CartItem,
 } = require("../models");
@@ -35,7 +35,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
         //   },
         // },
         // {
-        //   model: PaymentMethod,
+        //   model: PaymentMethods,
         //   as: "cartPaymentMethod",
         //   attributes: {
         //     exclude: fieldExclude,
