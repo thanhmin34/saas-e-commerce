@@ -25,6 +25,10 @@ const User = (sequelize, DataTypes) => {
         foreignKey: "customer_id",
         as: "userAddress",
       });
+      User.belongsTo(models.ShippingAddress, {
+        foreignKey: "customer_id",
+        as: "customerShippingAddress",
+      });
     }
   }
   User.init(
