@@ -10,12 +10,24 @@ module.exports = (sequelize, DataTypes) => {
       Order.belongsToMany(models.Products, {
         through: "ProductOrders",
       });
+
+      Order.belongsTo(models.Cart, {
+        foreignKey: "cart_id",
+        as: "cartOrder",
+      });
     }
   }
   Order.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        field: "id",
+        defaultValue: 10000000,
+      },
       customer_id: DataTypes.INTEGER,
-      total_amount: DataTypes.STRING,
+      status: DataTypes.STRING,
     },
     {
       sequelize,

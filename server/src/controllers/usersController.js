@@ -102,8 +102,7 @@ const registerByEmail = asyncHandler(async (req, res) => {
       });
     }
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return notificationMessageError(res, error);
   }
 });
 
@@ -132,13 +131,13 @@ const loginByEmail = asyncHandler(async (req, res) => {
     const token = generateToken(user.id);
     await User.update({ token }, { where: { id: 1 } });
 
-    notificationMessageSuccess(res, {
+    return notificationMessageSuccess(res, {
       status: true,
       message: "Login successfully",
       token,
     });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    return notificationMessageError(res, error);
   }
 });
 
