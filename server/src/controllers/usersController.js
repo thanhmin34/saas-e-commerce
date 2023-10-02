@@ -123,13 +123,13 @@ const loginByEmail = asyncHandler(async (req, res) => {
       return notificationMessageError(res, "Incorrect account");
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user?.password);
     if (!isPasswordValid) {
       return notificationMessageError(res, "incorrect password");
     }
 
-    const token = generateToken(user.id);
-    await User.update({ token }, { where: { id: 1 } });
+    const token = generateToken(user?.id);
+    await User.update({ token }, { where: { id: user?.id } });
 
     return notificationMessageSuccess(res, {
       status: true,

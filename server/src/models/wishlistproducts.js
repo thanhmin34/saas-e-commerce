@@ -6,8 +6,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   WishlistProducts.init(
     {
-      productId: DataTypes.INTEGER,
-      wishlistId: DataTypes.INTEGER,
+      productId: {
+        type: DataTypes.INTEGER,
+        field: "productId",
+      },
+      wishlistId: {
+        type: DataTypes.INTEGER,
+        field: "wishlistId",
+      },
     },
     {
       sequelize,

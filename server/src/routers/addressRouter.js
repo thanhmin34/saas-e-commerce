@@ -5,7 +5,7 @@ const auth = require("../middlewares/verifyToken.js");
 
 addressRouter.put(
   "/add-shipping-address-to-cart",
-  // auth,
+  auth,
   addressController.addShippingAddress
 );
 
