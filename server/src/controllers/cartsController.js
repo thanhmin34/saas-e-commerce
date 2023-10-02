@@ -13,17 +13,118 @@ const {
   Discount,
   CartItem,
   ShippingAddress,
+  Products,
 } = require("../models");
+const { mergeProducts } = require("../utils/mergeProducts");
+
+const cartSchema = Joi.object({
+  cart_id: Joi.string().required(),
+});
+
+const mergeCartSchema = Joi.object({
+  destination_cart_id: Joi.string().required(),
+  source_cart_id: Joi.string().required(),
+});
+
+const validateFieldBySchema = (data, schema) => {
+  return schema.validate(data);
+};
+
 const mergeCart = asyncHandler(async (req, res) => {
-  const {} = req || {};
+  const { body } = req || {};
+  const { destination_cart_id, source_cart_id } = body || {};
   try {
-  } catch (error) {}
+    const { error } = validateFieldBySchema(body, mergeCartSchema);
+    if (error) {
+      return notificationMessageError(res, error.details[0].message);
+    }
+
+    const sourceCart = await Cart.findOne({
+      where: {
+        cart_id: source_cart_id,
+      },
+      attributes: ["id"],
+      include: {
+        model: CartItem,
+        as: "listCartItem",
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "cart_id"],
+        },
+      },
+    });
+
+    const destinationCart = await Cart.findOne({
+      where: {
+        cart_id: destination_cart_id,
+      },
+      attributes: ["id"],
+      include: {
+        model: CartItem,
+        as: "listCartItem",
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "cart_id"],
+        },
+      },
+    });
+
+    if (!destinationCart || !sourceCart) {
+      return notificationMessageError(res, "Cannot merge cart");
+    }
+
+    const newCartId = generateCartId();
+    const listCartItems = destinationCart?.listCartItem || [];
+    const listSourceCartItems = sourceCart?.listCartItem || [];
+    //merge product simple, product config todo update
+    const products = mergeProducts(listSourceCartItems, listCartItems);
+
+    const newCartItem = products.map((item) => {
+      const { dataValues } = item || {};
+      const { product_id, quantity, price, options } = dataValues || {};
+      return {
+        cart_id: destinationCart?.id,
+        product_id,
+        quantity,
+        price,
+        options,
+      };
+    });
+
+    const idsCartItem = [...listCartItems, ...listSourceCartItems];
+
+    const idsSourceCartItem =
+      idsCartItem?.length > 0 ? idsCartItem.map((e) => e?.id) : [];
+
+    const deleteConditions = {
+      id: idsSourceCartItem,
+    };
+    // update or delete
+    destinationCart.cart_id = newCartId;
+
+    const createdCartItems = await CartItem.bulkCreate(newCartItem);
+    await destinationCart.addListCartItem(createdCartItems);
+    await CartItem.destroy({ where: deleteConditions });
+    await sourceCart.destroy();
+    await destinationCart.save();
+
+    return notificationMessageSuccess(res, {
+      message: "Ok",
+      cart_id: newCartId,
+      newCartItem,
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
 });
 
 const getCartDetails = asyncHandler(async (req, res) => {
   const { body } = req || {};
   const { cart_id } = body || {};
   try {
+    const { error } = validateFieldBySchema(body, cartSchema);
+    if (error) {
+      return notificationMessageError(res, error.details[0].message);
+    }
+
     const fieldExclude = ["createdAt", "updatedAt", "id"];
     const cart = await Cart.findOne({
       where: { cart_id },
@@ -35,6 +136,13 @@ const getCartDetails = asyncHandler(async (req, res) => {
           attributes: {
             exclude: fieldExclude,
           },
+          include: [
+            {
+              model: Products,
+              as: "productCartItem",
+              attributes: ["name", "sku", "image", "thumbnail"],
+            },
+          ],
         },
         {
           model: PaymentMethods,
@@ -93,9 +201,10 @@ const getCartDetails = asyncHandler(async (req, res) => {
             discount_amount,
             currency,
           },
-          payment_methods: cart?.cartPaymentMethod,
-          shipping_method: cart?.cartShippingMethods,
-          shipping_address: cart?.cartShippingAddress,
+          payment_methods: cart?.cartPaymentMethod || {},
+          shipping_method: cart?.cartShippingMethods || {},
+          shipping_address: cart?.cartShippingAddress || {},
+          products: cart?.listCartItem || [],
         },
       });
     }
