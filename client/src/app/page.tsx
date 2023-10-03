@@ -1,11 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
-import styles from "./page.module.css";
-import ImageUpload from "../components/ImageUpload.js";
-
+import TestRedux from '@components/TestRedux'
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <ImageUpload />
+    <main>
+      <TestRedux />
     </main>
-  );
+  )
 }

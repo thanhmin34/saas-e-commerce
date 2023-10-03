@@ -1,0 +1,83 @@
+@import 'variables';
+
+@mixin colorPrimary {
+  background: $primaryColor;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin flex($align-item, $justify-content) {
+  display: flex;
+  align-items: $align-item;
+  justify-content: $justify-content;
+}
+
+@mixin pageMainContainer {
+  margin: 0 30px;
+  padding: 30px;
+  background-color: $white;
+  border-radius: 20px;
+}
+
+@mixin borderDivideTop {
+  border-top: solid 1px $gray;
+}
+
+@mixin borderDivideBottom {
+  border-bottom: solid 1px $gray;
+}
+
+@mixin transparentButton {
+  background: none;
+  border: none;
+}
+
+@mixin grid($number) {
+  display: grid;
+  grid-template-columns: repeat($number, minmax(0, 1fr));
+}
+
+@mixin widthContainer() {
+  width: calc(100vw - 330px);
+  max-width: 1517px;
+}
+
+@mixin frameContainer() {
+  width: calc(100vw - 400px);
+  max-width: 1517px;
+  margin-inline-start: 30px;
+}
+
+@mixin scrollY() {
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $grey03;
+    border-radius: 2.5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $grayThirteen;
+  }
+}
+
+// New Layout
+@mixin rootContainer {
+  width: calc(100vw - 400px);
+  max-width: 1517px;
+  margin-inline-start: 30px;
+}
+
+@mixin innerContainer {
+  width: 100%;
+  max-width: 1440px;
+  margin-top: 30px;
+}
