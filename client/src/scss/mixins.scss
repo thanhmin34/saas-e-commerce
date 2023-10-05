@@ -1,0 +1,219 @@
+@mixin container {
+  margin: 0 auto;
+  max-width: 1216px;
+  padding: 0px;
+
+  @media (min-width: 641px) {
+    max-width: 1216px;
+  }
+}
+
+@mixin header-content {
+  margin: 0 auto;
+  max-width: 1216px;
+
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+
+  @media (max-width: 1216px) {
+    padding-inline-start: 15px;
+    padding-inline-end: 15px;
+  }
+}
+
+@mixin footer-content {
+  margin: 0 auto;
+  width: 1216px;
+
+  @include breakpoint-max(1215px) {
+    width: calc(100vw - 30px);
+  }
+}
+
+@mixin small-dropdown {
+  .dropdown-menu {
+    width: 6.875rem;
+    min-width: 6.875rem;
+    height: auto;
+    overflow-y: scroll;
+    padding: 8px 0 !important;
+
+    .dropdown-item {
+      border-bottom: 1px solid $grey--light;
+      padding: 20px 0 !important;
+      height: 10px;
+      font-size: 12px;
+      font-weight: 400;
+      background: $white;
+      padding-inline-start: 15px;
+    }
+
+    .dropdown-item:hover {
+      background: $grey--thirtyTwo;
+    }
+
+    .drop-item-disabled {
+      cursor: not-allowed !important;
+      pointer-events: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      :hover {
+        cursor: not-allowed !important;
+        pointer-events: auto;
+      }
+    }
+  }
+  .dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+  }
+  .dropdown-menu::-webkit-scrollbar-corner {
+    background: $white;
+  }
+  .dropdown-menu::-webkit-scrollbar-track {
+    background: $white;
+  }
+  .dropdown-menu::-webkit-scrollbar-thumb:horizontal {
+    background-color: $grey--thirtyThree;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+  }
+  .dropdown-menu::-webkit-scrollbar-thumb:vertical {
+    background: $grey--thirtyThree;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+  }
+}
+
+@mixin clearfix {
+  &::after {
+    display: table;
+    clear: both;
+
+    content: '';
+  }
+}
+
+@mixin transparent-button {
+  background: transparent;
+  border: none;
+}
+
+@mixin center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+@mixin absCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+@mixin absLeft {
+  position: absolute;
+  top: 50%;
+
+  transform: translate(0, -50%);
+}
+
+@mixin flex($align-item, $justify-content) {
+  display: flex;
+  align-items: $align-item;
+  justify-content: $justify-content;
+}
+@mixin grid($number) {
+  display: grid;
+  grid-template-columns: repeat($number, minmax(0, 1fr));
+}
+
+@mixin text-overflow($number) {
+  display: -webkit-box;
+  -webkit-line-clamp: $number;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin respond($breakpoint) {
+  @if $breakpoint ==extra-large-desktop {
+    @media only screen and (min-width: 1500px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==large-desktop {
+    @media only screen and (min-width: 1200px) and (max-width: 1499px) {
+      @content;
+    }
+  }
+
+  // 24px
+  @if $breakpoint ==small-desktop {
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+      @content;
+    }
+  }
+
+  // 20px
+  @if $breakpoint ==extra-large-mobile {
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==large-mobile {
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  }
+
+  // 20 px
+  @if $breakpoint ==small-mobile {
+    @media only screen and (max-width: 575px) {
+      @content;
+    }
+  }
+
+  // 16px
+  @if $breakpoint ==extra-small-mobile {
+    @media only screen and (max-width: 479px) {
+      @content;
+    }
+  }
+}
+// breakpoint custom
+@mixin breakpoint-min($breakpoint) {
+  @media only screen and (min-width: $breakpoint) {
+    @content;
+  }
+}
+
+@mixin breakpoint-max($breakpoint) {
+  @media only screen and (max-width: $breakpoint) {
+    @content;
+  }
+}
+@mixin breakpoint($breakpoint-min, $breakpoint-max) {
+  @media only screen and (min-width: $breakpoint-min) and (max-width: $breakpoint-max) {
+    @content;
+  }
+}
+
+// mega menu
+
+@mixin megaMenuHighlight {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 1px;
+  background: $black;
+  transition: width 0.3s;
+}

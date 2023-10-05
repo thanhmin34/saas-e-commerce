@@ -1,0 +1,19 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.productRating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 20px;
+
+  .ratingText {
+    @include respond(large-mobile) {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 130%;
+      color: $primary-color;
+    }
+  }
+}

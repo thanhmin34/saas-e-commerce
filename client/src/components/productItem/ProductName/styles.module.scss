@@ -1,0 +1,13 @@
+@import '@scss/mixins';
+.name {
+  cursor: pointer;
+  width: 100%;
+  padding: 0;
+  font-size: 14px;
+  text-align: center;
+  display: block;
+  p {
+    @include text-overflow(2);
+    line-height: 16px;
+  }
+}

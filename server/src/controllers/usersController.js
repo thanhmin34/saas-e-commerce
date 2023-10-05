@@ -7,7 +7,7 @@ const {
   notificationMessageSuccess,
 } = require("../utils/notificationMessageStatus.js");
 const { generateToken } = require("../config/verifyToken.js");
-const { generateCartId } = require("../utils/generateCartId.js");
+const { getToken } = require("../utils//getToken.js");
 
 // validateField
 const createUserSchema = Joi.object({
@@ -123,13 +123,13 @@ const loginByEmail = asyncHandler(async (req, res) => {
       return notificationMessageError(res, "Incorrect account");
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user?.password);
     if (!isPasswordValid) {
       return notificationMessageError(res, "incorrect password");
     }
 
-    const token = generateToken(user.id);
-    await User.update({ token }, { where: { id: 1 } });
+    const token = generateToken(user?.id);
+    await User.update({ token }, { where: { id: user?.id } });
 
     return notificationMessageSuccess(res, {
       status: true,
@@ -141,9 +141,35 @@ const loginByEmail = asyncHandler(async (req, res) => {
   }
 });
 
+const logOut = asyncHandler(async (req, res) => {
+  const { headers } = req || {};
+
+  const token = getToken(headers);
+  try {
+    const user = await User.findOne({
+      where: { token },
+      attributes: ["id", "token"],
+    });
+    if (!user?.id) {
+      return notificationMessageError(res, "Incorrect account");
+    }
+    user.token = null;
+    await user.save();
+
+    return notificationMessageSuccess(res, {
+      status: true,
+      message: "Logout successfully",
+      user,
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
 module.exports = {
   getAllUsers,
   registerByEmail,
   loginByEmail,
   getUserInformation,
+  logOut,
 };

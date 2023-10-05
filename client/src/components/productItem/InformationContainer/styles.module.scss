@@ -1,0 +1,36 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.informationContainer {
+  .informationContainerTop {
+    display: flex;
+    justify-content: space-between;
+    height: 76px;
+    column-gap: 5px;
+    flex-direction: column;
+  }
+
+  .nameContainer {
+    cursor: pointer;
+    width: 100%;
+    padding: 0;
+    p {
+      @include text-overflow(2);
+      font-size: 15px;
+      line-height: 16px;
+    }
+  }
+
+  .priceContainer {
+    display: flex;
+    font-size: 15px;
+  }
+
+  .unit {
+    font-size: 12px;
+  }
+
+  .brandNameContainer {
+    margin: auto;
+  }
+}

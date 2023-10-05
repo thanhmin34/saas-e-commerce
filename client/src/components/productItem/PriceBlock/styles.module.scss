@@ -1,0 +1,39 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.specialPrice {
+  color: $special-price-color;
+}
+
+.price {
+  font-weight: 500;
+  font-size: 0.8rem;
+  font-style: Medium;
+  display: flex;
+  justify-content: center;
+  & > span {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 5px;
+  }
+}
+.priceContainer {
+  font-weight: 400;
+  font-size: 15px;
+  font-style: Medium;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  & > span {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 5px;
+  }
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: $optional-text-color;
+}

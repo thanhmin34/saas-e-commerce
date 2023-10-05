@@ -74,7 +74,6 @@ const addProductStore = asyncHandler(async (req, res) => {
       store_id,
     });
 
-    console.log("productDetail", productDetail);
     return notificationMessageSuccess(res, {
       productDetail,
     });
