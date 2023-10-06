@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import store from '@redux/store'
 import Header from '@components/header/Header'
 import Footer from '@components/footer/Footer'
-
 const queryClient = new QueryClient()
 
 const ReduceProvider = ({ children }: { children: ReactNode }) => {

@@ -34,6 +34,13 @@
       "@fetchingApi/*": ["./src/fetchingApi/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/dictionary.ts",
+    "src/app[lang]/dictionaries/dictionaries.js"
+  ],
   "exclude": ["node_modules"]
 }

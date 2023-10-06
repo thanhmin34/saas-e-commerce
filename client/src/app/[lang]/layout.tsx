@@ -9,12 +9,19 @@ export const metadata: Metadata = {
   description: 'natural',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+interface Params {
+  lang: string
+}
+const RootLayout = ({ params, children }: { params: Params; children: React.ReactNode }) => {
+  const { lang } = params
+
   return (
-    <html lang="en">
+    <html lang={`${lang?.includes('en') ? 'en' : 'nl'}`}>
       <body className={inter.className}>
         <ReduceProvider>{children}</ReduceProvider>
       </body>
     </html>
   )
 }
+
+export default RootLayout
