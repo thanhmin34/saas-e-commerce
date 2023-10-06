@@ -1,0 +1,89 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.inputElement {
+  width: 100%;
+  outline: none;
+  border: $border--primary;
+  &:focus-within {
+    border-color: $black;
+  }
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 150%;
+  margin: 12px 0;
+
+  .inputWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border: none;
+    .input {
+      width: 100%;
+      height: 40px;
+      line-height: 100%;
+      outline: none;
+      z-index: -5;
+      padding: 0 16px;
+      border: none;
+    }
+    .label {
+      position: absolute;
+      display: table !important;
+      top: 50%;
+      transform: translateY(-50%);
+      padding-inline-start: 16px;
+      user-select: none;
+      pointer-events: none;
+      opacity: 0.5;
+      z-index: 20;
+      transition: 0.25s ease-in-out;
+    }
+  }
+  .messageError {
+    margin-top: 4px;
+    margin-left: 12px;
+    color: #f63248;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+  }
+}
+
+.input:autofill + .label {
+  top: 0px;
+  padding: 0 4px;
+  // left: 12px;
+  margin-inline-start: 12px;
+  display: block;
+  background: $white;
+  z-index: 100 !important;
+  color: $black;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 1;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.input:not(:placeholder-shown) + .label,
+.input:focus + .label {
+  top: 0px;
+  padding: 0 4px;
+  // left: 12px;
+  margin-inline-start: 12px;
+  display: block;
+  background: $white;
+  z-index: 100 !important;
+  color: $black;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 1;
+  line-height: 100%;
+  text-transform: capitalize;
+}
+
+.input:not(:placeholder-shown) .inputWrapper {
+  border-color: $black;
+}
