@@ -1,6 +1,6 @@
 'use client'
 import { useMemo } from 'react'
-import Button from '@components/Button'
+import Button from '@components/button'
 import styles from './styles.module.scss'
 
 const AddToCartButton = ({ className }: { className: string }) => {
