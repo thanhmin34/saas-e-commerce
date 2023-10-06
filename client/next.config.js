@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   publicRuntimeConfig: {
     BACKEND_URL: process.env.BACKEND_URL,
@@ -8,6 +9,7 @@ const nextConfig = {
     domains: ['release.thenineten.co'],
     formats: ['image/avif', 'image/webp'],
   },
+  reactStrictMode: true,
 }
 
 module.exports = nextConfig
