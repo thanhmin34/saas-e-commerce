@@ -1,5 +1,4 @@
 {
-  "products": {
-    "cart": "Add to Cart"
-  }
+  "products": "products",
+  "{value} test": "{value} test"
 }

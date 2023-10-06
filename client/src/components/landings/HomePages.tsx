@@ -1,10 +1,12 @@
 'use client'
+import useDetectDevice from '@hooks/useDetectDevice'
+import useIntl from '@hooks/useIntl'
 
-import useLandingPage from '@fetchingApi/landings/useLandingPage'
+const HomePages = ({}) => {
+  const { localizeMessage, formatMessage } = useIntl()
+  const { device, innerWidth } = useDetectDevice()
 
-const HomePages = () => {
-  const data = useLandingPage()
-  return <div>HomePages</div>
+  return <div>{formatMessage({ id: '{value} test' }, { value: 3123 })}</div>
 }
 
 export default HomePages
