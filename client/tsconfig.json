@@ -29,7 +29,9 @@
       "@scss/*": ["./src/scss/*"],
       "@utils/*": ["./src/utils/*"],
       "@HOCs/*": ["./src/HOCs/*"],
-      "@types/*": ["./src/types/*"]
+      "@types/*": ["./src/types/*"],
+      "@network/*": ["./src/network/*"],
+      "@fetchingApi/*": ["./src/fetchingApi/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
