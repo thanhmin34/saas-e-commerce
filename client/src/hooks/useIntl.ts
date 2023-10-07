@@ -49,7 +49,6 @@ const useIntl = () => {
 
   const formatMessage = ({ id }: { id: string }, values: Values) => {
     const message = languages[id]
-
     return values ? format(message, values) : message
   }
 
