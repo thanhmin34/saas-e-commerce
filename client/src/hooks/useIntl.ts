@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 
 import en from '../dictionaries/en.json'
-import nl from '../dictionaries/nl.json'
+import vn from '../dictionaries/vn.json'
 
 interface LanguageData {
   [key: string]: string
@@ -12,7 +12,7 @@ const useIntl = () => {
   const { lang } = pathname
 
   const languages: LanguageData = useMemo(() => {
-    return lang === 'en' ? en : nl
+    return lang === 'en' ? en : vn
   }, [lang])
 
   const localizeMessage = useCallback(

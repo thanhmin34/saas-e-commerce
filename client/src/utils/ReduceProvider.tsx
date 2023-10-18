@@ -26,13 +26,13 @@ const ReduceProvider = ({ children }: { children: ReactNode }) => {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <ToastContainer />
         <Suspense fallback={<Loading />}>
           <Header />
         </Suspense>
-        {children}
-        <Footer />
+        <main className="main main-container">{children}</main>
+        <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
       </QueryClientProvider>
     </Provider>
   )

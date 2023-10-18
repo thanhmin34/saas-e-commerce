@@ -25,11 +25,17 @@ const Button: React.FC<{
   }
 
   const _style = useMemo(() => {
-    return { ...style, ...stylesButton }
+    return { ...stylesButton, ...style }
   }, [style])
 
   return (
-    <button onClick={onClick} disabled={disabled} style={_style} className={`${styles.button}`} {...otherProps}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={_style}
+      className={`${styles.button} ${className ? className : ''}`}
+      {...otherProps}
+    >
       {children}
     </button>
   )

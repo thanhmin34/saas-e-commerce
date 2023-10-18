@@ -1,0 +1,13 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.languagesContainer {
+  @include respond(large-mobile) {
+    display: none;
+  }
+  .language {
+    @include flex(center, flex-start);
+    gap: 6px;
+    cursor: pointer;
+  }
+}

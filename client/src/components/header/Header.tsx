@@ -1,9 +1,19 @@
 import React from 'react'
 import styles from './styles.module.scss'
-type Props = {}
+import TopBar from './topbar'
+import MainHeader from './main-header'
+import MegaMenu from './mega-menu'
 
-const Header = (props: Props) => {
-  return <div>Header</div>
+const Header = () => {
+  return (
+    <header className={styles.header}>
+      <TopBar />
+      <div className={`${styles.mainHeader} main-container`}>
+        <MainHeader />
+      </div>
+      <MegaMenu />
+    </header>
+  )
 }
 
 export default Header

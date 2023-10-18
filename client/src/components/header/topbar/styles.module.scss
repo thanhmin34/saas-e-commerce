@@ -1,0 +1,19 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.topBarMenu {
+  width: 100%;
+  background-color: $primary-color;
+  height: $heightTopBar;
+  z-index: $zIndexHeader;
+  color: $white;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0 auto;
+  .topBarContent {
+    width: 100%;
+    @include flex(center, space-between);
+    margin: 0 auto;
+    height: $heightTopBar;
+  }
+}

@@ -1,9 +1,15 @@
 import React from 'react'
 import styles from './styles.module.scss'
-type Props = {}
+import InformationFooter from './information-footer/InformationFooter'
 
-const Footer = (props: Props) => {
-  return <div>Footer</div>
+const Footer = () => {
+  return (
+    <footer className={styles.footer}>
+      <div className={`main-container ${styles.footerContainer}`}>
+        <InformationFooter />
+      </div>
+    </footer>
+  )
 }
 
 export default Footer

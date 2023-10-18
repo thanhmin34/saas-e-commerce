@@ -4,4 +4,7 @@ export const imageUrls = {
   wishlist: '/assets/icon/heart.svg',
   iconNext: '/assets/next.svg',
   iconPrev: '/assets/icon/prev.svg',
+  iconEnglish: '/assets/icon/en.png',
+  iconSaudiArabian: '/assets/icon/ar.svg',
+  iconVn: '/assets/icon/vn.webp',
 }

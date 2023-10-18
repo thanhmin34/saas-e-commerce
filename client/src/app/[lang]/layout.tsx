@@ -1,12 +1,14 @@
 import ReduceProvider from '@utils/ReduceProvider'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import '@scss/global.scss'
-const inter = Inter({ subsets: ['latin'] })
+const inter = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 export const metadata: Metadata = {
-  title: 'SAAS - natural',
-  description: 'natural',
+  title: 'Natural touch',
+  keywords: 'Natural touch',
+  authors: [{ name: 'Hoang', url: 'https://nextjs.org' }],
+  description: '',
 }
 
 interface Params {
@@ -14,9 +16,8 @@ interface Params {
 }
 const RootLayout = ({ params, children }: { params: Params; children: React.ReactNode }) => {
   const { lang } = params
-
   return (
-    <html lang={`${lang?.includes('en') ? 'en' : 'nl'}`}>
+    <html lang={`${lang?.includes('en') ? 'en' : 'vn'}`}>
       <body className={inter.className}>
         <ReduceProvider>{children}</ReduceProvider>
       </body>
