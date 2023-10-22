@@ -10,7 +10,7 @@ const {
   ProductCategories,
   Wishlist,
 } = require("../models");
-
+const data = require("./test.json");
 const {
   notificationMessageError,
   notificationMessageSuccess,
@@ -62,22 +62,6 @@ const getProductsDetails = asyncHandler(async (req, res) => {
       product: error,
     });
   }
-});
-
-const addProductStore = asyncHandler(async (req, res) => {
-  const { body } = req || {};
-  const { product_id, store_id } = body || {};
-
-  try {
-    const productDetail = await ProductsStore.create({
-      product_id,
-      store_id,
-    });
-
-    return notificationMessageSuccess(res, {
-      productDetail,
-    });
-  } catch (error) {}
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
@@ -182,52 +166,81 @@ const CreateProducts = asyncHandler(async (req, res) => {
     extension_attributes,
   } = product || {};
   const { options } = extension_attributes || {};
-
+  // create product simple
   try {
-    const isValid = await Products.findOne({
-      where: {
-        sku: sku,
-      },
-    });
+    // const isValid = await Products.findOne({
+    //   where: {
+    //     sku: sku,
+    //   },
+    // });
 
-    if (isValid)
-      return notificationMessageError(res, "Product sku already exists");
+    // if (isValid)
+    //   return notificationMessageError(res, "Product sku already exists");
 
-    const newProduct = await Products.create({
-      sku,
-      name,
-      price,
-      quantity,
-      description,
-      thumbnail,
-      special_price,
-      store_id,
-      type,
-    });
+    // const newProduct = await Products.create({
+    //   sku,
+    //   name,
+    //   price,
+    //   quantity,
+    //   description,
+    //   thumbnail,
+    //   special_price,
+    //   store_id,
+    //   type,
+    // });
 
-    if (newProduct) {
-      if (newProduct?.type === "configuration" && options?.length > 0) {
-        const productVariations = generateProductVariations(options);
-        productVariations.forEach((item) => {
-          ProductsVariations.create({
-            price: 0,
-            quantity: 0,
-            image: "",
-            product_id: newProduct?.id,
-            config: item,
-          });
-        });
-      }
-      notificationMessageSuccess(
-        res,
-        {
-          status: true,
-          message: "Create product successfully",
-          product: newProduct,
-        },
-        201
-      );
+    const suffix = ".html";
+    async function handleCreate(item) {
+      const {
+        brand_name,
+        type_id,
+        sku,
+        name,
+        salable_qty,
+        image,
+        media_gallery,
+        price,
+      } = item;
+      await Products.create({
+        sku,
+        name,
+        price: price.regularPrice.amount.value,
+        quantity: salable_qty,
+        thumbnail: image?.url,
+        store_id: 1,
+        type: type_id,
+        media_gallery,
+        brand: brand_name,
+        url_path: sku ? `${sku.replaceAll(" ", "-")}${suffix}` : sku,
+      });
     }
+    data.data.forEach((element) => {
+      handleCreate(element);
+    });
+
+    // if (newProduct) {
+    //   if (newProduct?.type === "configuration" && options?.length > 0) {
+    //     const productVariations = generateProductVariations(options);
+    //     productVariations.forEach((item) => {
+    //       ProductsVariations.create({
+    //         price: 0,
+    //         quantity: 0,
+    //         image: "",
+    //         product_id: newProduct?.id,
+    //         config: item,
+    //       });
+    //     });
+    //   }
+    //   notificationMessageSuccess(
+    //     res,
+    //     {
+    //       status: true,
+    //       message: "Create product successfully",
+    //       product: newProduct,
+    //     },
+    //     201
+    //   );
+    // }
   } catch (error) {
     return res.status(404).send(error);
   }
@@ -272,6 +285,22 @@ const uploadImageByProduct = asyncHandler(async (req, res) => {
     return res.status(400).send(error);
     // return notificationMessageError(res, { error });
   }
+});
+
+const addProductStore = asyncHandler(async (req, res) => {
+  const { body } = req || {};
+  const { product_id, store_id } = body || {};
+
+  try {
+    const productDetail = await ProductsStore.create({
+      product_id,
+      store_id,
+    });
+
+    return notificationMessageSuccess(res, {
+      productDetail,
+    });
+  } catch (error) {}
 });
 
 module.exports = {

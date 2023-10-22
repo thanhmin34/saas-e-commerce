@@ -21,6 +21,7 @@ const ProductRating = ({ ratingValue }: PropsRating) => {
       <IoIosStarHalf key={lastIndex} color={'#F9A000'} size={15} className="product-content__rating star-icon" />
     )
   }
+
   return <Fragment>{rating}</Fragment>
 }
 

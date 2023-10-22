@@ -19,8 +19,7 @@ const WishlistButton = ({ children }: { children?: React.ReactNode }) => {
   const handleToggleFavorites = useCallback(async () => {
     try {
       if (isInWishlist) {
-        await removeFromWishlist()
-        return
+        return await removeFromWishlist()
       }
       await addToWishlist()
     } catch (e) {

@@ -1,9 +1,10 @@
-import TestRedux from '@components/TestRedux'
-import HomePages from '@components/landings/HomePages'
+import Loading from '@components/loading'
+import dynamic from 'next/dynamic'
+
+const HomePages = dynamic(() => import('@components/landings/HomePages'), {
+  loading: () => <Loading />,
+  ssr: false,
+})
 export default function Page() {
-  return (
-    <main>
-      <HomePages />
-    </main>
-  )
+  return <HomePages />
 }

@@ -42,6 +42,8 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.FLOAT,
       description: DataTypes.STRING,
       special_price: DataTypes.JSON,
+      special_to_date: DataTypes.STRING,
+      special_from_date: DataTypes.STRING,
       thumbnail: DataTypes.STRING,
       quantity: DataTypes.INTEGER,
       label: DataTypes.STRING,
@@ -50,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       seo: DataTypes.JSON,
       brand: DataTypes.STRING,
       wishlist_id: DataTypes.INTEGER,
+      url_path: DataTypes.STRING,
     },
     {
       sequelize,

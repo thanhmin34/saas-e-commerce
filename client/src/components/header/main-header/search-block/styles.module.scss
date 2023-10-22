@@ -1,0 +1,28 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.searchBlock {
+  @include flex(center, space-between);
+  width: 100%;
+  max-width: 390px;
+  border: $borderPrimary;
+  height: 36px;
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.inputElement {
+  height: 34px !important;
+  border: none !important;
+  outline: none;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 270px;
+}
+.buttonElement {
+  width: 100%;
+  max-width: 110px !important;
+  border-radius: 4px !important;
+}

@@ -1,0 +1,14 @@
+@import '@scss/mixins';
+.rightActions {
+  display: flex;
+  gap: 18px;
+
+  .action {
+    @include flex(center, flex-start);
+    gap: 6px;
+    .title {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.mainHeader {
+  height: $heightMainHeader;
+  width: 100%;
+  z-index: $zIndexHeader;
+  background-color: $white;
+  @media (max-width: 991px) {
+    height: 70px;
+  }
+
+  .desktopContent {
+    height: 100%;
+    @include flex(center, space-between);
+    position: relative;
+  }
+}

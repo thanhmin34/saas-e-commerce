@@ -3,7 +3,7 @@
 .inputElement {
   width: 100%;
   outline: none;
-  border: $border--primary;
+  border: $borderPrimary;
   &:focus-within {
     border-color: $black;
   }

@@ -1,0 +1,29 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.inputElement {
+  width: 100%;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 150%;
+
+  .input {
+    width: 100%;
+    height: 40px;
+    line-height: 100%;
+    outline: none;
+    z-index: -5;
+    padding: 0 16px;
+    border: $borderPrimary;
+  }
+
+  .messageError {
+    margin-top: 4px;
+    margin-left: 12px;
+    color: #f63248;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+  }
+}

@@ -17,7 +17,7 @@ const Button: React.FC<{
   otherProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
 }> = ({ style, className, children, onClick, disabled, ...otherProps }) => {
   const stylesButton: ConfigButton = {
-    borderRadius: '4px',
+    borderRadius: '4',
     backgroundColor: 'rgb(0, 104, 52)',
     color: 'rgb(255, 255, 255)',
     borderColor: 'rgb(0, 104, 52)',
@@ -25,11 +25,17 @@ const Button: React.FC<{
   }
 
   const _style = useMemo(() => {
-    return { ...style, ...stylesButton }
+    return { ...stylesButton, ...style }
   }, [style])
 
   return (
-    <button onClick={onClick} disabled={disabled} style={_style} className={`${styles.button}`} {...otherProps}>
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={_style}
+      className={`${styles.button} ${className ? className : ''}`}
+      {...otherProps}
+    >
       {children}
     </button>
   )

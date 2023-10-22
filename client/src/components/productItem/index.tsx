@@ -6,30 +6,10 @@ import ProductImage from './ProductImage'
 import AddToCartButton from './AddToCartButton/index'
 import WishlistButton from '@components/Wishlist/WishlistButton'
 import ProductRatingBlock from './ProductRatingBlock'
-interface Image {
-  url: string
-  label: string
-}
+import { ProductItemInterface } from '@interfaces/product'
 
-interface Price {
-  regularPrice: {
-    amount: {
-      currency: string
-      value: number
-    }
-  }
-}
-export interface Item {
-  image?: Image | undefined | null
-  brand_name: String | undefined
-  name: String | undefined
-  price: Price
-  rating_summary: number | null
-  review_count: number | null
-}
-
-const ProductItem = ({ item }: { item: Item }) => {
-  const { image, rating_summary, review_count } = item || {}
+const ProductItem = ({ item }: { item: ProductItemInterface }) => {
+  const { image, rating_summary, review_count, out_of_stock } = item || {}
   const { url, label } = image || {}
 
   return (
@@ -40,7 +20,7 @@ const ProductItem = ({ item }: { item: Item }) => {
         </div>
         <InformationContainer item={item} />
         <div className={styles.actions}>
-          <AddToCartButton className={`${styles.atcButton} ${styles.hoverDisplayItem}`} />
+          <AddToCartButton isOutOfStock={!!out_of_stock} className={`${styles.atcButton} ${styles.hoverDisplayItem}`} />
           <WishlistButton />
         </div>
         <ProductRatingBlock ratingSummary={rating_summary} reviewCount={review_count} />

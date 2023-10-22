@@ -1,10 +1,16 @@
-'use client'
+import { SliderBlock, Banner, ProductSliders } from './HTMLBlock'
 
-import useLandingPage from '@fetchingApi/landings/useLandingPage'
+import styles from './styles.module.scss'
 
-const HomePages = () => {
-  const data = useLandingPage()
-  return <div>HomePages</div>
+const HomePages = ({}) => {
+  return (
+    <div className={styles.homePages}>
+      <SliderBlock />
+      <Banner />
+      <ProductSliders />
+      <div style={{ height: 1000 }}></div>
+    </div>
+  )
 }
 
 export default HomePages

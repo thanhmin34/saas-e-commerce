@@ -29,7 +29,7 @@
       "@scss/*": ["./src/scss/*"],
       "@utils/*": ["./src/utils/*"],
       "@HOCs/*": ["./src/HOCs/*"],
-      "@types/*": ["./src/types/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
       "@network/*": ["./src/network/*"],
       "@fetchingApi/*": ["./src/fetchingApi/*"]
     }
@@ -40,7 +40,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/dictionary.ts",
-    "src/app[lang]/dictionaries/dictionaries.js"
+    "src/app[lang]/dictionaries/dictionaries.js",
+    "src/components/landings/HTMLBlock/slider/index.tsx"
   ],
   "exclude": ["node_modules"]
 }
