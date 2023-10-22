@@ -3,20 +3,14 @@ import { useMemo } from 'react'
 import Button from '@components/button'
 import styles from './styles.module.scss'
 
-const AddToCartButton = ({ className }: { className: string }) => {
-  const disabled = useMemo(() => false, [])
-
-  const btnMessage = useMemo(() => {
-    return 'Add to cart'
-  }, [])
-
+const AddToCartButton = ({ className, isOutOfStock }: { className: string; isOutOfStock: boolean }) => {
   function onClick() {
     console.log('!@3')
   }
 
   const renderAddToCart = (
-    <Button onClick={onClick} disabled={disabled} className={className}>
-      {btnMessage}
+    <Button onClick={onClick} disabled={isOutOfStock} className={className}>
+      {isOutOfStock ? 'Out Of Stock' : 'Add to cart'}
     </Button>
   )
 

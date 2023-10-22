@@ -1,30 +1,27 @@
 'use client'
-import { useCallback } from 'react'
+import { useMemo } from 'react'
+import { isEmpty } from 'lodash'
 import styles from './styles.module.scss'
-import Price from '@components/productItem/Price'
+import SimplePrice from './SimplePrice'
+import SpecialPrice from './SpecialPrice'
 
-interface Price {
-  regularPrice: {
-    amount: {
-      currency: String
-      value: number
-    }
-  }
+import { PriceTypes, RegularPriceTypes } from '@interfaces/product'
+interface PriceBlock {
+  price: PriceTypes
+  special_price: RegularPriceTypes | null | undefined
 }
 
-const PriceBlock = ({ price }: { price: Price }) => {
-  const { regularPrice } = price || {}
-  const { amount } = regularPrice || {}
-  const { value = 0, currency } = amount || {}
-  const renderSimplePrice = useCallback(() => {
-    return (
-      <div>
-        <Price value={value} currencyCode={currency} />
-      </div>
-    )
-  }, [price])
+const PriceBlock = ({ price, special_price }: PriceBlock) => {
+  const isSimplePrice: boolean = useMemo<boolean>(() => {
+    return isEmpty(special_price)
+  }, [special_price])
 
-  return <span className={styles.priceContainer}>{renderSimplePrice()}</span>
+  const renderPrice = isSimplePrice ? (
+    <SimplePrice price={price} />
+  ) : (
+    <SpecialPrice special_price={special_price as RegularPriceTypes} />
+  )
+  return <div className={styles.priceContainer}>{renderPrice}</div>
 }
 
 export default PriceBlock

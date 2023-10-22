@@ -2,9 +2,17 @@ import { map } from 'lodash'
 import React from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-import { Splide, SplideSlide } from '@splidejs/react-splide'
-import '@splidejs/react-splide/css'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
+const settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+}
 const sliderData = [
   {
     url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Main_Banner_01_Desktop_EN-min_1696228503435.jpg',
@@ -22,30 +30,18 @@ const sliderData = [
     url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Main_Banner_03_Desktop_EN-min_1696510563175.jpg',
   },
 ]
-const SliderBlock = (props: any) => {
-  const renderUi = map(sliderData, (item, index) => (
+
+type SliderBlockProps = {
+  // You can add more specific props here if needed
+}
+const SliderBlock: React.FC<SliderBlockProps> = (props) => {
+  const renderUi = map(sliderData.slice(0, 1), (item, index) => (
     <Link href={item.href} key={index} className={styles.sliderItem}>
       <img src={item.url} alt={item.alt} width={'100'} height={100} />
     </Link>
   ))
-  return (
-    <div className={styles.slider}>
-      <Splide aria-label="My Favorite Images">
-        <SplideSlide>
-          <img
-            src="https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Main_Banner_03_Desktop_EN-min_1696510563175.jpg"
-            alt="Image 1"
-          />
-        </SplideSlide>
-        <SplideSlide>
-          <img
-            src="https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Main_Banner_02_Desktop_EN-min_1696228529234.jpg"
-            alt="Image 2"
-          />
-        </SplideSlide>
-      </Splide>
-    </div>
-  )
+
+  return <div className={styles.slider}>{renderUi}</div>
 }
 
 export default SliderBlock

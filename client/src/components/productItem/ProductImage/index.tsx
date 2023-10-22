@@ -2,8 +2,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './styles.module.scss'
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
-const ProductImage = ({ className, url, label }) => {
+interface PropsTypes {
+  className?: string
+  url: string | StaticImport
+  label: string | undefined
+}
+const ProductImage = ({ className, url, label }: PropsTypes) => {
   const renderClassName = () => `${styles.imageContainer} ${className ?? ''}`
 
   return (
@@ -11,8 +17,9 @@ const ProductImage = ({ className, url, label }) => {
       <Link href={'/'}>
         <Image
           src={url}
-          alt={label}
+          alt={label || 'image'}
           layout="fill"
+
           // placeholder="blur"
           // blurDataURL={`data:image/svg+xml;base64,${toBase64(Shimmer(700, 475))}`}
           // quality={100}

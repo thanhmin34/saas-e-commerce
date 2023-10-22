@@ -1,2 +1,4 @@
 import SliderBlock from './slider'
-export { SliderBlock }
+import Banner from './banner'
+import ProductSliders from './product-slider'
+export { SliderBlock, Banner, ProductSliders }
