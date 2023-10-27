@@ -1,9 +1,9 @@
-@import '@scss/variables';
-@import '@scss/mixins';
+@import "@scss/variables";
+@import "@scss/mixins";
 .footer {
   display: flex;
   flex-direction: column;
-  background-color: $primary-color;
+  background-color: $primaryColor;
   color: $white;
   @include flex(center, center);
   padding: 40px 0;

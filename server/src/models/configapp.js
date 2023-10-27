@@ -1,10 +1,10 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Styles extends Model {
+  class ConfigApps extends Model {
     static associate(models) {}
   }
-  Styles.init(
+  ConfigApps.init(
     {
       button: DataTypes.JSON,
       font_size: DataTypes.STRING,
@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Styles",
+      modelName: "ConfigApps",
     }
   );
-  return Styles;
+  return ConfigApps;
 };

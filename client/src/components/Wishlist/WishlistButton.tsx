@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 import { imageUrls } from '@constants/imageUrls'
 import styles from './styles.module.scss'

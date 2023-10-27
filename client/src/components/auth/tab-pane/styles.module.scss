@@ -1,0 +1,29 @@
+@import "@scss/variables";
+@import "@scss/mixins";
+
+.registrationCheckout {
+  padding-top: 80px;
+}
+.tabPane {
+  @include flex(center, center);
+  margin-bottom: 30px;
+  @include respond(large-mobile) {
+    padding: 12px;
+  }
+}
+.tabId {
+  width: 100%;
+  max-width: 192px;
+  padding-bottom: 20px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 130%;
+  @include flex(center, center);
+  border-bottom: 2px solid $primaryColor;
+  opacity: 0.4;
+  cursor: pointer;
+}
+.tabActive {
+  opacity: 1 !important;
+}

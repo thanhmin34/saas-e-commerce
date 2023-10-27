@@ -1,9 +1,9 @@
-@import '@scss/variables';
-@import '@scss/mixins';
+@import "@scss/variables";
+@import "@scss/mixins";
 
 .megaMenu {
   width: 100%;
-  border-top: 1px solid $primary-color;
+  border-top: 1px solid $primaryColor;
   border-bottom: 1px solid $greyLight;
   z-index: $zIndexHeader;
   background-color: $white;
@@ -28,7 +28,8 @@
         position: relative;
         .text {
           &::after {
-            content: '';
+            z-index: $zIndexSidebar;
+            content: "";
             display: block;
             position: absolute;
             width: 0;
@@ -59,6 +60,7 @@
   @include flex(flex-start, flex-start);
   padding: 20px 12px;
   gap: 24px;
+  background-color: $white;
   .subCategoryListItem {
     flex-basis: 70%;
     display: grid;
@@ -70,7 +72,7 @@
       span {
         position: relative;
         &::after {
-          content: '';
+          content: "";
           display: block;
           position: absolute;
           width: 0;

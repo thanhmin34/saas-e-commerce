@@ -1,0 +1,35 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.signUpByEmail {
+  margin-top: 24px;
+}
+
+.subTitle {
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  margin-bottom: 24px;
+}
+.errorMessage {
+  font-size: 14px;
+  color: $redTwo;
+  font-weight: 500;
+  line-height: 19px;
+  margin: 0 10px;
+  min-height: 30px;
+}
+.forgotPassword {
+  margin: -8px 0 20px;
+  a {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    color: $basicColor;
+    @include flex(center, flex-end);
+  }
+}
+.inputGroup {
+  margin-bottom: 16px;
+}

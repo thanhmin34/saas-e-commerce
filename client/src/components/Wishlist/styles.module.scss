@@ -1,5 +1,5 @@
-@import '@scss/variables';
-@import '@scss/mixins';
+@import "@scss/variables";
+@import "@scss/mixins";
 
 .loadingSpinner {
   animation: spin 2s linear infinite;
@@ -16,10 +16,10 @@
 
 .wishlistButtonWithBorder {
   // border: $border-two;
-  color: $secondary-color;
+  color: $secondaryColor;
   width: 36px;
   height: 36px;
-  border: $border--two;
+  border: 1px solid $white;
 }
 .wishlistButtonThree {
   background: $white !important;

@@ -6,7 +6,7 @@ import { ROUTER_PATHS } from '@constants/routerPaths'
 const apiClient = () => {
   const token = localStorage.getItem(STORAGE_KEYS.TOKEN)
   const reqInstance = axios.create({
-    baseURL: BACKEND_URL,
+    baseURL: BACKEND_URL || 'http://localhost:5000/',
     timeout: 60000,
     headers: {
       'Content-Type': 'application/json',
@@ -26,13 +26,13 @@ const apiClient = () => {
       const axiosError = error as AxiosError
       if (unAuthorized(axiosError?.response?.status)) {
         localStorage.removeItem(STORAGE_KEYS.TOKEN)
-        window.location.replace(ROUTER_PATHS.LOGIN_BY_EMAIL)
+        window.location.replace(ROUTER_PATHS.LOGIN)
       }
       return error as AxiosError
     }
   }
 
-  const post = async (uri: string, params: any, config: AxiosRequestConfig<any> | undefined) => {
+  const post = async (uri: string, params?: unknown, config?: AxiosRequestConfig<any> | undefined) => {
     try {
       const response = await reqInstance.post(uri, params, config)
       return response?.data

@@ -1,9 +1,9 @@
-@import '@scss/variables';
-@import '@scss/mixins';
+@import "@scss/variables";
+@import "@scss/mixins";
 
 .topBarMenu {
   width: 100%;
-  background-color: $primary-color;
+  background-color: $primaryColor;
   height: $heightTopBar;
   z-index: $zIndexHeader;
   color: $white;

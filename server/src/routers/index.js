@@ -10,9 +10,10 @@ const addressRouter = require("./addressRouter.js");
 const ordersRouter = require("./ordersRouter.js");
 const wishlistsRouter = require("./wishlistsRouter.js");
 const homePagesRouter = require("./homePagesRouter.js");
-const stylesRouter = require("./stylesRouter.js");
+const configRouter = require("./configRouter.js");
 const iconsRouter = require("./icons.js");
 const categoryRouter = require("./categoryRouter.js");
+const productInCategoryRouter = require("./productInCategoryRouter.js");
 
 const renderRouters = (app) => {
   const listRouters = [
@@ -28,9 +29,10 @@ const renderRouters = (app) => {
     ordersRouter,
     wishlistsRouter,
     homePagesRouter,
-    stylesRouter,
+    configRouter,
     iconsRouter,
     categoryRouter,
+    productInCategoryRouter,
   ];
 
   listRouters.map((item) => app.use("/", item));

@@ -40,15 +40,15 @@
       transition: 0.25s ease-in-out;
     }
   }
-  .messageError {
-    margin-top: 4px;
-    margin-left: 12px;
-    color: #f63248;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 100%;
-  }
+}
+.messageError {
+  margin-top: 4px;
+  margin-left: 12px;
+  color: #f63248;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
 }
 
 .input:autofill + .label {

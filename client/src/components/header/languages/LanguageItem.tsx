@@ -1,5 +1,5 @@
 'use client'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import React, { useCallback } from 'react'
 import styles from './styles.module.scss'
 import { Languages } from '@interfaces/languages'

@@ -12,7 +12,7 @@ const Button: React.FC<{
   style?: React.CSSProperties
   className?: string
   children: React.ReactNode
-  onClick: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   disabled?: boolean | undefined
   otherProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
 }> = ({ style, className, children, onClick, disabled, ...otherProps }) => {

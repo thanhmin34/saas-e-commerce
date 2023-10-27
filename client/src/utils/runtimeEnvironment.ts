@@ -1,5 +1,6 @@
 import getConfig from 'next/config'
 
-const { publicRuntimeConfig } = getConfig() || {}
+const { serverRuntimeConfig } = getConfig() || {}
+const { BACKEND_URL, BE_IMAGE_DOMAIN, HOST } = serverRuntimeConfig || {}
 
-export const { BACKEND_URL, BE_IMAGE_DOMAIN, HOST } = publicRuntimeConfig || {}
+export { BACKEND_URL, BE_IMAGE_DOMAIN, HOST }

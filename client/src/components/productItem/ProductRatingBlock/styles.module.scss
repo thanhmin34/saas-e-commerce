@@ -1,5 +1,5 @@
-@import '@scss/variables';
-@import '@scss/mixins';
+@import "@scss/variables";
+@import "@scss/mixins";
 
 .productRating {
   display: flex;
@@ -13,7 +13,7 @@
       font-size: 14px;
       font-weight: 500;
       line-height: 130%;
-      color: $primary-color;
+      color: $primaryColor;
     }
   }
 }

@@ -131,7 +131,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     const product = await Products.findOne({
       where: { sku: productSku },
     });
-    console.log("product?.sku", product?.sku);
+
     if (product?.id) {
       await Products.destroy({
         where: {

@@ -1,40 +1,30 @@
 // color
-$primary-color: #149447;
-$text-color: #131313;
+$primaryColor: #149447;
+$textColor: #131313;
 
-$primary-color--disabled: #cccdcb;
-$secondary-color: #fd6a62;
-$basic-color: #82b736;
+$disabled: #cccdcb;
+$secondaryColor: #fd6a62;
+$basicColor: #82b736;
 
 $black: #000;
-$black--two: #333;
-$black--three: #222;
-$black-four: #b3b3b3;
-$black-five: #02150a;
-$black-six: rgba(14, 14, 19, 0.8);
-$black-seven: rgba(14, 14, 19, 0.5);
+$blackTwo: #333;
+$blackThree: #222;
+$blackFour: #02150a;
+$blackSix: #1f0804;
 $white: #fff;
 $grey: #7e7e7e;
 $greyLight: #f0f1f3;
 $greyTwo: #d6d6d6;
-$grey--three: #e7e7e7;
-$grey--four: #f8f8f8;
-$grey--five: #fafbfd;
-$grey--six: #999999;
-$grey--seven: #777777;
-$grey--eight: #d0d0d0;
-$grey--nine: #dcdcdc;
-$grey--ten: #eeeeee;
-$grey--eleven: #ccc;
-$grey--twelve: #aaaaaa;
+$greyThree: #e7e7e7;
 
-$disable-button-background: rgba(0, 0, 0, 0.2);
+$greyOne: #f0f1f3;
+$redOne: #c9253d;
+$redTwo: #d11830;
+
 $textShadow: 10px 10px 24px rgba(0, 0, 0, 0.05);
 
 //border
 $borderPrimary: 1px solid #d5d5d5;
-$border--one: 1px solid $white;
-$border--two: 1px solid $black;
 
 // z-index
 $zIndexSidebar: 999;

@@ -1,12 +1,11 @@
 // import Image from '@components/Image'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import Link from 'next/link'
 import styles from './styles.module.scss'
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 interface PropsTypes {
   className?: string
-  url: string | StaticImport
+  url: string
   label: string | undefined
 }
 const ProductImage = ({ className, url, label }: PropsTypes) => {
