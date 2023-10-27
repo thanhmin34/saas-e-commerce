@@ -4,40 +4,41 @@ const { Categories } = require("../models");
 const {
   notificationMessageSuccess,
 } = require("../utils/notificationMessageStatus");
+const { Op } = require("sequelize");
+
+async function insertProductInCategory(products) {
+  return null;
+}
 
 const getAllCategory = asyncHandler(async (req, res) => {
-  const { body } = req || {};
-  const id = 1;
+  const categoryId = 0;
   try {
-    const styles = await Categories.findOne({
-      where: { id },
+    const categoryList = await await Categories.findAll({
+      where: { parent_id: categoryId },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
+      include: {
+        model: Categories,
+        as: "children_category",
+        where: { parent_id: { [Op.ne]: 0 } },
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+        include: {
+          model: Categories,
+          as: "children_category",
+        },
+      },
     });
-    if (!styles?.id) {
+
+    if (!categoryList) {
       return notificationMessageError(res, "Internal Server Error ");
     }
-    const {
-      button,
-      font_size,
-      font_weight,
-      hover_text,
-      hover_background_color,
-      background_color,
-      color,
-    } = styles;
+
     return notificationMessageSuccess(res, {
       status: true,
-      styles: {
-        button: JSON.parse(button),
-        font_size,
-        font_weight,
-        hover_text,
-        hover_background_color,
-        background_color,
-        color,
-      },
+      categoryList,
     });
   } catch (error) {}
 });
@@ -92,7 +93,6 @@ const deleteCategory = asyncHandler(async (req, res) => {
 
 const updateCategory = asyncHandler(async (req, res) => {
   const { body } = req || {};
-  const { styles } = body || {};
 
   try {
     const stylesItem = await Categories.create({});

@@ -3,32 +3,41 @@ import React, { ChangeEventHandler } from 'react'
 
 interface InputPrimary {
   value: string | number
-  placeholder?: string | undefined
-  type?: string | undefined
+  placeholder: string
+  type: string
   onChange: ChangeEventHandler<HTMLInputElement>
-  name?: string | undefined
-  className?: string | undefined
-  message?: string | undefined
+  name: string
+  className: string
+  message: string
+  refInput: object
+  onBlur: ChangeEventHandler<HTMLInputElement>
 }
 
-const InputPrimary = ({
-  value = '',
-  onChange,
-  type = 'text',
-  placeholder = 'Enter the input',
-  name,
-  className,
-  message,
-}: InputPrimary) => {
+type InputOption = Partial<InputPrimary>
+
+const InputPrimary = React.forwardRef((props: InputOption, ref: React.LegacyRef<HTMLInputElement> | undefined) => {
+  const { type = 'text', placeholder = 'Enter the input', name, className, message, refInput, onChange, onBlur } = props
+
   return (
-    <div className={`${styles.inputElement} ${className}`}>
-      <div className={styles.inputWrapper}>
-        <input onChange={onChange} value={value} name={name} type={type} placeholder=" " className={styles.input} />
-        <span className={styles.label}>{placeholder}</span>
+    <>
+      <div className={`${styles.inputElement} ${className}`}>
+        <div className={styles.inputWrapper}>
+          <input
+            ref={ref}
+            name={name}
+            type={type}
+            placeholder=" "
+            onChange={onChange}
+            onBlur={onBlur}
+            className={styles.input}
+            {...refInput}
+          />
+          <span className={styles.label}>{placeholder}</span>
+        </div>
       </div>
       {message ? <div className={styles.messageError}>{message}</div> : ''}
-    </div>
+    </>
   )
-}
+})
 
 export default InputPrimary

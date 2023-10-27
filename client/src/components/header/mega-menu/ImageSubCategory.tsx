@@ -6,7 +6,7 @@ type Props = {
 type ImageUrl = string | StaticImport
 
 import styles from './styles.module.scss'
-import Image from 'next/image'
+import Image from "next/legacy/image"
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 const ImageSubCategory = ({ image_url }: Props) => {

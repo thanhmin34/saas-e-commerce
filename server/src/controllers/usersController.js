@@ -13,7 +13,6 @@ const { getToken } = require("../utils//getToken.js");
 const createUserSchema = Joi.object({
   firstName: Joi.string().trim().required(),
   lastName: Joi.string().trim().required(),
-  address: Joi.string().trim().required(),
   email: Joi.string().email(),
   password: Joi.string().min(6).required(),
 });
@@ -72,7 +71,8 @@ const getUserInformation = asyncHandler(async (req, res) => {
 
 const registerByEmail = asyncHandler(async (req, res) => {
   const { body } = req || {};
-  const { email, password, firstName, lastName, address } = body || {};
+  const { email, password, firstName, lastName } = body || {};
+  console.log("body", body);
   try {
     const { error } = validateFieldByCreateUser(body, createUserSchema);
     if (error) {
@@ -80,8 +80,9 @@ const registerByEmail = asyncHandler(async (req, res) => {
     }
 
     const isValid = await User.findOne({ where: { email } });
+
     if (isValid) {
-      return res.status(200).json({
+      return res.status(400).json({
         status: false,
         message: "Account already exists",
       });
@@ -92,7 +93,6 @@ const registerByEmail = asyncHandler(async (req, res) => {
       password,
       firstName,
       lastName,
-      address,
     });
 
     if (user?.dataValues?.id) {

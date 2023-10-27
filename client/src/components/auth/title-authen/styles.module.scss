@@ -1,0 +1,23 @@
+@import "@scss/variables";
+@import "@scss/mixins";
+.titleAuthentication {
+  h2 {
+    color: $textColor;
+    margin-bottom: 20px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 130%;
+    text-align: center;
+  }
+  h3 {
+    color: $textColor;
+    margin: 20px auto 0;
+    width: 100%;
+    max-width: 352px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+  }
+}

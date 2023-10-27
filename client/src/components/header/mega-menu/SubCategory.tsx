@@ -1,21 +1,24 @@
-import React from 'react'
-import styles from './styles.module.scss'
-import { SubCategory } from '@interfaces/sub-category'
-import SubCategoryList from './SubCategoryList'
-import ImageSubCategory from './ImageSubCategory'
+import React from "react";
+import styles from "./styles.module.scss";
+import { SubCategory } from "@interfaces/sub-category";
+import SubCategoryList from "./SubCategoryList";
+import ImageSubCategory from "./ImageSubCategory";
 
-type PropsType = { className: string | undefined; sub_category: SubCategory }
+type PropsType = {
+  className: string | undefined;
+  sub_category: SubCategory[];
+  image: string | undefined;
+};
 
-const SubCategory = ({ className, sub_category }: PropsType) => {
-  const { image_url, data } = sub_category
+const SubCategory = ({ className, sub_category, image }: PropsType) => {
   return (
-    <div className={`${className ? className : ''} ${styles.subCategoryItem}`}>
+    <div className={`${className ? className : ""} ${styles.subCategoryItem}`}>
       <div className={`main-container ${styles.subCategoryBlock}`}>
-        <SubCategoryList data={data} />
-        <ImageSubCategory image_url={image_url} />
+        <SubCategoryList sub_category={sub_category} />
+        <ImageSubCategory image_url={image} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SubCategory
+export default SubCategory;

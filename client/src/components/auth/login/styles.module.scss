@@ -1,0 +1,68 @@
+@import "@scss/variables";
+@import "@scss/mixins";
+
+.rootPage {
+  width: 100%;
+  max-width: 1216px;
+  margin: 70px auto 0;
+  position: relative;
+  @include flex(flex-start, space-between);
+  flex-direction: row;
+  @include respond(large-mobile) {
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    margin: 50px 0 20px;
+    padding: 0 16px;
+  }
+  @include respond(extra-large-mobile) {
+    align-items: center;
+    margin-top: 30px;
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+.seperate {
+  width: 1px;
+  background: $greyLight;
+  height: 300px;
+  margin-top: 132px;
+  @media (max-width: 767px) {
+    margin: 0;
+    height: auto;
+  }
+}
+
+.login {
+  font-style: normal;
+  width: 100%;
+  max-width: 420px;
+  min-width: 420px;
+  position: relative;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: start;
+  @include respond(small-desktop) {
+    max-width: 440px;
+    padding: 20px;
+  }
+  @include respond(extra-large-mobile) {
+    max-width: 540px;
+    padding: 20px;
+  }
+  @include respond(large-desktop) {
+    padding: 20px;
+  }
+  @include respond(large-mobile) {
+    max-width: 360px;
+    min-width: 330px;
+    padding: 0 12px;
+  }
+}
+.tabPaneMobile {
+  display: none;
+  @include respond(large-mobile) {
+    display: block;
+  }
+}

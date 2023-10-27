@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       Categories.belongsToMany(models.Products, {
         through: "ProductCategories",
       });
+      Categories.hasMany(models.Categories, {
+        foreignKey: "parent_id",
+        as: "children_category",
+      });
     }
   }
   Categories.init(

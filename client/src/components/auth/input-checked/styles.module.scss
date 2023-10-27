@@ -1,0 +1,23 @@
+@import "@scss/variables";
+@import "@scss/mixins";
+
+.inputRules {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  span {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 130%;
+    display: flex;
+    align-items: center;
+    color: $blackSix;
+  }
+}

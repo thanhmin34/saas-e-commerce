@@ -1,1 +1,1 @@
-export const toHTML = (str: string) => ({ __html: str })
+export const toHTML = (str: string) => ({ __html: str });

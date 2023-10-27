@@ -31,7 +31,8 @@
       "@HOCs/*": ["./src/HOCs/*"],
       "@interfaces/*": ["./src/interfaces/*"],
       "@network/*": ["./src/network/*"],
-      "@fetchingApi/*": ["./src/fetchingApi/*"]
+      "@lib/*": ["./src/lib/*"],
+      "@styles/*": ["./src/styles/*"]
     }
   },
   "include": [

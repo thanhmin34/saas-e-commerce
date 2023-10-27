@@ -1,21 +1,20 @@
 const Joi = require("joi");
 const asyncHandler = require("express-async-handler");
-const { Styles } = require("../models");
+const { ConfigApps } = require("../models");
 const {
   notificationMessageSuccess,
 } = require("../utils/notificationMessageStatus");
 
-const getStyles = asyncHandler(async (req, res) => {
-  const { body } = req || {};
+const getConfig = asyncHandler(async (req, res) => {
   const id = 1;
   try {
-    const styles = await Styles.findOne({
+    const config = await ConfigApps.findOne({
       where: { id },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
       },
     });
-    if (!styles?.id) {
+    if (!config?.id) {
       return notificationMessageError(res, "Internal Server Error ");
     }
     const {
@@ -26,10 +25,9 @@ const getStyles = asyncHandler(async (req, res) => {
       hover_background_color,
       background_color,
       color,
-    } = styles;
+    } = config;
     return notificationMessageSuccess(res, {
-      status: true,
-      styles: {
+      config_app: {
         button: JSON.parse(button),
         font_size,
         font_weight,
@@ -42,9 +40,9 @@ const getStyles = asyncHandler(async (req, res) => {
   } catch (error) {}
 });
 
-const createStyles = asyncHandler(async (req, res) => {
+const createConfig = asyncHandler(async (req, res) => {
   const { body } = req || {};
-  const { styles } = body || {};
+  const { config } = body || {};
   const {
     button,
     font_size,
@@ -53,10 +51,10 @@ const createStyles = asyncHandler(async (req, res) => {
     hover_background_color,
     background_color,
     color,
-  } = styles || {};
+  } = config || {};
 
   try {
-    const stylesItem = await Styles.create({
+    const config = await ConfigApps.create({
       button,
       font_size,
       font_weight,
@@ -65,7 +63,8 @@ const createStyles = asyncHandler(async (req, res) => {
       background_color,
       color,
     });
-    if (!stylesItem?.id)
+
+    if (!config?.id)
       return notificationMessageError(
         res,
         "The styles failed to create success"
@@ -79,6 +78,6 @@ const createStyles = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getStyles,
-  createStyles,
+  getConfig,
+  createConfig,
 };

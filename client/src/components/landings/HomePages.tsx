@@ -1,6 +1,6 @@
-import { SliderBlock, Banner, ProductSliders } from './HTMLBlock'
+import { SliderBlock, Banner, ProductSliders } from "./HTMLBlock";
 
-import styles from './styles.module.scss'
+import styles from "./styles.module.scss";
 
 const HomePages = ({}) => {
   return (
@@ -10,7 +10,7 @@ const HomePages = ({}) => {
       <ProductSliders />
       <div style={{ height: 1000 }}></div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePages
+export default HomePages;

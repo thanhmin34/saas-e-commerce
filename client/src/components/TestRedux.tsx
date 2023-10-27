@@ -10,16 +10,13 @@ import useToastMessage from '@hooks/useToastMessage'
 function MyComponent() {
   const dispatch = useDispatch()
   const { showToast, typeToast } = useToastMessage()
+  const cartData = useSelector((state: RootState) => state.cartData)
   const handleFetchData = () => {
-    dispatch(
-      setCart({
-        products: [],
-      })
-    )
+    setCart({ test: '123' })
   }
 
   const handleRemoveFetchData = () => {
-    dispatch(removeCart())
+    // dispatch(removeCart())
   }
 
   const { isLoading, error, data, refetch } = useQuery(

@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import Loading from '@components/loading'
 //
 import store from '@redux/store'
+import { AppProvider } from '@context/appContextProvider'
+import useAuth from '@hooks/useAuth'
 
 const queryClient = new QueryClient()
 
@@ -23,18 +25,22 @@ const Footer = dynamic(() => import('@components/footer/Footer'), {
 })
 
 const ReduceProvider = ({ children }: { children: ReactNode }) => {
+  const { isSignedIn } = useAuth()
+
   return (
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <ToastContainer />
-        <Suspense fallback={<Loading />}>
-          <Header />
-        </Suspense>
-        <main className="main main-container">{children}</main>
-        <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
-      </QueryClientProvider>
-    </Provider>
+        <AppProvider>
+          <Suspense fallback={<Loading />}>
+            <Header />
+          </Suspense>
+          <main className="main main-container">{children}</main>
+          <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
+        </AppProvider>
+      </Provider>
+    </QueryClientProvider>
   )
 }
 

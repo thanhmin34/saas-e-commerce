@@ -7,7 +7,7 @@ import apiClient from '@network/apiClient'
 const getData = async () => {
   const { get } = apiClient()
   try {
-    const responsive: AxiosResponse<any, any> | AxiosError<unknown, any> = await get('http://localhost:5000/home-page')
+    const responsive: AxiosResponse<any, any> | AxiosError<unknown, any> = await get('/home-page')
     return responsive
   } catch (error) {
     const axiosError = error as AxiosError<unknown, any>

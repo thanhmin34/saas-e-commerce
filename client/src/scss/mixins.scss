@@ -39,7 +39,7 @@
     padding: 8px 0 !important;
 
     .dropdown-item {
-      border-bottom: 1px solid $grey--light;
+      border-bottom: 1px solid $greyLight;
       padding: 20px 0 !important;
       height: 10px;
       font-size: 12px;
@@ -90,7 +90,7 @@
     display: table;
     clear: both;
 
-    content: '';
+    content: "";
   }
 }
 
@@ -209,7 +209,7 @@
 // mega menu
 
 @mixin megaMenuHighlight {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   width: 0;

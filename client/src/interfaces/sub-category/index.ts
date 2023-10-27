@@ -1,13 +1,18 @@
 export interface SubCategoryItem {
-  name: string
+  name: string;
+  slug: string;
+  id: number;
 }
 
 export interface SubCategory {
-  data?: SubCategoryItem[]
-  image_url?: string | undefined
+  name: string;
+  slug: string;
+  id: number;
 }
 
 export interface Category {
-  name: string
-  sub_category: SubCategory
+  name: string;
+  children_category: SubCategory[];
+  image: string | undefined;
+  slug: string;
 }

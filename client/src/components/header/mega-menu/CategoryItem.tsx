@@ -1,29 +1,32 @@
-'use client'
-import React, { useMemo } from 'react'
-import styles from './styles.module.scss'
-import SubCategory from './SubCategory'
-import { Category } from '@interfaces/sub-category'
-import lodash from 'lodash'
-
+"use client";
+import React, { useMemo } from "react";
+import styles from "./styles.module.scss";
+import SubCategory from "./SubCategory";
+import { Category } from "@interfaces/sub-category";
+import lodash from "lodash";
+import Link from "next/link";
 const CategoryItem = ({ item }: { item: Category }) => {
-  const { name, sub_category } = item || {}
+  const { name, children_category, image, slug } = item || {};
 
   const classNames = useMemo(() => {
-    const { data } = sub_category || {}
-    if (!lodash.isEmpty(data)) {
-      return `${styles.menuName} ${styles.menuHover}`
+    if (!lodash.isEmpty(children_category)) {
+      return `${styles.menuName} ${styles.menuHover}`;
     }
-    return styles.menuName
-  }, [sub_category])
+    return styles.menuName;
+  }, [children_category]);
 
   return (
     <div className={styles.menuItem}>
-      <div className={classNames}>
+      <Link href={slug} className={classNames}>
         <span className={styles.text}>{name}</span>
-      </div>
-      <SubCategory className={styles.subCategory} sub_category={sub_category} />
+      </Link>
+      <SubCategory
+        className={styles.subCategory}
+        sub_category={children_category}
+        image={image}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default CategoryItem
+export default CategoryItem;

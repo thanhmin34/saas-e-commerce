@@ -1,0 +1,54 @@
+@import "@scss/variables";
+@import "@scss/mixins";
+
+.blockNavigateLoginPage {
+  color: $black;
+  width: 100%;
+  max-width: 424px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 150%;
+  color: $black;
+  text-align: start;
+
+  margin-bottom: 30px;
+  @include respond(large-mobile) {
+    margin: 0;
+    display: none;
+  }
+  @include respond(small-desktop) {
+    max-width: 440px;
+    padding: 20px;
+  }
+  @include respond(extra-large-mobile) {
+    max-width: 540px;
+    padding: 20px;
+    margin-bottom: 0;
+  }
+  @include respond(large-desktop) {
+    max-width: 540px;
+    padding: 20px;
+  }
+  @include respond(large-mobile) {
+    max-width: 384px;
+    padding: 0 12px;
+  }
+  @include respond(extra-small-mobile) {
+    max-width: 350px;
+    padding: 0 12px;
+  }
+
+  @include breakpoint-min(1199px) {
+    width: 100%;
+    max-width: 424px;
+  }
+}
+
+.blockBody {
+  display: block;
+}
+.button {
+  width: 100%;
+  max-width: 450px !important;
+  margin: 30px 0 38px;
+}
