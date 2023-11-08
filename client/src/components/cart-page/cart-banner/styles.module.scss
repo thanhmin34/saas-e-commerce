@@ -1,0 +1,50 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.cartBanner {
+  @include grid(2);
+  grid-gap: 30px;
+  grid-column: auto;
+
+  .imageContainer {
+    overflow: contain;
+
+    @media (max-width: 1215px) {
+      min-height: 20vw;
+    }
+    @media (min-width: 1216px) {
+      min-height: 240px;
+    }
+    position: relative;
+  }
+
+  .image {
+    flex-shrink: 0;
+  }
+
+  &Tablet {
+    display: none;
+    padding: 0 15px;
+  }
+
+  img {
+    cursor: pointer;
+  }
+}
+.noCartBanner {
+  display: none;
+}
+@media (max-width: 992px) {
+  .cartBanner {
+    display: block;
+
+    &Tablet {
+      position: relative;
+      display: block;
+      min-height: 40vw;
+    }
+    &CheckTablet {
+      display: none;
+    }
+  }
+}

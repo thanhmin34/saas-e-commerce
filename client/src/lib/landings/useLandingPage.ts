@@ -1,13 +1,12 @@
-'use client'
-import React from 'react'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
 import apiClient from '@network/apiClient'
+import { APIS } from '@constants/apis'
 
 const getData = async () => {
   const { get } = apiClient()
   try {
-    const responsive: AxiosResponse<any, any> | AxiosError<unknown, any> = await get('/home-page')
+    const responsive = await get(APIS.LANDING_PAGE)
     return responsive
   } catch (error) {
     const axiosError = error as AxiosError<unknown, any>

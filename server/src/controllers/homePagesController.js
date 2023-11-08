@@ -5,6 +5,7 @@ const {
 const path = require("path");
 const homePageData = require("../views/test.json");
 const megaMenu = require("../views/megamenu.json");
+
 const getHomePages = asyncHandler(async (req, res) => {
   const {} = req || {};
   try {

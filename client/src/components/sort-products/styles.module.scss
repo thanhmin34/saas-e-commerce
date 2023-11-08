@@ -1,0 +1,30 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.sortProducts {
+  @include flex(center, space-between);
+
+  .resultsProducts {
+    font-size: 13px;
+    font-weight: 400;
+    color: $textColor;
+    line-height: 130%;
+    text-transform: uppercase;
+  }
+  .sortBlock {
+    @include flex(center, flex-start);
+    gap: 4px;
+    width: 100%;
+    max-width: 272px;
+  }
+  .sortDropdown {
+    width: 100%;
+    max-width: 210px;
+  }
+  .sortIcon {
+    cursor: pointer;
+    padding: 2px;
+  }
+  .sortIconIncrement {
+    transform: rotate(180deg);
+  }
+}

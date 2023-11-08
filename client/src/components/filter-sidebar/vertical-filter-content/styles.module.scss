@@ -1,0 +1,77 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.verticalFilter {
+  min-width: 320px;
+  @include flex(flex-start, flex-start);
+
+  .filter {
+    position: sticky;
+    top: 190px;
+    width: 320px;
+    @media (max-width: 1023px) {
+      position: static;
+    }
+    .main {
+      padding: 1rem 1.25rem 0;
+      flex-grow: 1;
+      overflow-y: scroll;
+      height: auto;
+      max-height: 500px;
+      &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
+      }
+
+      form {
+        width: 100% !important;
+      }
+    }
+    .footer {
+      display: flex;
+      height: 70px;
+      align-items: center;
+      justify-content: space-between;
+      //border-top: $border;
+      padding: 0.25rem;
+
+      button {
+        max-width: 130px;
+      }
+    }
+  }
+}
+
+.filterGroup {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+  justify-content: flex-start;
+  padding: 0.5rem;
+
+  .selected-filter {
+    align-items: center;
+    color: $black;
+    display: inline-grid;
+    font-size: 13px;
+    gap: 0.5rem;
+    grid-auto-flow: column;
+    justify-content: center;
+    min-height: 17px;
+    padding: 7px;
+    white-space: nowrap;
+  }
+}
+
+.footer {
+  display: flex;
+  height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  //border-top: $border;
+  padding: 1.25rem;
+
+  button {
+    max-width: 130px;
+  }
+}

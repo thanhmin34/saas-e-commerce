@@ -23,11 +23,6 @@ const apiClient = () => {
       const response = await reqInstance.get(uri, config)
       return response?.data
     } catch (error) {
-      const axiosError = error as AxiosError
-      if (unAuthorized(axiosError?.response?.status)) {
-        localStorage.removeItem(STORAGE_KEYS.TOKEN)
-        window.location.replace(ROUTER_PATHS.LOGIN)
-      }
       return error as AxiosError
     }
   }

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import styles from './styles.module.scss'
+import { BUTTON_TYPES } from '@constants/colors'
 
 interface ConfigButton {
   color: string | undefined
@@ -15,7 +16,8 @@ const Button: React.FC<{
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   disabled?: boolean | undefined
   otherProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
-}> = ({ style, className, children, onClick, disabled, ...otherProps }) => {
+  buttonType?: string
+}> = ({ style, className, children, onClick, disabled, buttonType, ...otherProps }) => {
   const stylesButton: ConfigButton = {
     borderRadius: '4',
     backgroundColor: 'rgb(0, 104, 52)',
@@ -24,9 +26,20 @@ const Button: React.FC<{
     border: 'none',
   }
 
+  const stylesOutlineButton: ConfigButton = {
+    borderRadius: '4',
+    backgroundColor: 'transparent',
+    color: '#149447',
+    borderColor: '#149447',
+    border: '1px solid #149447',
+  }
+
   const _style = useMemo(() => {
+    if (buttonType == BUTTON_TYPES.OUTLINE) {
+      return { ...stylesOutlineButton, ...style }
+    }
     return { ...stylesButton, ...style }
-  }, [style])
+  }, [style, buttonType])
 
   return (
     <button

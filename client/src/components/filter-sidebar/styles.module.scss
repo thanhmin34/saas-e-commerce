@@ -1,0 +1,11 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.filterSidebar {
+  background: $white;
+  overflow: auto;
+
+  &Enabled {
+    left: 0;
+  }
+}

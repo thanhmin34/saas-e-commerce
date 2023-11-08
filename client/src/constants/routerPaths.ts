@@ -5,6 +5,7 @@ const ROUTER_PATHS = {
   FORGOT_PASSWORD: 'forgot-password',
   TERM_CONDITION: '/',
   ACCOUNT_INFORMATION: '/account-information',
+  CART: '/cart',
 }
 
 export { ROUTER_PATHS }

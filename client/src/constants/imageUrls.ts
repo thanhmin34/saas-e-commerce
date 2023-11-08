@@ -7,4 +7,5 @@ export const imageUrls = {
   iconEnglish: '/assets/icon/en.png',
   iconSaudiArabian: '/assets/icon/ar.svg',
   iconVn: '/assets/icon/vn.webp',
+  iconSort: '/assets/icon/sort_in.jpg',
 }

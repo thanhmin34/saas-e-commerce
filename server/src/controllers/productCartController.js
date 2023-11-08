@@ -10,9 +10,9 @@ const {
 const addProductSchema = Joi.object({
   cart_id: Joi.string().required(),
   product: Joi.object({
-    product_id: Joi.number().required(),
+    id: Joi.number().required(),
+    sku: Joi.string().required(),
     quantity: Joi.number().required(),
-    price: Joi.number().required(),
   }),
 });
 
@@ -30,7 +30,7 @@ const validateFieldBySchema = (data, schema) => {
 const addProductToCart = asyncHandler(async (req, res) => {
   const { body } = req || {};
   const { cart_id, product } = body || {};
-  const { product_id, quantity, price, options } = product || {};
+  const { id, quantity, price, options } = product || {};
   try {
     const { error } = validateFieldBySchema(body, addProductSchema);
     if (error) {
@@ -44,22 +44,36 @@ const addProductToCart = asyncHandler(async (req, res) => {
       return notificationMessageError(res, "Unable to add product to cart");
 
     const product = await Products.findOne({
-      where: { id: product_id },
+      where: { id: id },
     });
-    if (!product?.id) notificationMessageError(res, "cannot find product");
 
-    const item = await CartItem.create({
-      cart_id: cart?.id,
-      product_id,
-      quantity,
-      price,
-      options,
+    if (!product?.id)
+      return notificationMessageError(res, "cannot find product");
+
+    const checkCartItem = await CartItem.findOne({
+      where: { cart_id: cart?.id, product_id: id },
     });
-    if (item?.id)
-      notificationMessageSuccess(res, {
-        status: true,
-        message: "Product added successfully",
+    console.log("checkCartItem....", checkCartItem);
+    if (!checkCartItem) {
+      const item = await CartItem.create({
+        cart_id: cart?.id,
+        product_id: id,
+        quantity,
+        price,
+        options,
       });
+      if (item?.id)
+        return notificationMessageSuccess(res, {
+          status: true,
+          message: "Product added successfully",
+        });
+    }
+    checkCartItem.quantity += quantity;
+    await checkCartItem.save();
+    return notificationMessageSuccess(res, {
+      status: true,
+      message: "Update Product successfully",
+    });
   } catch (error) {
     return notificationMessageError(res, error);
   }

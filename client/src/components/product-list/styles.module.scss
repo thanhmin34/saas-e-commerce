@@ -1,0 +1,8 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.content {
+  margin-top: 30px;
+  display: flex;
+  gap: 12px;
+}

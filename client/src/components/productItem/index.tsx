@@ -17,11 +17,15 @@ const ProductItem = ({ item }: { item: ProductItemInterface }) => {
     <div className={styles.productItemContainer}>
       <div className={styles.productItem}>
         <div className={styles.mainContainer}>
-          <ProductImage className={styles.imageContainer} url={url as string} label={label} />
+          <ProductImage className={styles.imageContainer} url={url} label={label} />
         </div>
         <InformationContainer item={item} />
         <div className={styles.actions}>
-          <AddToCartButton isOutOfStock={!!out_of_stock} className={`${styles.atcButton} ${styles.hoverDisplayItem}`} />
+          <AddToCartButton
+            item={item}
+            isOutOfStock={!!out_of_stock}
+            className={`${styles.atcButton} ${styles.hoverDisplayItem}`}
+          />
           <WishlistButton />
         </div>
         <ProductRatingBlock ratingSummary={rating_summary} reviewCount={review_count} />

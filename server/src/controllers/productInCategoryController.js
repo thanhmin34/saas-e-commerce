@@ -5,6 +5,8 @@ const {
   notificationMessageError,
 } = require("../utils/notificationMessageStatus");
 const Joi = require("joi");
+const { Op } = require("sequelize");
+const { checkFilterByCategory } = require("../utils/helper");
 
 const validateProductInCategory = Joi.object({
   category_id: Joi.number().required(),
@@ -56,71 +58,133 @@ const insertProductInCategory = asyncHandler(async (req, res) => {
 });
 
 const getProductsInCategory = asyncHandler(async (req, res) => {
+  const SORT_ORDERS_TITLE = ["ASC", "DESC"];
+
   const { query } = req || {};
-  const { id } = query || {};
+  const {
+    id,
+    current_page = 1,
+    page_size = 20,
+    order_name,
+    order_value,
+    filter_by_price_value,
+    filter_by_price_type,
+    filter_by_category_value,
+  } = query || {};
+
   try {
-    const products = await Categories.findOne({
-      where: { id },
-      attributes: ["id"],
-      include: [
-        {
-          model: Products,
-          through: "ProductCategories",
+    Categories.findByPk(id, {
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "image", "slug"],
+      },
+      include: {
+        model: Categories,
+        as: "children_category",
+        attributes: ["id", "name", "parent_id", "title"],
+      },
+    })
+      .then(async (category) => {
+        if (!category) {
+          return notificationMessageError(res, "Category does not exist");
+        }
+        const filter = {};
+
+        if (filter_by_price_value && filter_by_price_type) {
+          if (Array.isArray(filter_by_price_value)) {
+            filter.price = {
+              [Op.between]: filter_by_price_value,
+            };
+          } else {
+            const key = filter_by_price_type === "gte" ? "gte" : "lte";
+            filter.price = {
+              [Op[key]]: +filter_by_price_value,
+            };
+          }
+        }
+
+        const listChildCategory =
+          category.children_category?.length > 0
+            ? category.children_category.map((item) => item?.id)
+            : [];
+
+        const idsCategory = filter_by_category_value
+          ? checkFilterByCategory(filter_by_category_value)
+          : [id, ...listChildCategory];
+
+        // sort
+        const order =
+          order_name && order_value && SORT_ORDERS_TITLE.includes(order_value)
+            ? [[order_name, order_value]]
+            : [];
+
+        const offset = (+current_page - 1) * +page_size;
+
+        const products = await Products.findAndCountAll({
+          distinct: true,
+          where: filter,
           attributes: {
-            exclude: [
-              "createdAt",
-              "updatedAt",
-              "ProductCategories",
-              "wishlist_id",
-              "seo",
-              "media_gallery",
-              "description",
-            ],
+            exclude: ["createdAt", "updatedAt", "seo", "brand", "Categories"],
           },
-        },
-      ],
-    });
-
-    if (!products) {
-      return notificationMessageError(res, "Internal Server Error ");
-    }
-
-    const newProducts = products?.Products.map((item) => {
-      const {
-        id,
-        sku,
-        name,
-        price,
-        quantity,
-        label,
-        type,
-        image,
-        brand,
-        url_path,
-        special_price,
-        special_to_date,
-        special_from_date,
-      } = item || {};
-      return {
-        id,
-        sku,
-        name,
-        price,
-        quantity,
-        label,
-        type,
-        image,
-        brand,
-        url_path,
-        special_price,
-        special_to_date,
-        special_from_date,
-      };
-    });
-    return notificationMessageSuccess(res, {
-      status: true,
-      products: newProducts,
-    });
+          include: [
+            {
+              model: Categories,
+              through: ProductCategories,
+              where: {
+                // filter By Category
+                id: idsCategory,
+              },
+              attributes: {
+                exclude: ["createdAt", "updatedAt"],
+              },
+            },
+          ],
+          limit: +page_size,
+          offset: offset,
+          order,
+        });
+        const newProducts = products?.rows.map((item) => {
+          const {
+            id,
+            sku,
+            name,
+            price,
+            quantity,
+            label,
+            type,
+            image,
+            brand,
+            url_path,
+            special_price,
+            special_to_date,
+            special_from_date,
+            media_gallery,
+          } = item || {};
+          return {
+            id,
+            sku,
+            name,
+            price,
+            quantity,
+            label,
+            type,
+            image: JSON.parse(image),
+            media_gallery: JSON.parse(media_gallery),
+            brand,
+            url_path,
+            special_price,
+            special_to_date,
+            special_from_date,
+          };
+        });
+        return notificationMessageSuccess(res, {
+          products: newProducts,
+          total_count: products?.count,
+          category,
+        });
+      })
+      .catch((error) => {
+        return notificationMessageError(res, error);
+      });
   } catch (error) {}
 });
 

@@ -1,4 +1,9 @@
-interface Image {
+interface IImage {
+  url: string
+  label: string
+}
+
+interface IMediaGallery {
   url: string
   label: string
 }
@@ -14,12 +19,22 @@ export interface RegularPriceTypes {
 }
 
 export interface ProductItemInterface {
-  image?: Image
-  brand_name?: string | undefined
+  id: number
+  sku: string
+  image?: IImage
+  media_gallery: IMediaGallery
   name: string
-  price: PriceTypes
-  special_price?: RegularPriceTypes | null
+  price: number
+  quantity: number
+  type?: string
+  special_price?: number | null
   rating_summary?: number | undefined
   review_count?: number | undefined
   out_of_stock: boolean | undefined
+  url_path: string
+  special_to_date: string | null
+  special_from_date: string | null
+  brand_name: undefined | string
+  ratingSummary: number | undefined
+  reviewCount: number | undefined
 }

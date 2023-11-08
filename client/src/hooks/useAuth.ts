@@ -6,19 +6,18 @@ import { TWE } from '@constants/constants'
 const TTL = 60 * 60
 const useAuth = () => {
   const storage = new LocalStorageManager()
-  let jsonToken = null
-  if (typeof window !== 'undefined') {
-    jsonToken = storage.getItem(STORAGE_KEYS.TOKEN) ? storage.getItem(STORAGE_KEYS.TOKEN) : null
-  }
+  let jsonToken =
+    typeof window !== 'undefined'
+      ? storage.getItem(STORAGE_KEYS.TOKEN)
+        ? storage.getItem(STORAGE_KEYS.TOKEN)
+        : null
+      : null
+
   const calledRef = useRef<boolean>()
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const now = Date.now()
 
   const { timeStored } = jsonToken || {}
-  const b = {
-    payload: 'string',
-    cart: {},
-  }
   const handleSignOut = useCallback(async () => {
     try {
       if (!!timeStored && !calledRef.current) {
