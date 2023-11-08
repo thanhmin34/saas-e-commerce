@@ -11,7 +11,18 @@ export interface IPriceCart {
 export interface IPaymentCart {}
 export interface IShippingMethodCart {}
 export interface IShippingAddressCart {}
-export interface IProductsCart {}
+export interface IProductsCart {
+  product_id: number
+  quantity: number
+  price: number
+  options: null
+  name: string
+  sku: string
+  image: {
+    label: string
+    url: string
+  }
+}
 
 export interface ICart {
   cart_id: string

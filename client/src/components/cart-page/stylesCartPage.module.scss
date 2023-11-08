@@ -11,6 +11,7 @@
   .productsContainer {
     display: grid;
     border-top: $border;
+    padding: 0;
 
     .product {
       display: grid;
@@ -200,11 +201,11 @@
             }
 
             .specialPrice {
-              color: $special-price-color;
+              color: $specialPriceColor;
             }
 
             .regularPrice {
-              color: $grey--thirtyThree;
+              color: $greyFour;
               text-decoration: line-through;
             }
           }
@@ -218,7 +219,7 @@
   @include flex(center, flex-start);
   margin-top: 10px;
   gap: 10px;
-  color: $primary-color;
+  color: $textColor;
 
   .removeToCart {
     outline: none;
@@ -301,7 +302,7 @@
     font-weight: 400;
     line-height: 16.8px;
     padding: 9px 17px;
-    border: $border--two;
+    border: 1px solid $black;
     color: $black;
     background: $white;
   }
@@ -323,7 +324,7 @@
       font-weight: 400;
       line-height: 16.8px;
       padding: 9px 17px;
-      border: $border--two;
+      border: 1px solid $black;
       color: $black;
       background: $white;
     }
@@ -414,58 +415,6 @@
   }
 }
 
-.header {
-  * {
-    color: inherit !important;
-  }
-
-  display: grid;
-  gap: 0.5rem;
-  grid-template-columns: 4.9fr 2.1fr 2.1fr;
-  grid-template-areas: 'name quantity subtotal';
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 15.4px;
-  color: $primary-color;
-  margin-bottom: 20px;
-  align-items: flex-end;
-
-  @include respond(large-mobile) {
-    @include flex(center, space-between);
-    margin-bottom: 0px;
-  }
-
-  .textTitle {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 18px;
-    color: $primary-color;
-    text-transform: uppercase;
-  }
-
-  .name {
-    grid-area: name;
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .quantity {
-    grid-area: quantity;
-    display: flex;
-    justify-content: center;
-  }
-
-  .subtotal {
-    grid-area: subtotal;
-    display: flex;
-    justify-content: flex-end;
-
-    @include respond(large-mobile) {
-      display: none;
-    }
-  }
-}
-
 .productMobile {
   display: grid;
   padding: 20px 0px;
@@ -520,7 +469,7 @@
           font-size: 16px;
           font-weight: 500;
           line-height: 20.8px;
-          color: $primary-color;
+          color: $textColor;
         }
         .subtotal {
           @include flex(flex-start, space-between);
@@ -541,11 +490,11 @@
           }
 
           .specialPrice {
-            color: $special-price-color;
+            color: $specialPriceColor;
           }
 
           .regularPrice {
-            color: $grey--thirtyThree;
+            color: $greyFour;
             text-decoration: line-through;
           }
         }
@@ -572,11 +521,11 @@
         }
 
         .special-price {
-          color: $special-price-color;
+          color: $specialPriceColor;
         }
 
         .regular-price {
-          color: $grey--thirtyThree;
+          color: $greyFour;
           text-decoration: line-through;
         }
       }
@@ -585,7 +534,7 @@
         @include flex(center, flex-start);
         margin-top: 10px;
         gap: 10px;
-        color: $primary-color;
+        color: $textColor;
 
         &__remove-to-cart {
           outline: none;

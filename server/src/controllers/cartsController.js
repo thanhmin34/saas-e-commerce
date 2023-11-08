@@ -141,7 +141,14 @@ const getCartDetails = asyncHandler(async (req, res) => {
             {
               model: Products,
               as: "productCartItem",
-              attributes: ["name", "sku", "image"],
+              attributes: [
+                "name",
+                "sku",
+                "image",
+                "price",
+                "special_price",
+                "special_from_date",
+              ],
             },
           ],
         },
@@ -194,13 +201,26 @@ const getCartDetails = asyncHandler(async (req, res) => {
       const products =
         cart?.listCartItem?.length > 0
           ? cart?.listCartItem.map((item) => {
-              const { productCartItem, product_id, quantity, price, options } =
+              const { productCartItem, product_id, quantity, options } =
                 item || {};
-              const { name, sku, image } = productCartItem || {};
+
+              const {
+                name,
+                sku,
+                image,
+                price,
+                special_price,
+                special_from_date,
+              } = productCartItem || {};
+              const currentDate = new Date();
+
+              const newPrice = special_price
+                ? special_price * quantity
+                : price * quantity;
               return {
                 product_id,
                 quantity,
-                price,
+                price: newPrice,
                 options,
                 name,
                 sku,
@@ -225,6 +245,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
           shipping_method: cart?.cartShippingMethods,
           shipping_address: cart?.cartShippingAddress,
           products,
+          listCartItem: cart?.listCartItem,
         },
       });
     }

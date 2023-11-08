@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../stylesCartPage.module.scss'
+import styles from './styles.module.scss'
 import useIntl from '@hooks/useIntl'
 
 const HEADER_CART_PAGE = [
