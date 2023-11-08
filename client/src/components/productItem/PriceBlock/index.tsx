@@ -7,8 +7,8 @@ import SpecialPrice from './SpecialPrice'
 
 import { PriceTypes, RegularPriceTypes } from '@interfaces/product'
 interface PriceBlock {
-  price: PriceTypes
-  special_price: RegularPriceTypes | null | undefined
+  price: number
+  special_price?: RegularPriceTypes | null | undefined
 }
 
 const PriceBlock = ({ price, special_price }: PriceBlock) => {

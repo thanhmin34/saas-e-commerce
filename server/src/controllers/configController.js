@@ -17,6 +17,7 @@ const getConfig = asyncHandler(async (req, res) => {
     if (!config?.id) {
       return notificationMessageError(res, "Internal Server Error ");
     }
+
     const {
       button,
       font_size,
@@ -25,6 +26,7 @@ const getConfig = asyncHandler(async (req, res) => {
       hover_background_color,
       background_color,
       color,
+      currency,
     } = config;
     return notificationMessageSuccess(res, {
       config_app: {
@@ -35,6 +37,7 @@ const getConfig = asyncHandler(async (req, res) => {
         hover_background_color,
         background_color,
         color,
+        currency,
       },
     });
   } catch (error) {}

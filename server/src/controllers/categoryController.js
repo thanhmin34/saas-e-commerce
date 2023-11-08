@@ -13,7 +13,7 @@ async function insertProductInCategory(products) {
 const getAllCategory = asyncHandler(async (req, res) => {
   const categoryId = 0;
   try {
-    const categoryList = await await Categories.findAll({
+    const categoryList = await Categories.findAll({
       where: { parent_id: categoryId },
       attributes: {
         exclude: ["createdAt", "updatedAt"],
@@ -21,14 +21,6 @@ const getAllCategory = asyncHandler(async (req, res) => {
       include: {
         model: Categories,
         as: "children_category",
-        where: { parent_id: { [Op.ne]: 0 } },
-        attributes: {
-          exclude: ["createdAt", "updatedAt"],
-        },
-        include: {
-          model: Categories,
-          as: "children_category",
-        },
       },
     });
 

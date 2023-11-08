@@ -206,7 +206,7 @@ const CreateProducts = asyncHandler(async (req, res) => {
         name,
         price: price.regularPrice.amount.value,
         quantity: salable_qty,
-        thumbnail: image?.url,
+        image: image,
         store_id: 1,
         type: type_id,
         media_gallery,

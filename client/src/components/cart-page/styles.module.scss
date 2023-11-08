@@ -1,0 +1,75 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.cartPage {
+  .heading {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 36.4px;
+    color: $primaryColor;
+    text-align: center;
+
+    @media (max-width: 1216px) {
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 28.6px;
+      text-align: start;
+    }
+
+    @include respond(large-mobile) {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 31px;
+      text-align: center;
+    }
+
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    @media (max-width: 1216px) {
+      padding: 0 35px;
+      margin: 30px 0;
+    }
+
+    @media (max-width: 768px) {
+      padding: 0 15px;
+    }
+  }
+
+  .body {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 6.25fr 3.75fr;
+    grid-template-areas: 'items adjustments';
+    margin-top: 70px;
+    margin-bottom: 70px;
+
+    .error-message {
+      line-height: 1.5;
+      color: $errorTextColor;
+      font-size: 16px;
+      font-weight: 400;
+      margin-top: 0;
+    }
+
+    @media (max-width: 1216px) {
+      padding: 0 15px;
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+}
+
+@media (max-width: 1216px) {
+  .relatedProductContainer {
+    padding: 0 15px;
+  }
+}
+
+.noItemsMessage {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+}

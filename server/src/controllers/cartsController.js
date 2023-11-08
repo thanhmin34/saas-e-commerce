@@ -117,13 +117,14 @@ const mergeCart = asyncHandler(async (req, res) => {
 });
 
 const getCartDetails = asyncHandler(async (req, res) => {
-  const { body } = req || {};
-  const { cart_id } = body || {};
+  const { body, query } = req || {};
+  const { cart_id } = query || {};
+
   try {
-    const { error } = validateFieldBySchema(body, cartSchema);
-    if (error) {
-      return notificationMessageError(res, error.details[0].message);
-    }
+    // const { error } = validateFieldBySchema(body, cartSchema);
+    // if (error) {
+    //   return notificationMessageError(res, error.details[0].message);
+    // }
 
     const fieldExclude = ["createdAt", "updatedAt", "id"];
     const cart = await Cart.findOne({
@@ -140,7 +141,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
             {
               model: Products,
               as: "productCartItem",
-              attributes: ["name", "sku", "image", "thumbnail"],
+              attributes: ["name", "sku", "image"],
             },
           ],
         },
@@ -190,8 +191,27 @@ const getCartDetails = asyncHandler(async (req, res) => {
       (total + tax_amount + shipping_amount) * discount_amount;
 
     if (cart) {
+      const products =
+        cart?.listCartItem?.length > 0
+          ? cart?.listCartItem.map((item) => {
+              const { productCartItem, product_id, quantity, price, options } =
+                item || {};
+              const { name, sku, image } = productCartItem || {};
+              return {
+                product_id,
+                quantity,
+                price,
+                options,
+                name,
+                sku,
+                image: JSON.parse(image),
+              };
+            })
+          : [];
       return notificationMessageSuccess(res, {
         cart: {
+          cart_id: cart?.cart_id,
+          total_quantity: cart?.listCartItem.length || 0,
           price: {
             total,
             total_excl,
@@ -201,11 +221,38 @@ const getCartDetails = asyncHandler(async (req, res) => {
             discount_amount,
             currency,
           },
-          payment_methods: cart?.cartPaymentMethod || {},
-          shipping_method: cart?.cartShippingMethods || {},
-          shipping_address: cart?.cartShippingAddress || {},
-          products: cart?.listCartItem || [],
+          payment_methods: cart?.cartPaymentMethod,
+          shipping_method: cart?.cartShippingMethods,
+          shipping_address: cart?.cartShippingAddress,
+          products,
         },
+      });
+    }
+    return notificationMessageError(res, "Cannot find cart");
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
+const checkCartIsAuth = asyncHandler(async (req, res) => {
+  const { body } = req || {};
+  const { cart_id } = body || {};
+  try {
+    const { error } = validateFieldBySchema(body, cartSchema);
+    if (error) {
+      return notificationMessageError(res, error.details[0].message);
+    }
+
+    const cart = await Cart.findOne({
+      where: { cart_id },
+      attributes: ["cart_id"],
+    });
+
+    if (cart) {
+      return notificationMessageSuccess(res, {
+        status: true,
+        message: "Cart id exists",
+        cart_id: cart?.cart_id,
       });
     }
     return notificationMessageError(res, "Cannot find cart");
@@ -235,4 +282,5 @@ module.exports = {
   getCartDetails,
   createCart,
   mergeCart,
+  checkCartIsAuth,
 };

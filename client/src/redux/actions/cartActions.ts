@@ -1,24 +1,10 @@
+import { ICart, ICartAction } from '@interfaces/redux/cart'
+
 export const SET_CART = 'SET_CART'
 export const REMOVE_CART = 'REMOVE_CART'
 
-interface ProductItems {
-  name: string
-  quantity: number
-}
-export interface Cart {
-  // items: ProductItems[]
-  test: string
-}
-
-export interface CartAction {
-  type: string
-  cart: Cart | {}
-}
-
-export type DispatchType = (args: CartAction) => CartAction
-
-export const setCart = (cart: Cart) => {
-  const action: CartAction = {
+export const setCart = (cart: ICart) => {
+  const action: ICartAction = {
     type: SET_CART,
     cart,
   }
@@ -26,9 +12,12 @@ export const setCart = (cart: Cart) => {
 }
 
 export const removeCart = () => {
-  const action: CartAction = {
+  const action: ICartAction = {
     type: SET_CART,
-    cart: {},
+    cart: {
+      cart_id: '',
+      total_quantity: 0,
+    },
   }
   return action
 }

@@ -1,0 +1,31 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.toggleFilter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0 16px;
+  cursor: pointer;
+  .header {
+    font-size: 16px;
+    font-weight: 600;
+    color: $textColor;
+    line-height: 21px;
+    @include flex(center, space-between);
+    .icon {
+      cursor: pointer;
+    }
+  }
+  .content {
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: height 0.8s ease;
+  }
+  .activeFilter {
+    height: max-content;
+    opacity: 1;
+    visibility: visible;
+    transition: height 0.8s ease;
+  }
+}

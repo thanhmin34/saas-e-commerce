@@ -1,11 +1,13 @@
 'use client'
-
-import { PriceTypes } from '@interfaces/product'
+import { useSelector } from 'react-redux'
 import styles from './styles.module.scss'
+import { RootState } from '@redux/reducers'
 
-const SimplePrice = ({ price }: { price: PriceTypes }) => {
-  const { value, currency } = price
-  const renderPrice = `${value} ${currency}`
+const SimplePrice = ({ price }: { price: number }) => {
+  const configApp = useSelector((state: RootState) => state.configApp)
+  const { currency } = configApp || {}
+  const renderPrice = `${price} ${currency}`
+
   return <span className={styles.price}>{renderPrice}</span>
 }
 

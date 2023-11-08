@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
-import styles from "./styles.module.scss";
-import CategoryItem from "./CategoryItem";
-import { useSelector } from "react-redux";
-import { RootState } from "@redux/reducers";
-import { map } from "lodash";
+import React, { Fragment } from 'react'
+import styles from './styles.module.scss'
+import CategoryItem from './CategoryItem'
+import { useSelector } from 'react-redux'
+import { RootState } from '@redux/reducers'
+import { map } from 'lodash'
 
 const MegaMenu = () => {
-  const megaMenu = useSelector((state: RootState) => state.megaMenu);
+  const megaMenu = useSelector((state: RootState) => state.megaMenu)
 
   const content: React.JSX.Element = (
     <div className={`${styles.megaMenuList} main-container`}>
@@ -16,8 +16,8 @@ const MegaMenu = () => {
         </Fragment>
       ))}
     </div>
-  );
-  return <div className={`${styles.megaMenu}`}>{content}</div>;
-};
+  )
+  return <div className={`${styles.megaMenu}`}>{content}</div>
+}
 
-export default MegaMenu;
+export default MegaMenu

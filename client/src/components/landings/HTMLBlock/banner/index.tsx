@@ -1,49 +1,18 @@
-import React from 'react'
-import styles from './styles.module.scss'
 import { map } from 'lodash'
-import Link from 'next/link'
-type Props = {}
+import styles from './styles.module.scss'
+import BannerItem from './BannerItem'
 
-const bannersData = [
-  {
-    url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Category_Banner_-_home_-_EN-min_1696143670665.jpg',
-    alt: 'img',
-    href: '/product/1',
-  },
-  {
-    url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Category_Banner_-_skin_-_EN-min_1696143678876.jpg',
-    alt: 'img',
-    href: '/product/1',
-  },
-  {
-    url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Category_Banner_-_relax_-_EN-min_1696143685539.jpg',
-    alt: 'img',
-    href: '/product/1',
-  },
-  {
-    url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Category_Banner_-_ranges_-_EN-min_1696143690397.jpg',
-    alt: 'img',
-    href: '/product/1',
-  },
-  {
-    url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Category_Banner_-_gifts_-_EN-min_1696143699663.jpg',
-    alt: 'img',
-    href: '/product/1',
-  },
-  {
-    url: 'https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Category_Banner_-_hair_-_EN-min_1696143694834.jpg',
-    alt: 'img',
-    href: '/product/1',
-  },
-]
+export interface IPropsBanner {
+  src: string
+  link: string
+  alt: string
+  label: string
+}
 
-const Banner = (props: Props) => {
-  const renderBanners = map(bannersData, (item, index) => (
-    <Link href={item.href} key={index} className={styles.bannerItem}>
-      <img src={item.url} alt="" />
-    </Link>
-  ))
-  return <div className={styles.banner}>{renderBanners}</div>
+const Banner = ({ banner }: { banner: IPropsBanner[] }) => {
+  const content = map(banner, (item, index) => <BannerItem item={item} key={index} />)
+
+  return <div className={styles.banner}>{content}</div>
 }
 
 export default Banner

@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       special_price: DataTypes.JSON,
       special_to_date: DataTypes.STRING,
       special_from_date: DataTypes.STRING,
-      media_gallery: DataTypes.STRING,
+      media_gallery: DataTypes.JSON,
       quantity: DataTypes.INTEGER,
       label: DataTypes.STRING,
       type: DataTypes.STRING,

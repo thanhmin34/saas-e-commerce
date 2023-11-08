@@ -1,11 +1,34 @@
 'use client'
-import { useMemo } from 'react'
 import Button from '@components/button'
 import styles from './styles.module.scss'
+import { ProductItemInterface } from '@interfaces/product'
+import useUpdateCart from '@lib/products/useUpdateCart'
 
-const AddToCartButton = ({ className, isOutOfStock }: { className: string; isOutOfStock: boolean }) => {
+const AddToCartButton = ({
+  className,
+  isOutOfStock,
+  item,
+}: {
+  className: string
+  isOutOfStock: boolean
+  item: ProductItemInterface
+}) => {
+  const { handleAddToCart } = useUpdateCart()
+
   function onClick() {
-    console.log('!@3')
+    const { id, sku, image, price, special_price } = item || {}
+
+    handleAddToCart &&
+      handleAddToCart({
+        product: {
+          id,
+          sku,
+          image,
+          price,
+          quantity: 1,
+          special_price,
+        },
+      })
   }
 
   const renderAddToCart = (
