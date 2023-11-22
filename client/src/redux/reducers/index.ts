@@ -16,29 +16,20 @@ import { ICart, ICartAction } from '@interfaces/redux/cart'
 
 const rootReducer: Reducer<
   CombinedState<{
-    // cartData: ICart
-    // configApp: IConfigApp
-    // megaMenu: MegaMenu | {}
+    cartData: ICart
+    configApp: IConfigApp
+    megaMenu: MegaMenu | {}
     userInfo: IUserInfo
-    // productsList: IProductsList
+    productsList: IProductsList
   }>,
-  // ICartAction | ConfigAction | MegaMenuAction | IProductsListAction
-  IUserInfoAction | ISignInAction
+  ICartAction | ConfigAction | MegaMenuAction | IProductsListAction | IUserInfoAction | ISignInAction
 > = combineReducers({
-  // cartData: cartReducer,
-  // configApp: configReducer,
-  // megaMenu: megaMenuReducer,
+  cartData: cartReducer,
+  configApp: configReducer,
+  megaMenu: megaMenuReducer,
   userInfo: userInfoReducer,
-  // productsList: productsListReducer,
+  productsList: productsListReducer,
 })
-
-// const rootReducer = combineReducers({
-//   cartData: cartReducer,
-//   configApp: configReducer,
-//   megaMenu: megaMenuReducer,
-//   userInfo: userInfoReducer,
-//   productsList: productsListReducer,
-// })
 
 export default rootReducer
 

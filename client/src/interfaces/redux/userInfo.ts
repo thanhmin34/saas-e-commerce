@@ -1,6 +1,6 @@
 export interface IUserInfo {
-  userInfo: {}
-  isSignedIn: boolean
+  userInfo?: {}
+  isSignedIn?: boolean
 }
 export interface IUserInfoAction {
   type: string

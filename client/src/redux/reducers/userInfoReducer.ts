@@ -22,8 +22,8 @@ const userInfoReducer = (state = initState, action: IAction): IUserInfo => {
   switch (action.type) {
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload }
-    // case SET_IS_SIGN_IN:
-    //   return { ...state, isSignedIn: action.payload }
+    case SET_IS_SIGN_IN:
+      return { ...state, isSignedIn: !!action.payload }
     default:
       return state
   }

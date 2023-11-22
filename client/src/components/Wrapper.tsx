@@ -43,7 +43,7 @@ const Wrapper = (props: IWrapper) => {
   //* Handle clear redux data if user sign out
   useEffect(() => {
     if (!isSignedIn) {
-      dispatch(setUserInfo({}))
+      dispatch(setUserInfo({ userInfo: {} }))
       // dispatch(setWishlist(null))
     }
   }, [isSignedIn])
