@@ -10,14 +10,24 @@ import AddIcon from '@mui/icons-material/Add'
 import { BUTTON_TYPES } from '@constants/colors'
 import { useRouter } from 'next/navigation'
 import { ROUTER_PATHS } from '@constants/routerPaths'
+import { IAddProductItem } from '@interfaces/cart'
+import PriceBlock from '@components/productItem/PriceBlock'
 
-export default function AddToCartModal({ item, show, handleToggleModal }: any) {
+export default function AddToCartModal({
+  item,
+  show,
+  handleToggleModal,
+}: {
+  item: IAddProductItem
+  show: boolean
+  handleToggleModal: () => void
+}) {
   const { push } = useRouter()
   const { localizeMessage } = useIntl()
-  function renderPrice() {
-    return '123'
-  }
+  const { product } = item || {}
+  const { price, quantity, image, name } = product || {}
 
+  const special_price = 12
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -29,6 +39,19 @@ export default function AddToCartModal({ item, show, handleToggleModal }: any) {
     outline: 'none',
     // boxShadow: 24,
     borderRadius: 1,
+  }
+
+  function renderPrice() {
+    return (
+      <PriceBlock
+        className={styles.priceBlock}
+        price={price as number}
+        special_price={{
+          max_price: price as number,
+          minimum_price: special_price as number,
+        }}
+      />
+    )
   }
 
   const renderFooter = (
@@ -50,27 +73,18 @@ export default function AddToCartModal({ item, show, handleToggleModal }: any) {
   const renderInfo = (
     <div className={styles.info}>
       <div className={styles.image}>
-        <Image
-          src={
-            'https://media.9ten.cloud/media/catalog/product/cache/3a2767d19dd730d30b16d3926fb0aba4/h/a/hair_brush_-_green_-_large-min.jpg'
-          }
-          layout="fixed"
-          height={150}
-          width={150}
-          alt="img"
-        />
+        <Image src={image?.url as string} layout="fixed" height={150} width={150} alt={image?.label as string} />
       </div>
       <section className={styles.detail}>
-        <p>product.name</p>
+        <p>{name || ''}</p>
         <section className={styles.miniDetail}>
           <div className={styles.line}>
-            <p className={styles.label}>{localizeMessage('Price')}</p>
-            {/* {renderPrice()} */}
-            550000
+            <p className={styles.label}>{localizeMessage('Price')}:</p>
+            {renderPrice() || 0}
           </div>
           <div className={styles.line}>
             <p className={styles.label}>{localizeMessage('Quantity')}:</p>
-            <p className={styles.text}>quantity</p>
+            <p className={styles.text}>{quantity || 0}</p>
           </div>
         </section>
       </section>

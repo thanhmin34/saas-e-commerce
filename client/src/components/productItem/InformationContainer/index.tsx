@@ -20,7 +20,13 @@ const InformationContainer = ({ item }: { item: ProductItemInterface }) => {
           <div className={styles.informationContainerTop}>
             <ProductName productName={name} />
             <div className={styles.priceContainer}>
-              <PriceBlock price={price} special_price={special_price} />
+              <PriceBlock
+                price={price}
+                special_price={{
+                  max_price: price as number,
+                  minimum_price: special_price as number,
+                }}
+              />
             </div>
           </div>
           <BrandName brandName={brand_name} />
@@ -32,7 +38,13 @@ const InformationContainer = ({ item }: { item: ProductItemInterface }) => {
         <ProductName productName={name} />
         <BrandName brandName={brand_name} />
         <div className={styles.priceContainer}>
-          <PriceBlock price={price} special_price={special_price} />
+          <PriceBlock
+            price={price}
+            special_price={{
+              max_price: price as number,
+              minimum_price: special_price as number,
+            }}
+          />
         </div>
       </div>
     )

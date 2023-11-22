@@ -1,4 +1,5 @@
 @import '@scss/mixins';
+@import '@scss/variables';
 .rightActions {
   display: flex;
   gap: 18px;
@@ -10,5 +11,25 @@
       font-size: 14px;
       font-weight: normal;
     }
+  }
+}
+.icon {
+  position: relative;
+  @include flex(center, center);
+  .qty {
+    @include flex(center, center);
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    top: -8px;
+    right: -8px;
+    text-align: center;
+    color: $white;
+    border-radius: 50%;
+    background: $redThree;
+    font-size: 10px;
+    z-index: $zIndexDropdown;
   }
 }

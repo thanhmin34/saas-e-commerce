@@ -17,6 +17,12 @@ export const removeCart = () => {
     cart: {
       cart_id: '',
       total_quantity: 0,
+      price: null,
+      payment_methods: null,
+      shipping_method: null,
+      shipping_address: null,
+      products: [],
+      discount: null,
     },
   }
   return action

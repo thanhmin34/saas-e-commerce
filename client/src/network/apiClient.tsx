@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 import { BACKEND_URL } from '@utils/runtimeEnvironment'
 import STORAGE_KEYS from '@constants/storageKeys'
-import { ROUTER_PATHS } from '@constants/routerPaths'
 
 const apiClient = () => {
-  const token = localStorage.getItem(STORAGE_KEYS.TOKEN)
+  const token = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.TOKEN) : null
+
   const reqInstance = axios.create({
     baseURL: BACKEND_URL || 'http://localhost:5000/',
     timeout: 60000,
@@ -13,10 +13,6 @@ const apiClient = () => {
       ...(token && { Authorization: `Bearer ${token}` }),
     },
   })
-
-  const unAuthorized = (status: number | undefined) => {
-    return status === 401
-  }
 
   const get = async (uri: string, config: AxiosRequestConfig<any> | undefined = {}) => {
     try {
@@ -36,9 +32,9 @@ const apiClient = () => {
     }
   }
 
-  const put = async (uri: string, params: any, config: AxiosRequestConfig<any> | undefined) => {
+  const put = async (uri: string, params?: unknown, config?: AxiosRequestConfig<any> | undefined) => {
     try {
-      const response = await reqInstance.patch(uri, params, config)
+      const response = await reqInstance.put(uri, params, config)
       return response?.data
     } catch (error) {
       console.error(error)
@@ -46,7 +42,7 @@ const apiClient = () => {
     }
   }
 
-  const remove = async (uri: string, config: AxiosRequestConfig<any> | undefined) => {
+  const remove = async (uri: string, config?: AxiosRequestConfig<any> | undefined) => {
     try {
       const response = await reqInstance.delete(uri, config)
       return response?.data

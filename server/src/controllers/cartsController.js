@@ -14,15 +14,17 @@ const {
   CartItem,
   ShippingAddress,
   Products,
+  User,
 } = require("../models");
 const { mergeProducts } = require("../utils/mergeProducts");
+const { getToken } = require("../utils/getToken");
 
 const cartSchema = Joi.object({
   cart_id: Joi.string().required(),
 });
 
 const mergeCartSchema = Joi.object({
-  destination_cart_id: Joi.string().required(),
+  // destination_cart_id: Joi.string().required(),
   source_cart_id: Joi.string().required(),
 });
 
@@ -31,27 +33,53 @@ const validateFieldBySchema = (data, schema) => {
 };
 
 const mergeCart = asyncHandler(async (req, res) => {
-  const { body } = req || {};
+  const { body, headers } = req || {};
   const { destination_cart_id, source_cart_id } = body || {};
   try {
-    const { error } = validateFieldBySchema(body, mergeCartSchema);
-    if (error) {
-      return notificationMessageError(res, error.details[0].message);
-    }
+    // const { error } = validateFieldBySchema(body, mergeCartSchema);
+    // if (error) {
+    //   return notificationMessageError(res, error.details[0].message);
+    // }
 
     const sourceCart = await Cart.findOne({
       where: {
         cart_id: source_cart_id,
       },
-      attributes: ["id"],
+      attributes: ["id", "cart_id"],
       include: {
         model: CartItem,
         as: "listCartItem",
         attributes: {
-          exclude: ["createdAt", "updatedAt", "cart_id"],
+          exclude: ["createdAt", "updatedAt"],
         },
       },
     });
+    if (!sourceCart) {
+      return notificationMessageError(res, "Cannot merge cart");
+    }
+
+    if (!destination_cart_id) {
+      const token = getToken(headers);
+      const user = await User.findOne({
+        where: {
+          token,
+        },
+        attributes: ["token", "id"],
+      });
+
+      if (!user)
+        return notificationMessageError(res, {
+          message: "Internal server error",
+        });
+
+      sourceCart.customer_id = user?.id;
+      await sourceCart.save();
+
+      return notificationMessageSuccess(res, {
+        message: "Ok",
+        newCartId: sourceCart?.cart_id,
+      });
+    }
 
     const destinationCart = await Cart.findOne({
       where: {
@@ -67,7 +95,7 @@ const mergeCart = asyncHandler(async (req, res) => {
       },
     });
 
-    if (!destinationCart || !sourceCart) {
+    if (!sourceCart || !destinationCart) {
       return notificationMessageError(res, "Cannot merge cart");
     }
 
@@ -108,8 +136,7 @@ const mergeCart = asyncHandler(async (req, res) => {
 
     return notificationMessageSuccess(res, {
       message: "Ok",
-      cart_id: newCartId,
-      newCartItem,
+      newCartId,
     });
   } catch (error) {
     return notificationMessageError(res, error);
@@ -141,7 +168,14 @@ const getCartDetails = asyncHandler(async (req, res) => {
             {
               model: Products,
               as: "productCartItem",
-              attributes: ["name", "sku", "image"],
+              attributes: [
+                "name",
+                "sku",
+                "image",
+                "price",
+                "special_price",
+                "special_from_date",
+              ],
             },
           ],
         },
@@ -163,7 +197,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
           model: Discount,
           as: "cartDiscount",
           attributes: {
-            exclude: [...fieldExclude, "start_date", "end_date", "code"],
+            exclude: [...fieldExclude],
           },
         },
         {
@@ -182,10 +216,11 @@ const getCartDetails = asyncHandler(async (req, res) => {
             return (acc += cur?.price);
           }, 0)
         : 0;
+
     const tax_amount = 0.05;
     const total_excl = +(0.05 * +total).toFixed(2);
     const shipping_amount = lodash.get(cart, "cartShippingMethods.price", 0);
-    const discount_amount = lodash.get(cart, "cartDiscount.value", 0);
+    const discount_amount = lodash.get(cart, "cartDiscount.value", 0) * total;
     const currency = "USD";
     const totalPayment =
       (total + tax_amount + shipping_amount) * discount_amount;
@@ -194,13 +229,26 @@ const getCartDetails = asyncHandler(async (req, res) => {
       const products =
         cart?.listCartItem?.length > 0
           ? cart?.listCartItem.map((item) => {
-              const { productCartItem, product_id, quantity, price, options } =
+              const { productCartItem, product_id, quantity, options } =
                 item || {};
-              const { name, sku, image } = productCartItem || {};
+
+              const {
+                name,
+                sku,
+                image,
+                price,
+                special_price,
+                special_from_date,
+              } = productCartItem || {};
+              const currentDate = new Date();
+
+              const newPrice = special_price
+                ? special_price * quantity
+                : price * quantity;
               return {
                 product_id,
                 quantity,
-                price,
+                price: newPrice,
                 options,
                 name,
                 sku,
@@ -214,17 +262,18 @@ const getCartDetails = asyncHandler(async (req, res) => {
           total_quantity: cart?.listCartItem.length || 0,
           price: {
             total,
-            total_excl,
+            total_excl: total_excl ? +total_excl.toFixed(2) : 0,
             total_payment: total ? +totalPayment.toFixed(2) : 0,
             tax_amount,
             shipping_amount,
-            discount_amount,
+            discount_amount: discount_amount ? +discount_amount.toFixed(2) : 0,
             currency,
           },
           payment_methods: cart?.cartPaymentMethod,
           shipping_method: cart?.cartShippingMethods,
           shipping_address: cart?.cartShippingAddress,
           products,
+          discount: cart?.cartDiscount,
         },
       });
     }
@@ -263,6 +312,7 @@ const checkCartIsAuth = asyncHandler(async (req, res) => {
 
 const createCart = asyncHandler(async (req, res) => {
   try {
+    console.log("!@3");
     const cart_id = generateCartId();
     const cart = await Cart.create({ cart_id });
     if (cart?.id) {

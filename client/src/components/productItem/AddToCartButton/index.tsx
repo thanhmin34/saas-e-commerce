@@ -16,7 +16,7 @@ const AddToCartButton = ({
   const { handleAddToCart } = useUpdateCart()
 
   function onClick() {
-    const { id, sku, image, price, special_price } = item || {}
+    const { id, sku, image, price, special_price, name } = item || {}
 
     handleAddToCart &&
       handleAddToCart({
@@ -27,6 +27,7 @@ const AddToCartButton = ({
           price,
           quantity: 1,
           special_price,
+          name,
         },
       })
   }

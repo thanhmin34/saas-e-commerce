@@ -1,10 +1,15 @@
 'use client'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import LocalStorageManager from '@utils/simplePersistence'
 import STORAGE_KEYS from '@constants/storageKeys'
-import { TWE } from '@constants/constants'
+import { TWE } from '@constants/variables'
+import { useDispatch } from 'react-redux'
+import { setIsSignIn } from '@redux/actions/userInfoAction'
+
 const TTL = 60 * 60
+
 const useAuth = () => {
+  const dispatch = useDispatch()
   const storage = new LocalStorageManager()
   let jsonToken =
     typeof window !== 'undefined'
@@ -58,11 +63,7 @@ const useAuth = () => {
   }, [now, timeStored, TTL, handleSignOut])
 
   useEffect(() => {
-    if (timeStored) {
-      setIsSignedIn(true)
-    } else {
-      setIsSignedIn(false)
-    }
+    dispatch(setIsSignIn(!!timeStored))
   }, [timeStored])
 
   return { isSignedIn }

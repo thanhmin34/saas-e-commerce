@@ -1,0 +1,200 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.product {
+  display: grid;
+  padding: 30px 0px;
+  border-bottom: $borderThree;
+
+  .errorMessage {
+    font-size: 14px;
+    color: $redOne;
+    font-weight: 500;
+    line-height: 19px;
+    margin: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+    min-height: 30px;
+  }
+
+  .row {
+    align-items: flex-start;
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 4.9fr 2.1fr 2.1fr;
+    // grid-gap: 30px;
+    // grid-template-areas: 'image details';
+    // grid-template-columns: 100px 1fr;
+
+    .productImageContainer {
+      height: 100%;
+    }
+
+    .productDetails {
+      @media (max-width: 767px) {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+      }
+
+      height: 100%;
+      line-height: 1.5;
+      font-weight: 500;
+      line-height: 22.4px;
+
+      .name {
+        position: relative;
+        grid-area: name;
+        flex-direction: column;
+        @include flex(flex-start, space-between);
+
+        .productName {
+          @include text-overflow(2);
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 20.8px;
+          color: $black;
+        }
+
+        .remaining {
+          margin-top: 5px;
+          font-size: 12px;
+          font-weight: 500;
+          color: crimson;
+        }
+
+        .buttonContainer {
+          display: flex;
+          flex-direction: row;
+
+          .productButton {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 19.6px;
+            color: $black;
+            margin-inline-end: 15px;
+            background: none;
+            border: 0;
+            font-size: 100%;
+            padding: 0;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-appearance: none;
+
+            .content {
+              font-size: 13px;
+              font-weight: 300;
+              line-height: 16.9px;
+
+              @include flex(center, center);
+              gap: 0.35rem;
+              grid-auto-flow: column;
+
+              justify-items: center;
+
+              img {
+                display: flex;
+                margin-inline-end: 8px;
+              }
+
+              button {
+                height: 20px;
+                display: flex;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+
+      .quantity {
+        grid-area: quantity;
+        @include flex(center, center);
+        font-weight: 500;
+        line-height: 22.4px;
+        color: $black;
+
+        .quantityContainer {
+          direction: ltr;
+          display: grid;
+          grid-template-columns: 30px 40px 30px;
+          border: none;
+
+          button,
+          input {
+            margin: auto;
+            display: inline;
+            width: 30px;
+            height: 30px;
+            border: $borderOne;
+            background: $white;
+            padding: 0;
+          }
+
+          button {
+            &:active {
+              background: $blue;
+            }
+
+            &:hover {
+              border-color: $black;
+            }
+
+            &:disabled {
+              background: $white;
+              color: #adb5bd;
+              border: 1px solid #adb5bd;
+            }
+
+            .buttonIconContainer {
+              width: 20px;
+              height: 20px;
+              padding: 0;
+              margin: auto;
+            }
+          }
+
+          input {
+            text-align: center;
+          }
+
+          input[type='number']::-webkit-inner-spin-button,
+          input[type='number']::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
+      }
+
+      .subtotal {
+        @include flex(flex-end, center);
+        flex-direction: column;
+        font-size: 13px;
+        width: 160px;
+
+        .specialPrice {
+          color: $specialPriceColor;
+        }
+
+        .regularPrice {
+          color: $greyFour;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}
+.colProductName {
+  display: flex;
+  gap: 10px;
+}
+.priceSubtotal {
+  font-weight: 500;
+  line-height: 20.8px;
+  display: flex;
+  justify-content: flex-end !important;
+  font-weight: 500;
+  line-height: 22.4px;
+  color: $black;
+}

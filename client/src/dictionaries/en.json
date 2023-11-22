@@ -8,5 +8,13 @@
   "Price": "Price",
   "Filters": "Filters",
   "Shopping Cart": "Shopping Cart",
-  "There are no items in your cart.": "There are no items in your cart."
+  "There are no items in your cart.": "There are no items in your cart.",
+  "Summary": "Summary",
+  "{value} items": "{value} items",
+  "Cart Subtotal (Inc VAT)": "Cart Subtotal (Inc VAT)",
+  "Shipping (Inc VAT)": "Shipping (Inc VAT)",
+  "Order Total": "Order Total",
+  "Apply discount code": "Apply discount code",
+  "Remove": "Remove",
+  "Submitting": "Submitting"
 }

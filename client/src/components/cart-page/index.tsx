@@ -4,7 +4,10 @@ import styles from './styles.module.scss'
 import dynamic from 'next/dynamic'
 import Loading from '@components/loading'
 import useIntl from '@hooks/useIntl'
-import CartItemsContainer from './cart-item'
+import CartItemsContainer from './cart-item-container'
+import CartCalculationArea from './cart-calculation-area'
+import { useSelector } from 'react-redux'
+import { RootState } from '@redux/reducers'
 
 const CartBanner = dynamic(() => import('./cart-banner'), {
   loading: () => <Loading />,
@@ -15,6 +18,8 @@ const Cart = () => {
   const [isQuantityEditing, setIsQuantityEditing] = useState(false)
 
   const { localizeMessage } = useIntl()
+  const cart = useSelector((state: RootState) => state.cartData)
+  const { total_quantity } = cart || {}
   return (
     <div className={`main-page ${styles.cartPage}`}>
       <CartBanner />
@@ -24,9 +29,7 @@ const Cart = () => {
       <div className={styles.body}>
         <CartItemsContainer />
         {/* {Number(totalQuantity) !== 0 && <CartActionMobile />} */}
-        {/* {totalQuantity > 0 && (
-          <CartCalculationArea isQuantityEditing={isQuantityEditing} isNotEnoughQuantity={isNotEnoughQuantity} />
-        )} */}
+        {total_quantity > 0 && <CartCalculationArea />}
       </div>
       {/* <div className={styles.relatedProductContainer}>
         {relatedProducts && Array.isArray(get(relatedProducts, 'items')) && (

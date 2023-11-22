@@ -11,6 +11,7 @@ import Loading from '@components/loading'
 import store from '@redux/store'
 import { AppProvider } from '@context/appContextProvider'
 import CartContextProvider from '@context/cartContextProvider'
+import Wrapper from '@components/Wrapper'
 
 const queryClient = new QueryClient()
 
@@ -30,15 +31,17 @@ const ReduceProvider = ({ children }: { children: ReactNode }) => {
       <Provider store={store}>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <ToastContainer />
-        <CartContextProvider>
-          <AppProvider>
-            <Suspense fallback={<Loading />}>
-              <Header />
-            </Suspense>
-            <main className="main main-container">{children}</main>
-            <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
-          </AppProvider>
-        </CartContextProvider>
+        <Wrapper>
+          <CartContextProvider>
+            <AppProvider>
+              <Suspense fallback={<Loading />}>
+                <Header />
+              </Suspense>
+              <main className="main main-container">{children}</main>
+              <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
+            </AppProvider>
+          </CartContextProvider>
+        </Wrapper>
       </Provider>
     </QueryClientProvider>
   )

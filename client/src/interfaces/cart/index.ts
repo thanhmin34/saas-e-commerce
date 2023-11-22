@@ -1,5 +1,3 @@
-import { RegularPriceTypes } from '@interfaces/product'
-
 export interface IAddProductItem {
   product: {
     id: number
@@ -11,9 +9,23 @@ export interface IAddProductItem {
     }
     price?: number
     special_price?: number | null | undefined
+    name?: string
   }
 }
 
 export interface IAddProductToCart extends IAddProductItem {
   cart_id: string
+}
+
+export interface ICartItemForCartPage {
+  product_id: number
+  quantity: number
+  price: number
+  options: [] | null
+  name: string
+  sku: string
+  image: {
+    label: string
+    url: string
+  }
 }

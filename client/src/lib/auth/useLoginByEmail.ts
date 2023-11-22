@@ -6,7 +6,7 @@ import { useMutation } from 'react-query'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { APIS } from '@constants/apis'
-import { TTL } from '@constants/constants'
+import { TTL } from '@constants/variables'
 import { ROUTER_PATHS } from '@constants/routerPaths'
 import STORAGE_KEYS from '@constants/storageKeys'
 import { zodResolver } from '@hookform/resolvers/zod'

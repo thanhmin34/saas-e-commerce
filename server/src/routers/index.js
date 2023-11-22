@@ -14,6 +14,7 @@ const configRouter = require("./configRouter.js");
 const iconsRouter = require("./icons.js");
 const categoryRouter = require("./categoryRouter.js");
 const productInCategoryRouter = require("./productInCategoryRouter.js");
+const seoRouter = require("./seoRouter.js");
 
 const renderRouters = (app) => {
   const listRouters = [
@@ -33,6 +34,7 @@ const renderRouters = (app) => {
     iconsRouter,
     categoryRouter,
     productInCategoryRouter,
+    seoRouter,
   ];
 
   listRouters.map((item) => app.use("/", item));

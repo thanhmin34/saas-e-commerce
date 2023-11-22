@@ -7,7 +7,7 @@ import { IProductsList } from '@interfaces/redux/product'
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 import { IFilterProduct, ISortProduct } from '@interfaces/product/productList'
 import { SORT_DEFAULTS } from '@constants/products'
-import { DEFAULT_FILTER_BY_PRODUCTS, FILTER_BY_PRODUCTS } from '@constants/constants'
+import { DEFAULT_FILTER_BY_PRODUCTS, FILTER_BY_PRODUCTS } from '@constants/variables'
 
 const ProductListContext = createContext<{
   productsData: IProductsList | {}

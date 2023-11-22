@@ -1,5 +1,5 @@
-import { IKeyofFilterByProducts } from '@interfaces/global/global'
-import { FILTER_BY_PRODUCTS } from './../constants/constants'
+import { IKeyofFilterByProducts } from '@interfaces/global'
+import { FILTER_BY_PRODUCTS } from '../constants/variables'
 import { IFilterProduct } from '@interfaces/product/productList'
 import axios, { AxiosError } from 'axios'
 import { isEmpty, map } from 'lodash'

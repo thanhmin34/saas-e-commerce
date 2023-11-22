@@ -169,3 +169,7 @@
   top: 4px;
   transform: rotate(45deg);
 }
+.priceBlock {
+  @include flex(center, center);
+  margin: 0 !important;
+}

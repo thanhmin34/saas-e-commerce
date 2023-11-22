@@ -74,12 +74,12 @@
     background: $white;
   }
   .dropdown-menu::-webkit-scrollbar-thumb:horizontal {
-    background-color: $grey--thirtyThree;
+    background-color: $greyFour;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 12px;
   }
   .dropdown-menu::-webkit-scrollbar-thumb:vertical {
-    background: $grey--thirtyThree;
+    background: $greyFour;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 12px;
   }
@@ -90,7 +90,7 @@
     display: table;
     clear: both;
 
-    content: "";
+    content: '';
   }
 }
 
@@ -209,7 +209,7 @@
 // mega menu
 
 @mixin megaMenuHighlight {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   width: 0;

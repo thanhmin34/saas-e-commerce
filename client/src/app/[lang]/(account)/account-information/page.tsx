@@ -1,9 +1,11 @@
 'use client'
-import useAuth from '@hooks/useAuth'
+
+import { RootState } from '@redux/reducers'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const AccountInformationPage = () => {
-  // useAuth()
+  const user = useSelector((state: RootState) => state.userInfo)
 
   return <div>AccountInformationPage</div>
 }

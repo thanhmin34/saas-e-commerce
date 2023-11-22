@@ -1,0 +1,67 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.name {
+  position: relative;
+  grid-area: name;
+  flex-direction: column;
+  @include flex(flex-start, space-between);
+
+  .productName {
+    @include text-overflow(2);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20.8px;
+    color: $black;
+  }
+
+  .remaining {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: crimson;
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+
+    .productButton {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 19.6px;
+      color: $black;
+      margin-inline-end: 15px;
+      background: none;
+      border: 0;
+      font-size: 100%;
+      padding: 0;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      .content {
+        font-size: 13px;
+        font-weight: 300;
+        line-height: 16.9px;
+
+        @include flex(center, center);
+        gap: 0.35rem;
+        grid-auto-flow: column;
+
+        justify-items: center;
+
+        img {
+          display: flex;
+          margin-inline-end: 8px;
+        }
+
+        button {
+          height: 20px;
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}

@@ -7,7 +7,7 @@ import productsListReducer from './productsListReducer'
 
 //Redux
 import { CombinedState, Reducer, combineReducers } from 'redux'
-import { IUserInfo, IUserInfoAction } from '@interfaces/redux/userInfo'
+import { ISignInAction, IUserInfo, IUserInfoAction } from '@interfaces/redux/userInfo'
 import { IProductsListAction, IProductsList } from '@interfaces/redux/product'
 
 import { ConfigAction, IConfigApp } from '@interfaces/redux/config'
@@ -22,7 +22,7 @@ const rootReducer: Reducer<
     userInfo: IUserInfo
     productsList: IProductsList
   }>,
-  ICartAction | ConfigAction | MegaMenuAction | IUserInfoAction | IProductsListAction
+  ICartAction | ConfigAction | MegaMenuAction | IProductsListAction | IUserInfoAction | ISignInAction
 > = combineReducers({
   cartData: cartReducer,
   configApp: configReducer,

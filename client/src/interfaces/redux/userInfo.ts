@@ -1,12 +1,13 @@
 export interface IUserInfo {
-  userInfo: {}
+  userInfo?: {}
+  isSignedIn?: boolean
 }
 export interface IUserInfoAction {
   type: string
-  userInfo: IUserInfo
+  payload: IUserInfo
 }
 
 export interface ISignInAction {
   type: string
-  isSignIn: boolean
+  payload: boolean
 }

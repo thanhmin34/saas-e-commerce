@@ -45,24 +45,39 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 const getUserInformation = asyncHandler(async (req, res) => {
-  const { params } = req || {};
-  const { userId } = params || {};
+  const { headers } = req || {};
 
   try {
-    const user = await User.findByPk(userId, {
-      attributes: {
-        exclude: ["token", "password", "createdAt", "updatedAt"],
+    const token = getToken(headers);
+
+    const user = await User.findOne({
+      where: {
+        token,
       },
-      // include: [
-      //   {
-      //     model: Cart,
-      //     as: "userCart",
-      //     attributes: ["cart_id"],
-      //   },
-      // ],
+      attributes: {
+        exclude: ["updatedAt", "createdAt", "password", "address"],
+      },
+      include: [
+        {
+          model: Cart,
+          as: "userCart",
+          attributes: ["cart_id"],
+        },
+      ],
     });
+
+    const { firstName, lastName, id, email, phoneNumber, userCart } =
+      user || {};
+
     return notificationMessageSuccess(res, {
-      user,
+      user: {
+        firstName,
+        lastName,
+        id,
+        email,
+        phoneNumber,
+      },
+      cart_id: userCart?.cart_id,
     });
   } catch (error) {
     return notificationMessageError(res, "Internal server error");
@@ -72,7 +87,7 @@ const getUserInformation = asyncHandler(async (req, res) => {
 const registerByEmail = asyncHandler(async (req, res) => {
   const { body } = req || {};
   const { email, password, firstName, lastName } = body || {};
-  console.log("body", body);
+
   try {
     const { error } = validateFieldByCreateUser(body, createUserSchema);
     if (error) {

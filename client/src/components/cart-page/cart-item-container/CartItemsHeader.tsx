@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../stylesCartPage.module.scss'
+import styles from './styles.module.scss'
 import useIntl from '@hooks/useIntl'
 
 const HEADER_CART_PAGE = [
@@ -22,7 +22,9 @@ const CartItemsHeader = () => {
   return (
     <div className={styles.header}>
       {HEADER_CART_PAGE.map((i) => (
-        <span className={i.className}>{localizeMessage(i.title)}</span>
+        <span key={i.title} className={i.className}>
+          {localizeMessage(i.title)}
+        </span>
       ))}
     </div>
   )

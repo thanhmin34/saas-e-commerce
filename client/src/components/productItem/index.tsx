@@ -7,18 +7,18 @@ import AddToCartButton from './AddToCartButton/index'
 import WishlistButton from '@components/Wishlist/WishlistButton'
 import ProductRatingBlock from './ProductRatingBlock'
 import { ProductItemInterface } from '@interfaces/product'
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import Link from 'next/link'
 
 const ProductItem = ({ item }: { item: ProductItemInterface }) => {
-  const { image, rating_summary, review_count, out_of_stock } = item || {}
+  const { image, rating_summary, review_count, out_of_stock, url_path } = item || {}
   const { url, label } = image || {}
 
   return (
     <div className={styles.productItemContainer}>
       <div className={styles.productItem}>
-        <div className={styles.mainContainer}>
+        <Link href={`/${url_path}`} className={styles.mainContainer}>
           <ProductImage className={styles.imageContainer} url={url} label={label} />
-        </div>
+        </Link>
         <InformationContainer item={item} />
         <div className={styles.actions}>
           <AddToCartButton

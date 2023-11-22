@@ -2,7 +2,7 @@ import { map } from 'lodash'
 import useIntl from '@hooks/useIntl'
 import React, { Fragment, useCallback } from 'react'
 import styles from './styles.module.scss'
-import { SORT_PRODUCTS_OPTION } from '@constants/constants'
+import { SORT_PRODUCTS_OPTION } from '@constants/variables'
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { useProductsListContext } from '@context/productsListContext'
 type Props = {}

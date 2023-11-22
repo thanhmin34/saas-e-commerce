@@ -1,0 +1,59 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.quantityContainer {
+  direction: ltr;
+  display: grid;
+  grid-template-columns: 30px 40px 30px;
+  border: none;
+
+  button,
+  input {
+    margin: auto;
+    display: inline;
+    width: 30px;
+    height: 30px;
+    border: $borderOne;
+    background: $white;
+    padding: 0;
+  }
+
+  button {
+    @include flex(center, center);
+    cursor: pointer;
+    // &:active {
+    //   background: $blue;
+    // }
+
+    // &:hover {
+    //   border-color: $black;
+    // }
+
+    &:disabled {
+      background: $white;
+      color: $borderThree;
+      // border: #adb5bd;
+    }
+
+    .buttonIconContainer {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin: auto;
+    }
+  }
+
+  input {
+    text-align: center;
+    &:focus {
+      outline: none !important;
+      border-color: $borderOne;
+    }
+  }
+
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

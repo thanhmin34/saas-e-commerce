@@ -29,7 +29,8 @@ const useCart = () => {
     onSuccess(data) {
       if ('cart' in data) {
         console.log('data', data)
-        dispatch(setCart(data.cart))
+        const { cart } = data || {}
+        dispatch(setCart({ ...cart, total_quantity: cart?.products?.length || 0 }))
       }
     },
     enabled: !!refCart.current,

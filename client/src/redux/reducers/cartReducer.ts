@@ -17,6 +17,7 @@ const initState: ICart = {
   shipping_method: null,
   shipping_address: null,
   products: [],
+  discount: null,
 }
 
 const cartReducer = (state = initState, action: ICartAction) => {

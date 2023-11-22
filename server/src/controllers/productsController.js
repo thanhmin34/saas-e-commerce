@@ -34,10 +34,12 @@ const validateField = (data, schema) => {
 const getProductsDetails = asyncHandler(async (req, res) => {
   const { params } = req || {};
   const { productSku } = params || {};
-
+  console.log("productSku", productSku);
+  const sku = productSku ? productSku.replace(".html", "") : "";
   try {
     const productDetail = await Products.findOne({
-      where: { sku: productSku },
+      where: { sku },
+
       include: [
         {
           model: ProductsVariations,
@@ -54,8 +56,48 @@ const getProductsDetails = asyncHandler(async (req, res) => {
       ],
     });
 
+    const {
+      id,
+      sku: productSku,
+      name,
+      description,
+      price,
+      special_price,
+      special_to_date,
+      special_from_date,
+      media_gallery,
+      quantity,
+      label,
+      type,
+      image,
+      seo,
+      brand,
+      wishlist_id,
+      url_path,
+      ProductsChildren,
+      // Categories,
+    } = productDetail || {};
     return notificationMessageSuccess(res, {
-      product: productDetail,
+      product: {
+        id,
+        sku: productSku,
+        name,
+        description,
+        price,
+        special_price,
+        special_to_date,
+        special_from_date,
+        media_gallery: JSON.parse(media_gallery),
+        quantity,
+        label,
+        type,
+        image: JSON.parse(image),
+        seo,
+        brand,
+        wishlist_id,
+        url_path,
+        // category: Categories,
+      },
     });
   } catch (error) {
     return notificationMessageSuccess(res, {
