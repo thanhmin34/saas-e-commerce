@@ -7,7 +7,7 @@ productCartRouter.put(
   "/product-cart",
   productCartController.updateProductToCart
 );
-productCartRouter.put(
+productCartRouter.delete(
   "/delete-product-cart",
   productCartController.deleteProductToCart
 );

@@ -28,11 +28,11 @@ const getAllDiscounts = asyncHandler(async (req, res) => {
 
 const addDiscount = asyncHandler(async (req, res) => {
   const { body } = req || {};
-  const { cart_id, discount } = body || {};
+  const { cart_id, code } = body || {};
   try {
     const discountItem = await Discount.findOne({
       where: {
-        code: discount,
+        code: code,
       },
     });
 
@@ -61,8 +61,8 @@ const addDiscount = asyncHandler(async (req, res) => {
 });
 
 const removeDiscount = asyncHandler(async (req, res) => {
-  const { body } = req || {};
-  const { cart_id } = body || {};
+  const { body, query } = req || {};
+  const { cart_id } = query || {};
 
   try {
     const newCart = await Cart.update(

@@ -6,6 +6,11 @@ const ROUTER_PATHS = {
   TERM_CONDITION: '/',
   ACCOUNT_INFORMATION: '/account-information',
   CART: '/cart',
+  CHECK_OUT: '/check-out',
+  CATEGORY: '/category',
+  WISH_LIST: '/wish-list',
 }
 
-export { ROUTER_PATHS }
+const ROUTER_AUTH = ['/check-out', '/account-information']
+
+export { ROUTER_PATHS, ROUTER_AUTH }

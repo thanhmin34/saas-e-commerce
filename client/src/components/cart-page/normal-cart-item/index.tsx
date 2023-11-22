@@ -14,7 +14,7 @@ type Props = {
 const NormalCartItem = (props: Props) => {
   const { item } = props || {}
 
-  const { image, quantity, price } = item || {}
+  const { image, quantity, price, product_id } = item || {}
 
   return (
     <li className={styles.product}>
@@ -28,6 +28,7 @@ const NormalCartItem = (props: Props) => {
           <div className={styles.quantity}>
             <QuantityContainer
               currentQuantity={quantity}
+              productId={product_id}
               // setIsQuantityEditing={setIsQuantityEditing}
               // adjustQuantity={adjustQuantity}
               // increaseQuantity={increaseQuantity}

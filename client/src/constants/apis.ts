@@ -10,4 +10,10 @@ export const APIS = {
   MERGE_CART: 'merge-cart',
   CHECK_CART_IS_AUTH: 'check-cart-auth',
   ADD_TO_CART: 'product-cart',
+  REMOVE_PRODUCT_TO_CART: 'delete-product-cart',
+  ADD_COUPON: 'add-coupon',
+  REMOVE_COUPON: 'remove-coupon',
+  PRODUCTS: 'products',
+  SEO_PAGES: 'seo-pages',
+  SEO_PRODUCT: 'seo-product',
 }

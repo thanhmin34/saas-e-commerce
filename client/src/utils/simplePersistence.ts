@@ -30,7 +30,6 @@ export default class LocalStorageManager {
       }
       const values = JSON.parse(serializedValue)
       const { ttl, timeStored } = values
-      console.log('timeout', now - timeStored > ttl * 1000)
 
       if ('ttl' in values && ttl && now - timeStored > ttl * 1000) {
         localStorage.removeItem(key)

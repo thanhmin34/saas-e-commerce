@@ -22,7 +22,9 @@ const CartItemsHeader = () => {
   return (
     <div className={styles.header}>
       {HEADER_CART_PAGE.map((i) => (
-        <span className={i.className}>{localizeMessage(i.title)}</span>
+        <span key={i.title} className={i.className}>
+          {localizeMessage(i.title)}
+        </span>
       ))}
     </div>
   )

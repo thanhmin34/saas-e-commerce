@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/cli": "^12.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@formatjs/intl-localematcher": "^0.4.2",
@@ -23,9 +24,14 @@
     "@types/react-dom": "18.2.7",
     "@types/react-image-gallery": "^1.2.2",
     "@types/react-slick": "^0.23.10",
+    "aws-amplify": "^5.3.12",
+    "aws-sdk": "^2.1494.0",
     "axios": "^1.5.1",
     "html-react-parser": "^4.2.5",
     "lodash": "^4.17.21",
+    "mapbox-gl": "^2.15.0",
+    "maplibre-gl": "^3.6.0",
+    "maplibre-gl-js-amplify": "^3.1.0",
     "negotiator": "^0.6.3",
     "next": "13.4.19",
     "react": "18.2.0",
@@ -37,11 +43,13 @@
     "react-image-gallery": "^1.3.0",
     "react-input-mask": "^2.0.4",
     "react-loading": "^2.0.3",
+    "react-map-gl": "^7.1.6",
     "react-query": "^3.39.3",
     "react-range": "^1.8.14",
     "react-redux": "^8.1.3",
     "react-slick": "^0.29.0",
     "react-toastify": "^9.1.3",
+    "reading-time": "^1.5.0",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
@@ -51,6 +59,10 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/react-input-mask": "^3.0.4"
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.0",
+    "@types/react-input-mask": "^3.0.4",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
   }
 }

@@ -9,6 +9,7 @@ export interface IAddProductItem {
     }
     price?: number
     special_price?: number | null | undefined
+    name?: string
   }
 }
 

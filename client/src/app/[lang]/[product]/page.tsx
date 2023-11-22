@@ -1,20 +1,46 @@
 import React from 'react'
 
+import dynamic from 'next/dynamic'
+import type { Metadata, ResolvingMetadata } from 'next'
+
+import Loading from '@components/loading'
+import { PropsPages } from '@interfaces/global'
+import { getProductDetails } from '@lib/products/useProductDetails'
+import { IProductDetails, ISeoProduct } from '@interfaces/product/productDetails'
+import { get } from 'lodash'
+import { HOST } from '@constants/variables'
+
+const ProductDetails = dynamic(() => import('@components/products'), {
+  loading: () => <Loading />,
+  ssr: true,
+})
+
 type Props = {
-  params: {
-    lang: string
-    product: string
+  params: { product: string; lang: string }
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  // fetch data
+  const responsive: { product: IProductDetails } = await getProductDetails({ productSku: params?.product })
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: get(responsive, 'product.name', ''),
+    keywords: get(responsive, 'product.name', ''),
+    description: get(responsive, 'product.name', ''),
+    openGraph: {
+      images: [get(responsive, 'product.image.url', ''), ...previousImages],
+    },
+    alternates: {
+      canonical: `${HOST}/${params?.lang}/${params.product}`,
+    },
   }
 }
-import { Metadata } from 'next'
-import { pagesType } from '@constants/ssr'
-import useSortProductsInCategory from '@lib/category/useSortProductsInCategory'
 
-export const metadata: Metadata = {
-  title: '123.js',
-}
-const page = (props: Props) => {
-  return <div>page [[]]</div>
+const ProductDetailsPage = async (props: PropsPages) => {
+  const data = await getProductDetails({ productSku: props?.params?.product })
+  return <ProductDetails product={data?.product} />
 }
 
-export default page
+export default ProductDetailsPage

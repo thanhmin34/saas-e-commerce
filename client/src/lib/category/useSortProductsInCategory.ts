@@ -5,7 +5,7 @@ import apiClient from '@network/apiClient'
 import { setMegaMenu } from '@redux/actions/megaMenuAction'
 import { APIS } from '@constants/apis'
 import { setProductsList } from '@redux/actions/productsListAction'
-import { getFilterCriteria, getPageCriteria, getSortCriteria } from '@utils/common'
+import { getFilterCriteria, getPageCriteria, getSortCriteria } from '@utils/helper'
 import { IProductsListSortAndFilter } from '@interfaces/product/productList'
 
 export const getSortProductsInCategory = async ({

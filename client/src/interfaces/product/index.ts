@@ -14,8 +14,8 @@ export interface PriceTypes {
 }
 
 export interface RegularPriceTypes {
-  minimum_price: PriceTypes
-  max_price: PriceTypes
+  minimum_price: number
+  max_price: number
 }
 
 export interface ProductItemInterface {

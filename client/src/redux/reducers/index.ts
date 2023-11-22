@@ -7,7 +7,7 @@ import productsListReducer from './productsListReducer'
 
 //Redux
 import { CombinedState, Reducer, combineReducers } from 'redux'
-import { IUserInfo, IUserInfoAction } from '@interfaces/redux/userInfo'
+import { ISignInAction, IUserInfo, IUserInfoAction } from '@interfaces/redux/userInfo'
 import { IProductsListAction, IProductsList } from '@interfaces/redux/product'
 
 import { ConfigAction, IConfigApp } from '@interfaces/redux/config'
@@ -16,20 +16,29 @@ import { ICart, ICartAction } from '@interfaces/redux/cart'
 
 const rootReducer: Reducer<
   CombinedState<{
-    cartData: ICart
-    configApp: IConfigApp
-    megaMenu: MegaMenu | {}
+    // cartData: ICart
+    // configApp: IConfigApp
+    // megaMenu: MegaMenu | {}
     userInfo: IUserInfo
-    productsList: IProductsList
+    // productsList: IProductsList
   }>,
-  ICartAction | ConfigAction | MegaMenuAction | IUserInfoAction | IProductsListAction
+  // ICartAction | ConfigAction | MegaMenuAction | IProductsListAction
+  IUserInfoAction | ISignInAction
 > = combineReducers({
-  cartData: cartReducer,
-  configApp: configReducer,
-  megaMenu: megaMenuReducer,
+  // cartData: cartReducer,
+  // configApp: configReducer,
+  // megaMenu: megaMenuReducer,
   userInfo: userInfoReducer,
-  productsList: productsListReducer,
+  // productsList: productsListReducer,
 })
+
+// const rootReducer = combineReducers({
+//   cartData: cartReducer,
+//   configApp: configReducer,
+//   megaMenu: megaMenuReducer,
+//   userInfo: userInfoReducer,
+//   productsList: productsListReducer,
+// })
 
 export default rootReducer
 

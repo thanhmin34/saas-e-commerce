@@ -91,7 +91,9 @@ export default function CartItemsContainer() {
             <NoItemMessage />
           )}
           <div className={`${styles.footer} ${totalQuantity === 0 ? '' : styles.noItems}`}>
-            <Button onClick={() => push(ROUTER_PATHS.HOME)}>{localizeMessage('Continue Shopping')}</Button>
+            <Button className={styles.buttonBack} onClick={() => push(ROUTER_PATHS.HOME)}>
+              {localizeMessage('Continue Shopping')}
+            </Button>
           </div>
         </div>
       </Fragment>

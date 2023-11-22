@@ -1,16 +1,17 @@
 'use client'
+import React from 'react'
 import Button from '@components/button'
 import useIntl from '@hooks/useIntl'
-import { get } from 'lodash'
-
-import React, { useEffect, useMemo } from 'react'
 import styles from './styles.module.scss'
+
 import { useRouter } from 'next/navigation'
+import DiscountForm from './DiscountForm'
 import SummaryContainer from './SummaryContainer'
 import PriceInformationContainer from './PriceInformationContainer'
-import DiscountForm from './DiscountForm'
+import { ROUTER_PATHS } from '@constants/routerPaths'
+
 export default function CartCalculationArea() {
-  const router = useRouter()
+  const { push } = useRouter()
   const { localizeMessage } = useIntl()
 
   const checkoutDisabled = false
@@ -21,7 +22,7 @@ export default function CartCalculationArea() {
         <SummaryContainer />
         <PriceInformationContainer />
         <DiscountForm />
-        <Button onClick={() => {}}>{localizeMessage('Proceed to Checkout')}</Button>
+        <Button onClick={() => push(ROUTER_PATHS.CHECK_OUT)}>{localizeMessage('Proceed to Checkout')}</Button>
       </div>
     </div>
   )

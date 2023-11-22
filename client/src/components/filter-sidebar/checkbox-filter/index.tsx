@@ -12,8 +12,8 @@ import { RootState } from '@redux/reducers'
 import { IProductsList } from '@interfaces/redux/product'
 import { useProductsListContext } from '@context/productsListContext'
 import { filterByProductList } from '@utils/utiils'
-import { FILTER_BY_PRODUCTS, FILTER_BY_PRODUCTS_KEY } from '@constants/constants'
-import { getValuesFilterByKey } from '@utils/common'
+import { FILTER_BY_PRODUCTS, FILTER_BY_PRODUCTS_KEY } from '@constants/variables'
+import { getValuesFilterByKey } from '@utils/helper'
 
 const CheckboxFilter = () => {
   const { setFilterByProducts, filterByProducts } = useProductsListContext()

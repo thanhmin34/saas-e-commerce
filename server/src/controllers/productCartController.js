@@ -53,13 +53,13 @@ const addProductToCart = asyncHandler(async (req, res) => {
     const checkCartItem = await CartItem.findOne({
       where: { cart_id: cart?.id, product_id: id },
     });
-    console.log("checkCartItem....", checkCartItem);
+
     if (!checkCartItem) {
       const item = await CartItem.create({
         cart_id: cart?.id,
         product_id: id,
         quantity,
-        price,
+        price: product?.price,
         options,
       });
       if (item?.id)
@@ -80,9 +80,9 @@ const addProductToCart = asyncHandler(async (req, res) => {
 });
 
 const deleteProductToCart = asyncHandler(async (req, res) => {
-  const { body } = req || {};
-  const { product, cart_id } = body || {};
-  const { product_id } = product || {};
+  const { body, query } = req || {};
+  const { product_id, cart_id } = query || {};
+
   try {
     const cart = await Cart.findOne({
       where: { cart_id },
@@ -119,10 +119,10 @@ const updateProductToCart = asyncHandler(async (req, res) => {
   const { cart_id, product } = body || {};
   const { product_id, quantity } = product || {};
   try {
-    const { error } = validateFieldBySchema(body, addProductSchema);
-    if (error) {
-      return notificationMessageError(res, error.details[0].message);
-    }
+    // const { error } = validateFieldBySchema(body, addProductSchema);
+    // if (error) {
+    //   return notificationMessageError(res, error.details[0].message);
+    // }
 
     const cart = await Cart.findOne({
       where: { cart_id },
@@ -133,7 +133,12 @@ const updateProductToCart = asyncHandler(async (req, res) => {
         where: {
           product_id,
         },
-        attributes: ["id"],
+        include: {
+          model: Products,
+          as: "productCartItem",
+          attributes: ["id", "quantity"],
+        },
+        attributes: ["id", "product_id"],
       },
     });
 
@@ -142,6 +147,13 @@ const updateProductToCart = asyncHandler(async (req, res) => {
 
     const cartItemId = lodash.get(cart, "listCartItem[0].id");
     if (!cartItemId) notificationMessageError(res, "cannot find product");
+
+    const quantityProduct = cart?.listCartItem[0]?.productCartItem?.quantity;
+    if (quantityProduct < quantity)
+      return notificationMessageSuccess(res, {
+        status: false,
+        message: "You reach the max QTY for order",
+      });
 
     await CartItem.update(
       {
@@ -154,10 +166,10 @@ const updateProductToCart = asyncHandler(async (req, res) => {
       }
     );
 
-    notificationMessageSuccess(res, {
+    return notificationMessageSuccess(res, {
       status: true,
       message: "update product successfully",
-      cart,
+      quantityProduct,
     });
   } catch (error) {
     return notificationMessageError(res, error);
