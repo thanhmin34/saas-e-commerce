@@ -30,3 +30,12 @@ export interface ISeoPages {
     }[]
   }
 }
+
+export interface ITamaraProductWidget {
+  init(config: { lang: string; currency: string; price: number }): void
+  render(): void
+}
+
+export interface ITabbyPromo {
+  new (options: { selector: string; currency: string; price: number }): any
+}

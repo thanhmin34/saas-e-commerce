@@ -30,7 +30,7 @@ export const removeCoupon = async ({ cart_id }: { cart_id: string }) => {
 }
 
 const useCoupon = () => {
-  const { getCartDetails } = useCart()
+  const { refetch } = useCart()
   const { showToast, typeToast } = useToastMessage()
   const cart = useSelector((state: RootState) => state.cartData)
 
@@ -53,16 +53,14 @@ const useCoupon = () => {
     }
     const value = await addCouponMutation(params, {
       onSuccess(data, variables, context) {
-        console.log('data', data)
         if ('status' in data) {
-          getCartDetails(cart.cart_id)
+          refetch()
         }
       },
       onError(error, variables, context) {
         console.log('error', error)
       },
     })
-    console.log('value', value)
   }
   const handleRemoveCoupon = async () => {
     if (!cart.cart_id) {
@@ -74,11 +72,8 @@ const useCoupon = () => {
     }
     const value = await removeToCartMutation(params, {
       onSuccess(data, variables, context) {
-        console.log('data', data)
         if ('status' in data) {
-          console.log('22')
-
-          getCartDetails(cart.cart_id)
+          refetch()
         }
       },
       onError(error, variables, context) {

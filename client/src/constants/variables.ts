@@ -51,3 +51,47 @@ export const DEFAULT_FILTER_BY_PRODUCTS = [
     ...FILTER_BY_PRODUCTS.price,
   },
 ]
+
+export const SHARE_SOCIAL = [
+  {
+    name: 'facebook',
+    enable: true,
+    id_share_social: 'facebook',
+    link: '/',
+  },
+  {
+    name: 'instagram',
+    enable: true,
+    id_share_social: 'instagram',
+    link: '/',
+  },
+  {
+    name: 'twitter',
+    enable: true,
+    id_share_social: 'twitter',
+    link: '/',
+  },
+  {
+    name: 'whatApp',
+    enable: true,
+    id_share_social: 'whatApp',
+    link: '/',
+  },
+  {
+    name: 'linkedIn',
+    enable: true,
+    id_share_social: 'linkedIn',
+    link: '/',
+  },
+]
+export const TAMARA_WIDGET_CONFIG = {
+  MIN_PRICE: 10,
+  MAX_PRICE: 100,
+}
+
+export const TABBY_WIDGET_CONFIG = {
+  MIN_PRICE: 10,
+  MAX_PRICE: 100,
+}
+
+export const FORMAT_DATE_FILTER_RANGE = 'YYYY-MM-DD'

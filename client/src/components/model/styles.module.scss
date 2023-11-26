@@ -1,12 +1,21 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
 .model {
-  width: 100%;
-  height: 100%;
-  background-color: #c1c1c1;
-  opacity: 0.6;
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
+  max-height: -webkit-fill-available;
+  width: auto;
+  height: auto;
+  position: relative;
+  padding: 30px;
+  background-color: $white;
+  z-index: $zIndexModal;
+  border-radius: 1px;
+  .close {
+    padding: 3px;
+    cursor: pointer;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    transform: rotate(45deg);
+  }
 }

@@ -1,8 +1,9 @@
-import readingTime from 'reading-time'
 import { extend, filter, forEach, isArray, isEmpty, map } from 'lodash'
+import moment from 'moment'
 
 import { ROUTER_PATHS } from '@constants/routerPaths'
 import { IFilterProduct } from '@interfaces/product/productList'
+import { FORMAT_DATE_FILTER_RANGE } from '@constants/variables'
 
 export const toHTML = (str: string) => ({ __html: str })
 
@@ -62,6 +63,34 @@ export const checkRouteNeedAuthorized = (path: string) => {
   return false
 }
 
-export const getReadingTime = (text: string) => {
-  return readingTime(text).text
+export const loadScripts = (scriptId: string, src: string, callback?: () => void) => {
+  const existingScript = document.getElementById(scriptId)
+  if (!existingScript) {
+    const script = document.createElement('script')
+    if (src) {
+      script.src = src
+    }
+    script.id = scriptId
+    script.type = 'text/javascript'
+    script.async = true
+    document.getElementsByTagName('head')[0].appendChild(script)
+    script.onload = () => {
+      if (callback) callback()
+    }
+  }
+  if (existingScript && callback) callback()
+}
+
+export const formatDateTime = (date: string) => {
+  if (!date) return ''
+  const newDate = moment(date).format(FORMAT_DATE_FILTER_RANGE)
+  return newDate
+}
+
+export const renderFormatterPrice = (value: number, currency?: string) => {
+  // TODO UPDATE MULTI
+  if (!value) return ''
+  const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: currency || 'USD' })
+  const formattedNumber = formatter.format(value)
+  return formattedNumber
 }

@@ -1,3 +1,4 @@
+'use client'
 import { AxiosError } from 'axios'
 import { useMutation, useQuery } from 'react-query'
 import apiClient from '@network/apiClient'
@@ -46,7 +47,7 @@ export const updateProductToCart = async (params: {
 }
 
 const useUpdateCart = () => {
-  const { getCartDetails } = useCart()
+  const { refetch } = useCart()
   const cart = useSelector((state: RootState) => state.cartData)
 
   const { handleAddCartToModal } = useCartContext()
@@ -64,11 +65,6 @@ const useUpdateCart = () => {
   })
 
   const handleAddToCart = (params: IAddProductItem) => {
-    if (!cart.cart_id) {
-      showToast('cart_id not exist', typeToast.error)
-      return
-    }
-
     const { product } = params || {}
     const { id, quantity, sku } = product || {}
 
@@ -78,7 +74,7 @@ const useUpdateCart = () => {
         quantity,
         sku,
       },
-      cart_id: cart.cart_id,
+      cart_id: cart?.cart_id,
     }
 
     addToCartMutation(newParams, {
@@ -87,7 +83,7 @@ const useUpdateCart = () => {
           // reset cart
           handleAddCartToModal(params)
           showToast(data?.message, typeToast.success)
-          getCartDetails(cart.cart_id)
+          refetch()
         } else if ('response' in data) {
           showToast(data?.response?.data?.message, typeToast.error)
         }
@@ -105,11 +101,11 @@ const useUpdateCart = () => {
       cart_id: cart?.cart_id,
     }
 
-    await removeToCartMutation(newParams, {
+    removeToCartMutation(newParams, {
       onSuccess(data, variables, context) {
         if ('status' in data) {
           showToast(data?.message, typeToast.success)
-          getCartDetails(cart.cart_id)
+          refetch()
         } else if ('response' in data) {
           showToast(data?.response?.data?.message, typeToast.error)
         }
@@ -128,11 +124,11 @@ const useUpdateCart = () => {
       cart_id: cart?.cart_id,
     }
 
-    await updateQtyMutation(newParams, {
+    updateQtyMutation(newParams, {
       onSuccess(data, variables, context) {
         if ('status' in data) {
           showToast(data?.message, typeToast.success)
-          getCartDetails(cart.cart_id)
+          refetch()
         } else if ('response' in data) {
           showToast(data?.response?.data?.message, typeToast.error)
         }

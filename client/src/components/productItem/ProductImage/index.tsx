@@ -19,6 +19,7 @@ const ProductImage = ({ className, url, label }: PropsTypes) => {
         src={url}
         alt={label || 'image'}
         layout="fill"
+        priority={true}
         // placeholder="blur"
         // blurDataURL={`data:image/svg+xml;base64,${toBase64(Shimmer(700, 475))}`}
         // quality={100}

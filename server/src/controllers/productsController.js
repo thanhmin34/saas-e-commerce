@@ -9,6 +9,7 @@ const {
   Categories,
   ProductCategories,
   Wishlist,
+  Reviews,
 } = require("../models");
 const data = require("./test.json");
 const {
@@ -18,6 +19,7 @@ const {
 const {
   generateProductVariations,
 } = require("../utils/generateProductVariations");
+const { totalRating } = require("../utils/helper");
 // validateField
 const createProductSchema = Joi.object({
   sku: Joi.string().trim().required(),
@@ -34,7 +36,7 @@ const validateField = (data, schema) => {
 const getProductsDetails = asyncHandler(async (req, res) => {
   const { params } = req || {};
   const { productSku } = params || {};
-  console.log("productSku", productSku);
+
   const sku = productSku ? productSku.replace(".html", "") : "";
   try {
     const productDetail = await Products.findOne({
@@ -51,7 +53,12 @@ const getProductsDetails = asyncHandler(async (req, res) => {
         },
         {
           model: Categories,
-          through: ProductCategories,
+          through: "ProductCategories",
+        },
+        {
+          model: Reviews,
+          as: "review_list",
+          attributes: ["rating", "id", "product_id"],
         },
       ],
     });
@@ -74,9 +81,12 @@ const getProductsDetails = asyncHandler(async (req, res) => {
       brand,
       wishlist_id,
       url_path,
+      description_short,
       ProductsChildren,
+      review_list,
       // Categories,
     } = productDetail || {};
+
     return notificationMessageSuccess(res, {
       product: {
         id,
@@ -96,6 +106,9 @@ const getProductsDetails = asyncHandler(async (req, res) => {
         brand,
         wishlist_id,
         url_path,
+        description_short,
+        total_rating: totalRating(review_list),
+        review_count: review_list?.length,
         // category: Categories,
       },
     });

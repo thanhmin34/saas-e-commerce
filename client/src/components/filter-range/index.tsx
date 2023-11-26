@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useId } from 'react'
 import { getTrackBackground, Range } from 'react-range'
 
 import styles from './styles.module.scss'
@@ -14,12 +14,13 @@ const swatchInPrice = '#149447'
 const swatchOutPrice = '#ccc'
 
 export default function FilterRange({}) {
+  const id = useId()
   const { setFilterByProducts, filterByProducts } = useProductsListContext()
   const initialValues = getValuesFilterByKey(filterByProducts, FILTER_BY_PRODUCTS.price.key)
 
   function rangeTrack(props: ITrackProps, children: React.ReactNode, values: number[]) {
     return (
-      <div className={styles.rangeSliderTrack}>
+      <div key={id} className={styles.rangeSliderTrack}>
         <div
           ref={props.ref}
           className={styles.trackChildren}

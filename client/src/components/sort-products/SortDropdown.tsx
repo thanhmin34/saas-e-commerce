@@ -32,6 +32,7 @@ const SortDropdown = (props: Props) => {
           value={sortByProducts.order_name}
           label="Sort"
           onChange={handleChange}
+          className={styles.sortDropdown}
         >
           {map(SORT_PRODUCTS_OPTION, (item) => (
             <MenuItem key={item.value} value={item.value}>

@@ -1,3 +1,4 @@
+'use client'
 import { get } from 'lodash'
 import { AxiosError } from 'axios'
 import { useMutation } from 'react-query'
@@ -35,7 +36,7 @@ const useInitializeCart = () => {
   })
 
   const handleCheckCartIsAuth = async (cart_id: any, callback: (data: IDataCheckCartIsAuth) => void) => {
-    await mutate(
+    mutate(
       {
         cart_id,
       },
@@ -50,6 +51,7 @@ const useInitializeCart = () => {
 
   const handleAfterCheckCart = async (data: IDataCheckCartIsAuth) => {
     const cartId = get(data, 'cart_id')
+
     if (cartId) {
       // if there was cart id from storage, refetch cart
       await getCartDetails(cartId)
@@ -62,7 +64,7 @@ const useInitializeCart = () => {
     try {
       const cartIdFromStorage = await storage.getItem(STORAGE_KEYS.CART_ID)
       if (!cartIdFromStorage) {
-        await handleCreateNewCart(handleAfterCheckCart)
+        handleCreateNewCart(handleAfterCheckCart)
       } else {
         await handleCheckCartIsAuth(cartIdFromStorage?.value, handleAfterCheckCart)
       }

@@ -22,7 +22,6 @@ export default function CartItemsContainer() {
   const cart = useSelector((state: RootState) => state.cartData)
 
   const totalQuantity = get(cart, 'total_quantity')
-  const couponCode = get(cart, 'applied_coupons[0].code') || ''
   const items = get(cart, 'products')
 
   const { device } = useDetectDevice()
