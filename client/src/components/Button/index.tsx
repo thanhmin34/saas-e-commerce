@@ -17,7 +17,8 @@ const Button: React.FC<{
   disabled?: boolean | undefined
   otherProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
   buttonType?: string
-}> = ({ style, className, children, onClick, disabled, buttonType, ...otherProps }) => {
+  isDisableStyles?: boolean
+}> = ({ style, className, children, onClick, disabled, isDisableStyles, buttonType, ...otherProps }) => {
   const stylesButton: ConfigButton = {
     borderRadius: '4',
     backgroundColor: 'rgb(0, 104, 52)',
@@ -35,6 +36,7 @@ const Button: React.FC<{
   }
 
   const _style = useMemo(() => {
+    if (isDisableStyles) return style
     if (buttonType == BUTTON_TYPES.OUTLINE) {
       return { ...stylesOutlineButton, ...style }
     }

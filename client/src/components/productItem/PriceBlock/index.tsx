@@ -6,6 +6,7 @@ import SimplePrice from './SimplePrice'
 import SpecialPrice from './SpecialPrice'
 
 import { PriceTypes, RegularPriceTypes } from '@interfaces/product'
+import Price from '../Price'
 interface PriceBlock {
   price: number
   special_price?: RegularPriceTypes | null | undefined
@@ -19,7 +20,7 @@ const PriceBlock = ({ price, special_price, className }: PriceBlock) => {
   }, [special_price])
 
   const renderPrice = !isSpecialPrice ? (
-    <SimplePrice price={price} />
+    <Price value={price} />
   ) : (
     <SpecialPrice special_price={special_price as RegularPriceTypes} />
   )

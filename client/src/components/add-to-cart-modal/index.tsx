@@ -25,9 +25,8 @@ export default function AddToCartModal({
   const { push } = useRouter()
   const { localizeMessage } = useIntl()
   const { product } = item || {}
-  const { price, quantity, image, name } = product || {}
+  const { price, quantity, image, name, special_price } = product || {}
 
-  const special_price = 12
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -73,7 +72,14 @@ export default function AddToCartModal({
   const renderInfo = (
     <div className={styles.info}>
       <div className={styles.image}>
-        <Image src={image?.url as string} layout="fixed" height={150} width={150} alt={image?.label as string} />
+        <Image
+          src={image?.url as string}
+          layout="fixed"
+          height={150}
+          width={150}
+          alt={image?.label as string}
+          priority={true}
+        />
       </div>
       <section className={styles.detail}>
         <p>{name || ''}</p>

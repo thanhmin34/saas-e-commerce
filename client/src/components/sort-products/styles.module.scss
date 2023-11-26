@@ -16,10 +16,7 @@
     width: 100%;
     max-width: 272px;
   }
-  .sortDropdown {
-    width: 100%;
-    max-width: 210px;
-  }
+
   .sortIcon {
     cursor: pointer;
     padding: 2px;
@@ -27,4 +24,8 @@
   .sortIconIncrement {
     transform: rotate(180deg);
   }
+}
+.sortDropdown {
+  width: 100%;
+  max-width: 210px !important;
 }

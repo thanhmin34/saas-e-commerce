@@ -26,15 +26,7 @@ const NormalCartItem = (props: Props) => {
         </div>
         <div className={styles.productDetails}>
           <div className={styles.quantity}>
-            <QuantityContainer
-              currentQuantity={quantity}
-              productId={product_id}
-              // setIsQuantityEditing={setIsQuantityEditing}
-              // adjustQuantity={adjustQuantity}
-              // increaseQuantity={increaseQuantity}
-              // decreaseQuantity={decreaseQuantity}
-              // handleRemoveItem={handleRemoveItem}
-            />
+            <QuantityContainer currentQuantity={quantity} productId={product_id} />
           </div>
         </div>
         <div className={styles.subtotal}>

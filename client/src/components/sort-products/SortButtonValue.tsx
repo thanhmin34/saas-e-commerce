@@ -29,7 +29,7 @@ const SortButtonValue = () => {
 
   return (
     <div onClick={handleSortProducts} className={`${renderClassName}`}>
-      <Image src={imageUrls.iconSort} alt="icon-sort" width={24} height={24} />
+      <Image src={imageUrls.iconSort} alt="icon-sort" width={24} height={24} priority={true} />
     </div>
   )
 }

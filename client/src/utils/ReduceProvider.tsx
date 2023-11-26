@@ -27,8 +27,8 @@ const Footer = dynamic(() => import('@components/footer/Footer'), {
 
 const ReduceProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <ToastContainer />
         <Wrapper>
@@ -42,8 +42,8 @@ const ReduceProvider = ({ children }: { children: ReactNode }) => {
             </AppProvider>
           </CartContextProvider>
         </Wrapper>
-      </Provider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </Provider>
   )
 }
 

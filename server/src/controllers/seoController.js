@@ -13,8 +13,9 @@ const seoPages = asyncHandler(async (req, res) => {
         title: "Natural Touch",
         keywords: "Natural Touch",
         description: "Natural Touch",
-        url: "",
-        image_url: "",
+        url: "https://naturaltouchshop.com/en",
+        image_url:
+          "https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/natural_touch/natural_touch/Main_Banner_-_Desktop_-_03-min_1700143639639.jpg",
         authors: [
           {
             name: "hoang",

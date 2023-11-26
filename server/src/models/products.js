@@ -30,8 +30,9 @@ module.exports = (sequelize, DataTypes) => {
         as: "ProductsChildren",
       });
 
-      Products.belongsToMany(models.Wishlist, {
-        through: "WishlistProducts",
+      Products.hasMany(models.Reviews, {
+        foreignKey: "product_id",
+        as: "review_list",
       });
     }
   }
@@ -53,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       brand: DataTypes.STRING,
       wishlist_id: DataTypes.INTEGER,
       url_path: DataTypes.STRING,
+      description_short: DataTypes.STRING,
     },
     {
       sequelize,

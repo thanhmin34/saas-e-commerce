@@ -1,0 +1,554 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.productContent {
+  margin-top: 25px;
+  display: flex;
+  color: $textColor;
+  @include breakpoint-max(991px) {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .imageGallery {
+    display: flex;
+    flex-basis: 60%;
+    @include breakpoint-max(991px) {
+      flex-basis: 100%;
+    }
+    .thumbnail {
+      margin: 0 15px;
+      width: 100%;
+      height: 100%;
+      min-height: 510px;
+      object-fit: contain;
+      @include breakpoint-min(991px) {
+        flex-basis: 460px;
+      }
+      @include respond(large-mobile) {
+        min-height: 400px;
+      }
+      @include respond(extra-small-mobile) {
+        min-height: 340px;
+      }
+      @include breakpoint-max(400px) {
+        min-height: 320px;
+      }
+      flex: 1;
+      position: relative;
+      span {
+        img {
+          width: 100%;
+          height: 100%;
+          border: 1px solid #dee2e6 !important;
+          // margin: 0 15px !important;
+        }
+      }
+    }
+    .slickImage {
+      width: 100%;
+      max-width: 180px;
+      padding: 0 15px;
+      flex-direction: column;
+      gap: 20px;
+      display: none;
+      @include respond(extra-large-desktop) {
+        display: flex;
+      }
+      .imageItem {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-height: 160px;
+        span {
+          img {
+            width: 100%;
+            height: 100%;
+            border: 1px solid $black !important;
+          }
+        }
+      }
+    }
+  }
+}
+.productInformation {
+  display: flex;
+  flex-basis: 40%;
+  padding: 0 15px;
+  flex-direction: column;
+  @include breakpoint-max(991px) {
+    flex-basis: 100%;
+  }
+  .brandName {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    padding-bottom: 4px;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: $black;
+    margin-bottom: 20px;
+
+    @include respond(extra-small-mobile) {
+      margin-bottom: 10px;
+    }
+  }
+  .ratingPoint {
+    font-size: 15px;
+    line-height: 1.3;
+    font-weight: 500;
+    margin-inline-end: 10px;
+  }
+  .ratingCount {
+    display: flex;
+    gap: 2px;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+  .ratingWrap * {
+    color: inherit;
+    // display: flex;
+  }
+  .price {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.3;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin: 20px 0;
+  }
+
+  .regularPrice {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: $greySeven;
+    text-decoration: line-through;
+  }
+
+  .specialPrice {
+    font-weight: 500;
+    line-height: 1.3;
+    color: $specialPriceColor;
+  }
+}
+.description {
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: normal;
+}
+// action
+.buttonWrapper {
+  gap: 10px;
+  display: grid;
+  padding-top: 30px;
+  border-top: $border;
+  grid-template-columns: 160px auto 48px;
+
+  @include respond(extra-small-mobile) {
+    left: 0;
+    bottom: 0;
+    z-index: 5;
+    width: 100vw;
+    padding: 10px;
+    position: fixed;
+    background: $white;
+    grid-template-columns: 136px auto 40px;
+  }
+  .quantity {
+    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 48px);
+
+    @include respond(extra-small-mobile) {
+      grid-template-columns: repeat(3, 40px);
+    }
+
+    input {
+      width: 48px;
+      height: 48px;
+      text-align: center;
+      background: $primaryColor;
+      color: $white;
+      outline: none;
+      border: none !important;
+      @include respond(extra-small-mobile) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .icon {
+      padding: 0;
+      width: 48px;
+      height: 48px;
+      border: 1px solid $black;
+      background: $white;
+      cursor: pointer;
+      @include respond(extra-small-mobile) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+  .ofs {
+    &:disabled {
+      &:hover {
+        cursor: not-allowed;
+
+        // color: $white;
+        // background: $primary-color;
+      }
+    }
+  }
+  .cart {
+    width: 100%;
+    max-width: 800px !important;
+    height: 48px;
+    border: none;
+    color: $white;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+    background-color: $primaryColor !important;
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    @include respond(extra-small-mobile) {
+      height: 40px;
+    }
+  }
+  .wishlistFour {
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    line-height: 40px;
+    @include flex(center, center);
+    background: none;
+    border: 2px solid $primaryColor;
+    border-radius: 4px;
+    color: $primaryColor;
+    cursor: pointer;
+    @include respond(extra-small-mobile) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+.otherInfo {
+  .sku {
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: 120px 120px auto;
+    font-size: 14px !important;
+    font-weight: 400;
+    @media (max-width: 767px) {
+      font-size: 12px;
+    }
+    .title {
+      font-weight: 400;
+      line-height: 1.3;
+      font-size: 14px !important;
+    }
+
+    .value {
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .status {
+      display: flex;
+      justify-content: flex-end;
+      line-height: 1.3;
+    }
+
+    @include respond(extra-small-mobile) {
+      margin-top: 0px;
+    }
+  }
+
+  .share {
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: 95px auto;
+    .heavy {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+    .value {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    @include respond(extra-small-mobile) {
+      margin-top: 10px;
+    }
+  }
+
+  .socialIcons {
+    margin: 0;
+    padding: 0;
+    @include flex(center, flex-start);
+    gap: 10px;
+    li {
+      display: inline-block;
+      margin-inline-end: 20px;
+      cursor: pointer;
+      &:last-child {
+        margin-inline-end: 0;
+      }
+    }
+  }
+}
+.tamaraProductWidgetContainer,
+.tabbyPromo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.details {
+  line-height: 1.6;
+
+  .content {
+    padding-top: 30px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.5;
+
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
+.productDescriptionTab {
+  margin-top: 32px;
+  min-height: 240px;
+  width: 100%;
+  .tab {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    @include respond(large-mobile) {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tabItem {
+      width: 100%;
+      min-height: 60px !important;
+      max-height: 60px !important;
+      color: $textColor;
+      background-color: $greySix;
+      outline: none;
+      border: none;
+      border-radius: 0 !important;
+      width: 100%;
+      max-width: 800px !important;
+    }
+    .activeTab {
+      color: $white;
+      background-color: $primaryColor;
+    }
+  }
+
+  @media (max-width: 767px) {
+    min-height: 450px;
+  }
+}
+.review {
+  @include respond(large-mobile) {
+    max-width: 100%;
+  }
+
+  .reviewHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 30px;
+    h2 {
+      font-style: 22px;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    .addNewReviewBtn {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.3;
+      padding: 10px 40px;
+      border: 1px solid $black;
+      background: $white;
+      max-width: 200px !important;
+    }
+  }
+
+  .singleReview {
+    margin-top: 30px;
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid $greyEight;
+
+    .content {
+      flex-basis: 100%;
+      .reviewName {
+        @include flex(center, flex-start);
+        .username {
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 1.3;
+          color: $black;
+          margin-inline-end: 4px;
+        }
+
+        .date {
+          font-size: 13px;
+          font-weight: 300;
+          line-height: 1.3;
+          color: $black;
+        }
+      }
+
+      .message {
+        max-width: 1220px;
+        padding: 8px 0 15px;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.5;
+        white-space: normal;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .viewAllBtn {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: $white;
+    display: block;
+    cursor: pointer;
+    padding: 5px 35px;
+    margin: 15px auto 0;
+    background: $primaryColor;
+    outline: none;
+    border: none;
+    height: 40px;
+  }
+}
+.rating {
+  .ratingPoint {
+    font-size: 15px;
+    font-weight: 400;
+    margin-inline-end: 6px;
+  }
+  .ratingCount {
+    font-size: 13px;
+    font-weight: 300;
+  }
+}
+.tabContent {
+  margin: 30px 0;
+}
+
+.modal {
+  width: 100%;
+  max-width: 710px;
+  background-color: $white;
+}
+
+.addReviewForm {
+  width: 100%;
+  border-top: $borderFour;
+  margin-top: 30px;
+  @include respond(extra-small-mobile) {
+    margin-inline-start: 16px;
+    margin-inline-end: 16px;
+  }
+  tr {
+    td {
+      padding-top: 30px;
+      @include respond(lang-mobile) {
+        padding-top: 20px !important;
+      }
+      .formGroupOne {
+        margin: 0;
+      }
+    }
+    textarea {
+      padding: 15px;
+      outline: none;
+      border: 1px solid #dedede;
+      font-size: 14px;
+      line-height: 14px;
+      width: 100%;
+    }
+    input {
+      padding: 12px;
+      width: 100%;
+      outline: none;
+      border: 1px solid #dedede;
+      font-size: 14px;
+      line-height: 14px;
+      margin-top: -8px;
+    }
+    .label {
+      width: 20%;
+      min-width: 110px;
+      line-height: 25px;
+      vertical-align: text-top;
+    }
+    .star-icon {
+      padding-inline-end: 10px;
+    }
+  }
+}
+.modalTitle {
+  font-style: 28px;
+  font-weight: bold;
+}
+
+.modalImage {
+  width: 100%;
+  max-width: 260px;
+  height: 100%;
+  height: 260px;
+  position: relative;
+  span {
+    max-width: 260px;
+    height: 100%;
+    img {
+      width: 100%;
+      max-width: 260px;
+    }
+  }
+}
+
+.submitBtn {
+  margin-top: 20px;
+  max-width: 200px !important;
+  height: 40px;
+  color: $white;
+  background: $primaryColor;
+  border-radius: 0 !important;
+  @include flex(center, flex-end);
+  margin-inline-start: auto;
+  outline: none !important;
+  border: none !important;
+  &:disabled {
+    cursor: not-allowed;
+    border: $borderOne;
+    background: $disabled;
+  }
+}

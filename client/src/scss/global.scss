@@ -104,3 +104,10 @@ input[type='number'] {
   height: 40px;
   padding: 0 12px !important;
 }
+.MuiBox-root {
+  width: 100%;
+  max-width: 710px !important;
+  @include respond(large-mobile) {
+    padding: 0 16px;
+  }
+}

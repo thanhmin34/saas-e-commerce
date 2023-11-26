@@ -16,4 +16,5 @@ export const APIS = {
   PRODUCTS: 'products',
   SEO_PAGES: 'seo-pages',
   SEO_PRODUCT: 'seo-product',
+  REVIEWS: 'reviews',
 }

@@ -32,6 +32,7 @@
     "mapbox-gl": "^2.15.0",
     "maplibre-gl": "^3.6.0",
     "maplibre-gl-js-amplify": "^3.1.0",
+    "moment": "^2.29.4",
     "negotiator": "^0.6.3",
     "next": "13.4.19",
     "react": "18.2.0",

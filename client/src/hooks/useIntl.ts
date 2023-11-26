@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useMemo } from 'react'
 import { useParams } from 'next/navigation'
 import en from '../dictionaries/en.json'

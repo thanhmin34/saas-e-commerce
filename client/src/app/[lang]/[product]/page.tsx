@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import dynamic from 'next/dynamic'
 import type { Metadata, ResolvingMetadata } from 'next'
@@ -40,7 +40,11 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
 const ProductDetailsPage = async (props: PropsPages) => {
   const data = await getProductDetails({ productSku: props?.params?.product })
-  return <ProductDetails product={data?.product} />
+  return (
+    <Suspense>
+      <ProductDetails product={data?.product} />
+    </Suspense>
+  )
 }
 
 export default ProductDetailsPage
