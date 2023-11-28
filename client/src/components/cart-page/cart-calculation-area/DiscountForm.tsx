@@ -8,20 +8,16 @@ import useIntl from '@hooks/useIntl'
 import styles from './styles.module.scss'
 import useCoupon from '@lib/discount/useDiscount'
 
-const DiscountForm = () => {
+const DiscountForm = ({ className }: { className?: string }) => {
   const { localizeMessage } = useIntl()
   const cart = useSelector((state: RootState) => state.cartData)
-  const { handleAddCoupon, handleRemoveCoupon } = useCoupon()
+  const { handleAddCoupon, handleRemoveCoupon, isLoading, error } = useCoupon()
+  console.log('error', error)
 
   const [couponCode, setCouponCode] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   const doesCartHaveCoupon = useMemo(() => get(cart, 'discount.code'), [cart])
-  const loading = false
-
-  //   useEffect(() => {
-  //     setErrorMessage(couponErrorsMessage)
-  //   }, [couponErrorsMessage])
 
   useEffect(() => {
     if (doesCartHaveCoupon) {
@@ -56,7 +52,7 @@ const DiscountForm = () => {
         }}
         disabled={false}
       >
-        {loading
+        {isLoading
           ? localizeMessage('Submitting')
           : doesCartHaveCoupon
           ? localizeMessage('Remove')
@@ -81,7 +77,7 @@ const DiscountForm = () => {
   }
 
   return (
-    <div className={styles.discountForm}>
+    <div className={`${styles.discountForm} ${className ? className : ''}`}>
       {renderCouponInput()}
       {renderSubmitButton()}
       {errorMessage && <p className={styles.errorMessage}>{localizeMessage(errorMessage)}</p>}

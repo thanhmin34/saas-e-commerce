@@ -4,13 +4,13 @@ import STORAGE_KEYS from '@constants/storageKeys'
 
 const apiClient = () => {
   const token = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.TOKEN) : null
-
+  const newToken = token ? JSON.parse(token) : null
   const reqInstance = axios.create({
     baseURL: BACKEND_URL || 'http://localhost:5000/',
     timeout: 60000,
     headers: {
       'Content-Type': 'application/json',
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...(newToken && 'value' in newToken && { Authorization: `Bearer ${newToken?.value}` }),
     },
   })
 

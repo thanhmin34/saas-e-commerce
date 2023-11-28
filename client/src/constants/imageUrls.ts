@@ -8,4 +8,10 @@ export const imageUrls = {
   iconSaudiArabian: '/assets/icon/ar.svg',
   iconVn: '/assets/icon/vn.webp',
   iconSort: '/assets/icon/sort_in.jpg',
+  dropdown: '/assets/icon/dropdown.png',
+  loading: '/assets/icon/loading-small.svg',
+  codPayment: '/assets/icon/cod-payment.png',
+  bankTBPayment: '/assets/icon/tb-payment.png',
+  checkoutSelect: '/assets/icon/checkout-select.svg',
+  checkoutSelectActive: '/assets/icon/checkout-select-active.svg',
 }

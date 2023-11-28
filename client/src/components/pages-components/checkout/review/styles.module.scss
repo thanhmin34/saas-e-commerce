@@ -1,0 +1,261 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.review {
+  &.sticky-container {
+    position: fixed;
+    top: 200px;
+
+    @media (max-width: 1023px) {
+      position: static;
+    }
+  }
+  &.bottom-container {
+    margin-top: auto;
+  }
+
+  max-width: 592px;
+  margin: 0 auto;
+
+  @media (max-width: 1023px) {
+    margin-top: 56px;
+  }
+
+  display: grid;
+  width: 100%;
+  background: $colorBackgroundReview;
+  padding: 30px;
+
+  @include respond(large-mobile) {
+    padding: 20px 16px;
+    margin-top: 10px;
+  }
+
+  color: $textColor;
+
+  .title {
+    font-weight: 500;
+    font-size: 18px;
+    color: currentColor;
+    line-height: 23.4px;
+    margin-bottom: 20px;
+  }
+
+  .content {
+    gap: 20px;
+    display: grid;
+
+    @include respond(large-mobile) {
+      gap: 16px;
+    }
+
+    .lineItem {
+      @include flex(center, space-between);
+      .price,
+      .label {
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 24px;
+
+        @include respond(large-mobile) {
+          font-size: 15px;
+          font-weight: 400;
+        }
+      }
+      .price {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+
+    .strongText {
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+}
+
+// button {
+//   &:disabled {
+//     opacity: 0.4;
+//     cursor: default;
+//   }
+// }
+
+.buttonPlaceOrder {
+  width: 100%;
+  height: 48px;
+  max-width: 888px !important;
+  margin-top: 20px;
+  background: $primaryColor;
+  color: $white;
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 14px;
+  line-height: 16.8px;
+  font-weight: 500;
+  outline: none;
+  border: none;
+  border-radius: 0 !important;
+}
+
+.discount {
+  display: grid;
+  gap: 16px;
+  margin: 16px 0;
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 10px;
+
+    .item {
+      @include flex(center, space-between);
+      width: 100%;
+      max-width: 256px;
+      .title {
+        align-items: center;
+        height: 20px;
+        display: flex;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 19.5px;
+        margin-bottom: 0 !important;
+      }
+
+      .button {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        img {
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+    .price-summary-container__discount-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+
+      .coupon-input {
+        border: $borderOne;
+        font-size: 14px;
+        line-height: 24px;
+        color: $black;
+        width: 100%;
+        height: 40px;
+        padding: 0 0.75rem;
+
+        ::placeholder {
+          font-size: 8px;
+          color: $grey;
+          opacity: 0.8;
+        }
+
+        &--error {
+          border: 1px solid $specialPriceColor;
+        }
+
+        :focus,
+        &--error:focus {
+          border: 1px solid $black;
+        }
+      }
+
+      .submit-button {
+        min-height: unset;
+        height: 40px;
+        min-width: 150px;
+        width: 100%;
+        background: $primaryColor;
+        color: $white;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.8px;
+        border: none;
+
+        @media (max-width: 767px) {
+          min-width: 100px;
+        }
+      }
+
+      .error-message {
+        text-align: start;
+        padding: 0.625rem 0.125rem 0.125rem;
+        color: $errorTextColor;
+        font-weight: 600;
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+    }
+
+    &__block-input {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      border: 1px solid $greyTwelve;
+
+      input,
+      button {
+        outline: none;
+        border: none;
+      }
+
+      button {
+        height: 100%;
+        max-width: 150px;
+        width: 100%;
+        background: $primaryColor;
+        color: $white;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.8px;
+        border: none;
+      }
+
+      input {
+        font-size: 16px;
+        line-height: 24px;
+        width: 100%;
+        height: 100%;
+        padding: 0 10px;
+        border: none;
+      }
+
+      input::placeholder {
+        font-size: 12px;
+      }
+    }
+  }
+}
+.inputElement {
+  @include grid(1);
+  gap: 20px;
+  font-weight: 400;
+
+  textarea {
+    width: 100%;
+    height: 82px;
+    padding: 15px;
+    outline: none;
+    border: 1px solid $greyTwelve;
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  button {
+    height: 100%;
+    max-width: 86px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: $primaryColor;
+    color: $white;
+    font-size: 16px;
+    border: none;
+    outline: none;
+  }
+}
+.discountFormInput {
+  margin-bottom: 0 !important;
+}

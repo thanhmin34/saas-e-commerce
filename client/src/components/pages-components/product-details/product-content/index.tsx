@@ -16,7 +16,7 @@ const ProductContent = (props: IProductItemProps) => {
     <Fragment>
       <div className={styles.productContent}>
         <ImageGalleryLeftThumb image={image} mediaGallery={media_gallery} />
-        <div>
+        <div className={styles.productInformation}>
           <ProductInformation product={product} />
           <TamaraWidgetButton finalPrice={special_price ? special_price : price} />
           <TabbyWidgetButton finalPrice={special_price ? special_price : price} />

@@ -89,7 +89,7 @@ export const formatDateTime = (date: string) => {
 
 export const renderFormatterPrice = (value: number, currency?: string) => {
   // TODO UPDATE MULTI
-  if (!value) return ''
+  if (value == null || value == undefined) return ''
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: currency || 'USD' })
   const formattedNumber = formatter.format(value)
   return formattedNumber

@@ -1,12 +1,17 @@
 const asyncHandler = require("express-async-handler");
-const { Categories, ProductCategories, Products } = require("../models");
+const {
+  Categories,
+  ProductCategories,
+  Products,
+  Reviews,
+} = require("../models");
 const {
   notificationMessageSuccess,
   notificationMessageError,
 } = require("../utils/notificationMessageStatus");
 const Joi = require("joi");
 const { Op } = require("sequelize");
-const { checkFilterByCategory } = require("../utils/helper");
+const { checkFilterByCategory, totalRating } = require("../utils/helper");
 
 const validateProductInCategory = Joi.object({
   category_id: Joi.number().required(),
@@ -137,11 +142,17 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
                 exclude: ["createdAt", "updatedAt"],
               },
             },
+            {
+              model: Reviews,
+              as: "review_list",
+              attributes: ["rating", "id", "product_id"],
+            },
           ],
           limit: +page_size,
           offset: offset,
           order,
         });
+        console.log("products", products);
         const newProducts = products?.rows.map((item) => {
           const {
             id,
@@ -158,6 +169,7 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
             special_to_date,
             special_from_date,
             media_gallery,
+            review_list,
           } = item || {};
           return {
             id,
@@ -174,6 +186,8 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
             special_price,
             special_to_date,
             special_from_date,
+            review_count: review_list?.length,
+            total_rating: totalRating(review_list),
           };
         });
         return notificationMessageSuccess(res, {

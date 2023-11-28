@@ -1,0 +1,33 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.banner {
+  @include grid(2);
+  @include respond(large-mobile) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  gap: 30px;
+  .imageItem {
+    width: 100%;
+    position: relative;
+    @media (min-width: 1216px) {
+      min-height: 240px;
+    }
+    @media (max-width: 1215px) {
+      min-height: 20vw;
+    }
+    @media (max-width: 767px) {
+      min-height: 40vw;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    &:last-child {
+      @include respond(large-mobile) {
+        display: none;
+      }
+    }
+  }
+}

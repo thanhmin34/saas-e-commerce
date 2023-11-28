@@ -38,6 +38,13 @@ const getConfig = asyncHandler(async (req, res) => {
         background_color,
         color,
         currency,
+        banner_checkout_left:
+          "stores/15/Cart-Banner-Half-Shea-Butter-EN-min_1.png",
+        banner_checkout_right:
+          "stores/15/Cart-Banner-Free-Shipping-EN-min_1.png",
+        url_media_backend: "https://media.9ten.cloud/media/",
+        prefix_url_media: "snaptec/pwa/",
+        national_flags_image: "",
       },
     });
   } catch (error) {}

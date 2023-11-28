@@ -238,14 +238,14 @@ const ProductInformation = (props: IProductItemProps) => {
   }
 
   return (
-    <div className={styles.productInformation}>
+    <Fragment>
       {renderTopContent()}
       {renderPrice()}
       {renderDescription()}
       {renderAction()}
       {renderInfoContent()}
       {isLoading && <Loading />}
-    </div>
+    </Fragment>
   )
 }
 

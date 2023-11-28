@@ -1,0 +1,555 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.shippingAddress {
+  margin-top: 50px;
+  color: $textColor;
+  display: grid;
+  gap: 20px;
+
+  @include respond(large-mobile) {
+    margin-top: 30px;
+  }
+
+  .title {
+    background-color: $colorBackgroundReview;
+    padding: 17px 20px;
+    color: $textColor;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 36.4px;
+
+    @include respond(large-mobile) {
+      font-size: 22px;
+      list-style: 28.4px;
+    }
+  }
+  .btn {
+    height: 36px;
+    border: none;
+    width: 220px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-auto-flow: column;
+    column-gap: 10px;
+  }
+
+  .description {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+
+    @include respond(large-mobile) {
+      font-weight: 300;
+      margin-top: -13px;
+    }
+  }
+
+  .map {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    max-height: 250px;
+    @include flex(center, center);
+
+    @include respond(small-mobile) {
+      height: 200px;
+    }
+
+    &__loading {
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    &.v2 {
+      margin-bottom: 35px;
+    }
+
+    .search-container {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+
+      & > div {
+        width: 100%;
+      }
+
+      @media (max-width: 480px) {
+        & .input.search-map-input,
+        & .map-complete {
+          width: unset;
+          max-width: calc(100vw - 30px);
+        }
+      }
+    }
+
+    .buffer-container {
+      position: absolute;
+      top: calc(100% + 10px);
+      width: 100%;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: space-between;
+
+      .position {
+        flex-grow: 1;
+        height: 18px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .submit-button {
+        height: 36px;
+        border: none;
+        max-width: 175px;
+        min-width: 100px;
+      }
+    }
+
+    .edit-phone-container {
+      > div {
+        display: block !important;
+      }
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    border: 1px solid $primaryColor;
+    padding: 18px 20px;
+    font-size: 14px;
+    color: $black;
+    line-height: 16.8px;
+    gap: 5px;
+    font-weight: bold;
+
+    @include respond(large-mobile) {
+      font-size: 14px;
+      line-height: 21px;
+      font-weight: 300;
+      padding: 15px;
+      gap: 1px;
+    }
+
+    .submit-button {
+      height: 36px;
+      border: none;
+      max-width: 175px;
+      min-width: 100px;
+    }
+
+    &.v2 {
+      border: none;
+      padding: 0;
+      position: relative;
+
+      *:not(.title, .edit-button) {
+        font-weight: 400;
+        font-size: 14px;
+      }
+
+      .edit-button {
+        background: none;
+        border: none;
+        position: absolute;
+        top: 30px;
+        right: 0;
+
+        &.rtl {
+          right: unset;
+          left: 0;
+        }
+      }
+    }
+
+    .title {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 21px;
+      margin-bottom: 8px;
+    }
+  }
+
+  & .address-list {
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+//  set address
+.checkout__shipping-address__setaddress {
+  border: 1px solid $black;
+
+  &__title {
+    @include flex(center, space-between);
+
+    padding: 20px;
+    cursor: pointer;
+
+    span {
+    }
+
+    &__icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.85;
+      }
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .--show__address-active {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.v2 {
+    background-color: $greyOne;
+    border: none;
+    max-height: 100vh;
+    transition: max-height 0.3s;
+    overflow: hidden;
+  }
+}
+
+// from get address
+.form-getaddress {
+  width: 100%;
+  padding: 0 15px 15px;
+  display: grid;
+  gap: 5px;
+
+  &__button {
+    margin-top: 15px;
+    width: 100%;
+    max-width: 252px;
+    background: #a9a9a9;
+    cursor: default;
+    color: $white;
+    @include flex(center, center);
+    outline: none;
+    border: none;
+    height: 40px;
+    line-height: 40px;
+  }
+
+  .--button-enabale {
+    background: $black;
+    cursor: pointer;
+  }
+
+  &.v2 {
+    display: block;
+
+    form {
+      h1 {
+        display: none !important;
+      }
+
+      & > div {
+        padding: 0;
+
+        &:last-child {
+          padding-top: 20px;
+          display: flex !important;
+          justify-content: flex-end;
+
+          > :first-child {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+// checkout-field
+.checkout-field {
+  color: $black;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 9px 2px 0px;
+    margin-bottom: 12px;
+  }
+
+  .--active-field {
+    border-color: $primaryColor;
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    max-height: 40px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #d2d5d4;
+    position: relative;
+
+    .--active-bg {
+      background: $primaryColor;
+    }
+
+    &__icon-left {
+      height: 40px;
+      width: 39px;
+      @include flex(center, center);
+
+      background: $greyOne;
+
+      &__body {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: $white;
+        @include flex(center, center);
+
+        img {
+          width: 11px;
+          height: 7px;
+        }
+      }
+    }
+
+    &__value {
+      flex: 1;
+
+      input {
+        border: none;
+        outline: none;
+        width: 100%;
+      }
+
+      &__dropdown {
+        position: absolute;
+        z-index: 10;
+        top: calc(100% + 4px);
+        left: -1px;
+        right: -3px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: 300px;
+        width: 100%;
+
+        background: $white;
+
+        li {
+          padding: 10px;
+          font-size: 14px;
+          font-weight: 300;
+          line-height: 16px;
+          cursor: pointer;
+          text-align: center;
+
+          &:first-child {
+            margin-top: 15px;
+          }
+
+          &:hover {
+            background: $greyOne;
+          }
+        }
+      }
+    }
+
+    &__value,
+    input {
+      margin-left: 6px;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    input {
+      outline: none;
+      border: none;
+      height: 100%;
+      flex: 1;
+      color: $black;
+      background: transparent;
+    }
+
+    &__icon-right {
+      width: 40px;
+      height: 40px;
+      padding: 10px;
+      cursor: pointer;
+      opacity: 0.2;
+      @include flex(center, center);
+
+      margin-left: auto;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &.v2 {
+      height: 40px;
+      background-color: $white;
+    }
+  }
+}
+
+// edit address
+
+.checkout__edit-address {
+  display: flex;
+  flex-direction: column;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    color: $black;
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: 400;
+    gap: 28px;
+    cursor: pointer;
+
+    &__btn {
+      width: 16px;
+      height: 16px;
+
+      cursor: pointer;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__title {
+    color: $black;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 21px;
+  }
+}
+
+.checkout__edit-address__form {
+  margin-top: 20px;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 400;
+  display: grid;
+  gap: 5px;
+
+  &__button {
+    margin-top: 20px;
+
+    @include flex(center, space-between);
+
+    @media (max-width: 768px) {
+      gap: 20px;
+    }
+
+    button {
+      width: 100%;
+      max-width: 266px;
+      text-align: center;
+      background: $black;
+      color: $white;
+      border: none;
+      outline: none;
+      height: 40px;
+      line-height: 40px;
+    }
+
+    button:disabled {
+      background: $greyOne;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.formCheckout-field {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    padding: 9px 2px 0;
+    margin-bottom: 5px;
+  }
+
+  &__wrapper {
+    outline: none;
+    border: none;
+    width: 100%;
+    position: relative;
+
+    &__icon {
+      left: 12px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+    }
+
+    &__input {
+      color: $black;
+      background: $white;
+      border: $borderOne;
+      display: inline-flex;
+      flex: 0 0 100%;
+      height: 40px;
+      margin: 0;
+      max-width: 100%;
+      width: 100%;
+      padding: 5px 10px 5px 40px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 14px;
+    }
+
+    &__input--active {
+      padding: 5px 10px 5px;
+    }
+  }
+}
+
+// scrollbar
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: $greyNine;
+  border-radius: 12px;
+}
+
+.scrollbars::-webkit-scrollbar {
+  width: 4px;
+  height: 12px;
+}
+
+.--valid-item {
+  cursor: not-allowed !important;
+  opacity: 0.4 !important;
+}
