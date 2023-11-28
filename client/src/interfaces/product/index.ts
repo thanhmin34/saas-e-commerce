@@ -28,13 +28,11 @@ export interface ProductItemInterface {
   quantity: number
   type?: string
   special_price?: number | null
-  rating_summary?: number | undefined
+  total_rating?: number | undefined
   review_count?: number | undefined
   out_of_stock: boolean | undefined
   url_path: string
   special_to_date: string | null
   special_from_date: string | null
   brand_name: undefined | string
-  ratingSummary: number | undefined
-  reviewCount: number | undefined
 }

@@ -1,0 +1,81 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.map {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  max-height: 250px;
+  @include flex(center, center);
+
+  @include respond(small-mobile) {
+    height: 200px;
+  }
+
+  .loading {
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &.v2 {
+    margin-bottom: 35px;
+  }
+
+  .search-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    & > div {
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      & .input.search-map-input,
+      & .map-complete {
+        width: unset;
+        max-width: calc(100vw - 30px);
+      }
+    }
+  }
+
+  .buffer-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+
+    .position {
+      flex-grow: 1;
+      height: 18px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .submit-button {
+      height: 36px;
+      border: none;
+      max-width: 175px;
+      min-width: 100px;
+    }
+  }
+
+  .edit-phone-container {
+    > div {
+      display: block !important;
+    }
+  }
+}

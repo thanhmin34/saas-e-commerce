@@ -34,11 +34,19 @@ const useCoupon = () => {
   const { showToast, typeToast } = useToastMessage()
   const cart = useSelector((state: RootState) => state.cartData)
 
-  const { mutate: addCouponMutation, isLoading: isLoadingAddCoupon } = useMutation('addCoupon', {
+  const {
+    mutate: addCouponMutation,
+    isLoading: isLoadingAddCoupon,
+    error: errorAddCoupon,
+  } = useMutation('addCoupon', {
     mutationFn: addCoupon,
   })
 
-  const { mutate: removeToCartMutation, isLoading: isLoadingRemoveCoupon } = useMutation('removeCoupon', {
+  const {
+    error: errorRemoveCoupon,
+    mutate: removeToCartMutation,
+    isLoading: isLoadingRemoveCoupon,
+  } = useMutation('removeCoupon', {
     mutationFn: removeCoupon,
   })
 
@@ -51,11 +59,14 @@ const useCoupon = () => {
       code,
       cart_id: cart.cart_id,
     }
-    const value = await addCouponMutation(params, {
+    addCouponMutation(params, {
       onSuccess(data, variables, context) {
         if ('status' in data) {
+          showToast(data?.message, typeToast.success)
           refetch()
+          return
         }
+        // showToast(data?.message, typeToast.error)
       },
       onError(error, variables, context) {
         console.log('error', error)
@@ -70,10 +81,12 @@ const useCoupon = () => {
     const params = {
       cart_id: cart.cart_id,
     }
-    const value = await removeToCartMutation(params, {
+    removeToCartMutation(params, {
       onSuccess(data, variables, context) {
         if ('status' in data) {
           refetch()
+          showToast(data?.message, typeToast.success)
+          return
         }
       },
       onError(error, variables, context) {
@@ -82,7 +95,12 @@ const useCoupon = () => {
     })
   }
 
-  return { handleAddCoupon, handleRemoveCoupon, isLoading: isLoadingAddCoupon || isLoadingRemoveCoupon }
+  return {
+    handleAddCoupon,
+    handleRemoveCoupon,
+    isLoading: !!isLoadingAddCoupon || !!isLoadingRemoveCoupon,
+    error: errorAddCoupon || errorRemoveCoupon,
+  }
 }
 
 export default useCoupon

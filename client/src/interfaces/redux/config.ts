@@ -13,6 +13,11 @@ export interface IConfigApp {
   background_color: string | undefined
   color: string | undefined
   currency: string
+  banner_checkout_left: string
+  banner_checkout_right: string
+  url_media_backend: string
+  prefix_url_media: string
+  national_flags_image: string
 }
 export interface ConfigAction {
   type: string

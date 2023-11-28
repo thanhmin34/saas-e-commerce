@@ -10,7 +10,7 @@ import { ProductItemInterface } from '@interfaces/product'
 import Link from 'next/link'
 
 const ProductItem = ({ item }: { item: ProductItemInterface }) => {
-  const { image, rating_summary, review_count, out_of_stock, url_path } = item || {}
+  const { image, total_rating = 0, review_count = 0, out_of_stock, url_path } = item || {}
   const { url, label } = image || {}
 
   return (
@@ -28,7 +28,7 @@ const ProductItem = ({ item }: { item: ProductItemInterface }) => {
           />
           <WishlistButton />
         </div>
-        <ProductRatingBlock ratingSummary={rating_summary} reviewCount={review_count} />
+        <ProductRatingBlock ratingSummary={total_rating} reviewCount={review_count} />
       </div>
     </div>
   )

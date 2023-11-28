@@ -1,0 +1,38 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.checkout {
+  width: 100%;
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 0 24px;
+  @include respond(extra-large-mobile) {
+    padding: 0 20px;
+  }
+  @include respond(large-mobile) {
+    padding: 11px 15px 0;
+  }
+  @include respond(extra-small-mobile) {
+    padding: 11px 10px 0;
+  }
+  .container {
+    width: 100%;
+    gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    @media (max-width: 1023px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .blockLeft {
+      width: 100%;
+      max-width: 592px;
+      margin: auto;
+    }
+    .blockRight {
+      width: 100%;
+      color: $textColor;
+    }
+  }
+}

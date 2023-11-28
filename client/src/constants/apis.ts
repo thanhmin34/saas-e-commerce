@@ -17,4 +17,6 @@ export const APIS = {
   SEO_PAGES: 'seo-pages',
   SEO_PRODUCT: 'seo-product',
   REVIEWS: 'reviews',
+  SHIPPING_METHOD: 'shipping-method',
+  PAYMENT_METHOD: 'payment-method',
 }

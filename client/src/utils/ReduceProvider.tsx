@@ -1,7 +1,7 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { Provider } from 'react-redux'
-import React, { ReactNode, Suspense } from 'react'
+import React, { ReactNode, Suspense, useEffect, useState } from 'react'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ToastContainer } from 'react-toastify'
@@ -12,6 +12,7 @@ import store from '@redux/store'
 import { AppProvider } from '@context/appContextProvider'
 import CartContextProvider from '@context/cartContextProvider'
 import Wrapper from '@components/Wrapper'
+import { usePathname } from 'next/navigation'
 
 const queryClient = new QueryClient()
 
@@ -26,6 +27,26 @@ const Footer = dynamic(() => import('@components/footer/Footer'), {
 })
 
 const ReduceProvider = ({ children }: { children: ReactNode }) => {
+  const pathName = usePathname()
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    const handleStart = () => {
+      console.log('start')
+      setIsLoading(true)
+    }
+    const handleStop = () => {
+      console.log('stop')
+      setIsLoading(false)
+    }
+
+    handleStop()
+
+    return () => {
+      handleStart()
+    }
+  }, [pathName])
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
@@ -39,6 +60,7 @@ const ReduceProvider = ({ children }: { children: ReactNode }) => {
               </Suspense>
               <main className="main main-container">{children}</main>
               <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
+              {isLoading && <Loading />}
             </AppProvider>
           </CartContextProvider>
         </Wrapper>

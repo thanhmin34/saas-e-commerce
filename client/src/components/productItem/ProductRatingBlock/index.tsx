@@ -15,7 +15,7 @@ const ProductRatingBlock = ({ ratingSummary = 0, reviewCount = 0 }: PropsType) =
       return (
         <span className={styles.productRating}>
           <ProductRating ratingValue={rating} />
-          <span>{reviewCount || 0}</span>
+          <span>{`(${reviewCount})`}</span>
           <span className={styles.ratingText}>{rating.toFixed(1)}</span>
         </span>
       )
@@ -23,7 +23,7 @@ const ProductRatingBlock = ({ ratingSummary = 0, reviewCount = 0 }: PropsType) =
       return (
         <span className={styles.productRating}>
           <ProductRating ratingValue={rating} />
-          <span>{reviewCount || 0}</span>
+          <span>{`(${reviewCount})`}</span>
         </span>
       )
     }

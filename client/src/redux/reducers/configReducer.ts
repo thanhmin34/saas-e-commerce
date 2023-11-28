@@ -16,6 +16,11 @@ const initState: IConfigApp = {
   background_color: '',
   color: '',
   currency: '',
+  banner_checkout_left: '',
+  banner_checkout_right: '',
+  url_media_backend: '',
+  prefix_url_media: '',
+  national_flags_image: '',
 }
 
 const configReducer = (state = initState, action: ConfigAction) => {
