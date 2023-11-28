@@ -78,16 +78,6 @@ const CheckoutAWSMap = ({ currentAddress }: { currentAddress: ICurrentAddress })
       //     setCredentials(data)
       //   }
       // })
-      const currentUser: ICredentials = {
-        identityId: 'eu-west-1:b982a556-aa60-4137-ad08-447f479ebd6a',
-        accessKeyId: 'ASIAURUDXVQIT6MOWKX7',
-        secretAccessKey: '2rVnDDZggRJcedIilvniSqh8u0AecsbB4cmkrFEi',
-        sessionToken:
-          'IQoJb3JpZ2luX2VjEEUaCWV1LXdlc3QtMSJHMEUCIC8ev+1CmXKrAgcWRaXzLutrw+24+icszp/sFueU8ZlPAiEAi0MZ9KDMpGZt+bb9MtYU1EZPkc5NAeCvEsPFHYyMCFYq1QUInv//////////ARAAGgwzMTI3MzUxNDkwNzMiDDFBoVAOSWgEwkaH5CqpBcvMxg3dBh4db+7hw9tvGQIw+BdlMgeZPUXeMJo6L03jzEmSh5chulyK3Ik3xL0Qi8Y61cIJcxHlrsOhycKTOc0IN5WdeddaMZGPWVucEjUnoZljdeMidf4idbEu/ziSKNmt79YDUKJ0Qp39OJ0h0cQZwRRD2rhkzCw3aiwyf5hv6obY7xEqQG68ajc7w4CQf8+D2EEpXr8R5hOHfqKaxE2PkC7c35Ouw4YP+g0ROBwl4GopVKTC/1jN5maaQB1+sWECkF5LmVQqkPxIWZjTCVQ/TvaGQH+ITPGPTUulvMgxLDHT1QSzyyxcUgY/ff/MOaisf1KcV1lu2z4Qr+bJV0LC+ejdNgKbYHk1TUFUwgVHlbq+M7MSKJ8an+nnJslK9Rbs9zL6pMq9YQCFJwwVm3deaudYI694+M52MLO9qPnU2FMbgyuzMnwzYRdZuoHvNQb/ryWOcFNUk54QK0kKQpqjMkqCRL3XNmHisduQ8a+tAejCfE+4Tq25shK0sGz9b8YbEzKSMHGql67b2G+YEkWdzj5cvfm0RtkrJCyKdDFiEnBny85J2GoaZ/3NKNL22eiFijud7Ov4D97/yFpsw4lPM/2Ae0a/S2i8dZr9N75aYIqiUVUaugmUc9AOYooNE3gvOzAGNN1RwTMx6T96LEyvJwIMGwVFJ1yR+tIV1xwzCtsNaFHkFdEW/ZBlxW4R0cNZtfggXBZ6KCdZ6avOXmD4ZsVU+G3zdCxrm++qwlMNlPnifz0jd/sIM83w4x4/lI9Ldq4kGyYuMdQx/JiTKJQx+LlHd2cGTimm8txvqJ0R5AG8FInGeX/VTBUOv4p/28pmtZex7xwqEi0nRrGoUB85T3WNnGq6j49xbTOX4qRSP0WZUQ7/bEnKJ4ufbjjPixDYJK/Il0O2ljDUwpCrBjraAnUS2QU1sQ49HuLEwB3iSk98MaHjhz4uY85Q7wHIRsJZBiOdgLFawqHjpe39TMR/zxElZygYZEoMidhgb+605xMovTZY+da1u48YpcMvcka0HlXJyoRLkFGjl+oJQVdo1wB88JSh1fCID5bUeD96Pa5S6dDPgGTvK8ZV/WcyNI8SLx+ncVuAhagvzfp6dmJ3SmlKDFni63FvXfu3L4HC3r6XXkItT/z0/jVKU0lGS58B9l0ZDz8ChOaU7Tu81rn0C3DRCAJbFFUAExIKLMB0YoDdOvRHEMJjnk7hRYYGVTwu2c7hGP1HdtD9VDMhNLkF9tDkrDhrYjpjZF3yxaQ+29DaQlaqNzYGn6QDGJU7ogatjAyD6/3HHnQSQqynxlJ91h77COSt03kyB/O1KKWo8l6jX1zWrv8oGCIUns6z1YTn98/eTwVk5D9vjo6PcGAMnE4SGs2Gt81y618=',
-        expiration: new Date('2023-11-27T05:55:48.000Z'),
-        authenticated: false,
-      }
-      setCredentials(currentUser)
     }
 
     fetchCredentials()
