@@ -18,7 +18,8 @@ const Button: React.FC<{
   otherProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
   buttonType?: string
   isDisableStyles?: boolean
-}> = ({ style, className, children, onClick, disabled, isDisableStyles, buttonType, ...otherProps }) => {
+  type?: 'submit' | 'button'
+}> = ({ style, className, children, onClick, disabled, isDisableStyles, type, buttonType, ...otherProps }) => {
   const stylesButton: ConfigButton = {
     borderRadius: '4',
     backgroundColor: 'rgb(0, 104, 52)',
@@ -47,6 +48,7 @@ const Button: React.FC<{
     <button
       onClick={onClick}
       disabled={disabled}
+      type={type}
       style={_style}
       className={`${styles.button} ${className ? className : ''}`}
       {...otherProps}

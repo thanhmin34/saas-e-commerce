@@ -8,7 +8,7 @@ import Button from '@components/button'
 import styles from './styles.module.scss'
 
 interface INoteProps {
-  onSubmit: (value: string) => void
+  onSubmit: (notes: string) => void
   initialValue: string
 }
 const CheckoutNote = (props: INoteProps) => {
@@ -17,7 +17,7 @@ const CheckoutNote = (props: INoteProps) => {
   const { localizeMessage } = useIntl()
   const [value, updateValue] = useState(initialValue)
   const cart = useSelector((state: RootState) => state.cartData)
-  const cartNote = get(cart, 'customer_note')
+  const cartNote = get(cart, 'notes')
 
   return (
     <div className={styles.inputElement}>

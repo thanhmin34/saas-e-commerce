@@ -12,7 +12,6 @@ import { ICredentials } from '@aws-amplify/core'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 //Hooks
-const TOKEN_MAP_BOX = 'pk.eyJ1IjoidGhhbmhtaW4zNCIsImEiOiJjbDJ1NGNsMG4wYW8zM2lwMm8wdm9taHE2In0.zgLp06F_0sJvF-jPi5i1Eg'
 import { get } from 'lodash'
 import { DEFAULT_VALUE, ZOOM_LEVEL } from '@constants/map'
 import awsmobile from '../../../../aws-exports'
@@ -21,6 +20,10 @@ import { imageUrls } from '@constants/imageUrls'
 import { useCheckoutAWSMap } from '@hooks/useCheckoutAWSMap'
 import styles from './styles.module.scss'
 import Image from 'next/legacy/image'
+import { IPlace } from '@interfaces/checkout'
+import useToastMessage from '@hooks/useToastMessage'
+import Loading from '@components/loading'
+const TOKEN_MAP_BOX = 'pk.eyJ1IjoidGhhbmhtaW4zNCIsImEiOiJjbDJ1NGNsMG4wYW8zM2lwMm8wdm9taHE2In0.zgLp06F_0sJvF-jPi5i1Eg'
 
 Amplify.configure(awsmobile)
 
@@ -55,14 +58,21 @@ const transformRequest = (credentials: ICredentials) => (url: string, resourceTy
   return { url: url || '' }
 }
 
-const CheckoutAWSMap = ({ currentAddress }: { currentAddress: ICurrentAddress }) => {
-  const [credentials, setCredentials] = useState<ICredentials | null>(null)
+const CheckoutAWSMap = ({
+  currentAddress,
+  onChangeAddress,
+}: {
+  currentAddress: ICurrentAddress
+  onChangeAddress: (data: IPlace) => void
+}) => {
+  const { showToast, typeToast } = useToastMessage()
 
+  const [credentials, setCredentials] = useState<ICredentials | null>(null)
   const { viewportState, markerState, onPickMarker, updateViewPort, onPickCurrentLocation } = useCheckoutAWSMap({
     currentAddress,
   })
   const [viewport, setViewport] = viewportState
-
+  const [isLoading, setIsLoading] = useState(false)
   const [markers] = markerState
   const mapRef = useRef(null)
 
@@ -72,12 +82,12 @@ const CheckoutAWSMap = ({ currentAddress }: { currentAddress: ICurrentAddress })
 
   useEffect(() => {
     const fetchCredentials = async () => {
-      // const currentUser = Auth.currentUserCredentials()
-      // currentUser.then((data: ICredentials) => {
-      //   if (data) {
-      //     setCredentials(data)
-      //   }
-      // })
+      const currentUser = Auth.currentUserCredentials()
+      currentUser.then((data: ICredentials) => {
+        if (data) {
+          setCredentials(data)
+        }
+      })
     }
 
     fetchCredentials()
@@ -95,8 +105,39 @@ const CheckoutAWSMap = ({ currentAddress }: { currentAddress: ICurrentAddress })
       markers.latitude !== DEFAULT_VALUE.latitude &&
       markers.longitude !== DEFAULT_VALUE.longitude
     ) {
+      setIsLoading(true)
       Geo.searchByCoordinates([markers.longitude, markers.latitude], { maxResults: 2 }).then((data) => {
-        console.log('data', data)
+        if (!data) {
+          showToast('Invalid address', typeToast.error)
+          setIsLoading(false)
+          return
+        }
+        const {
+          addressNumber = '',
+          country = '',
+          geometry,
+          label = '',
+          municipality = '',
+          postalCode = '',
+          region = '',
+          street = '',
+        } = data || {}
+        const { point } = geometry || {}
+        const params = {
+          address_number: addressNumber,
+          post_code: postalCode,
+          region,
+          street,
+          city: municipality,
+          label,
+          country,
+          tempLatLng: {
+            latitude: point && point?.length > 1 ? point[1] : DEFAULT_VALUE.latitude,
+            longitude: point && point?.length > 1 ? point[0] : DEFAULT_VALUE.longitude,
+          },
+        }
+        onChangeAddress(params)
+        setIsLoading(false)
       })
     }
   }, [markers])
@@ -147,6 +188,7 @@ const CheckoutAWSMap = ({ currentAddress }: { currentAddress: ICurrentAddress })
           priority={true}
         />
       )}
+      {isLoading && <Loading />}
     </div>
   )
 }

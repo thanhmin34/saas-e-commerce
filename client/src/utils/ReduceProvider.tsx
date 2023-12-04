@@ -31,38 +31,22 @@ const ReduceProvider = ({ children }: { children: ReactNode }) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  useEffect(() => {
-    const handleStart = () => {
-      console.log('start')
-      setIsLoading(true)
-    }
-    const handleStop = () => {
-      console.log('stop')
-      setIsLoading(false)
-    }
-
-    handleStop()
-
-    return () => {
-      handleStart()
-    }
-  }, [pathName])
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <ToastContainer />
         <Wrapper>
-          <CartContextProvider>
-            <AppProvider>
+          <AppProvider>
+            <CartContextProvider>
               <Suspense fallback={<Loading />}>
                 <Header />
               </Suspense>
               <main className="main main-container">{children}</main>
               <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
               {isLoading && <Loading />}
-            </AppProvider>
-          </CartContextProvider>
+            </CartContextProvider>
+          </AppProvider>
         </Wrapper>
       </QueryClientProvider>
     </Provider>

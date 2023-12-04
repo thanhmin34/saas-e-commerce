@@ -553,3 +553,20 @@
   cursor: not-allowed !important;
   opacity: 0.4 !important;
 }
+.addressInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+}
+.actions {
+  display: flex;
+  gap: 32px;
+  button {
+    width: 100%;
+    border-radius: 0 !important;
+  }
+}

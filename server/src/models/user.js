@@ -29,17 +29,23 @@ const User = (sequelize, DataTypes) => {
         foreignKey: "id",
         as: "customerShippingAddress",
       });
+
+      User.belongsToMany(models.Gender, {
+        through: "users_gender",
+      });
     }
   }
   User.init(
     {
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+      firstname: DataTypes.STRING,
+      lastname: DataTypes.STRING,
       email: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      phone_number: DataTypes.STRING,
       address: DataTypes.STRING,
       password: DataTypes.STRING,
       token: DataTypes.STRING,
+      birth_date: DataTypes.DATE,
+      gender: DataTypes.STRING,
     },
     {
       sequelize,

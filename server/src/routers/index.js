@@ -6,7 +6,7 @@ const productCartRouter = require("./productCartRouter.js");
 const shippingMethodsRouter = require("./shippingMethodsRouter.js");
 const paymentMethodsRouter = require("./paymentMethodsRouter.js");
 const discountsRouter = require("./discountsRouter.js");
-const addressRouter = require("./addressRouter.js");
+const shippingAddressRouter = require("./shippingAddressRouter.js");
 const ordersRouter = require("./ordersRouter.js");
 const wishlistsRouter = require("./wishlistsRouter.js");
 const homePagesRouter = require("./homePagesRouter.js");
@@ -16,6 +16,7 @@ const categoryRouter = require("./categoryRouter.js");
 const productInCategoryRouter = require("./productInCategoryRouter.js");
 const seoRouter = require("./seoRouter.js");
 const reviewRouter = require("./reviewRouter.js");
+const noteRouter = require("./notesRouter.js");
 
 const renderRouters = (app) => {
   const listRouters = [
@@ -27,7 +28,7 @@ const renderRouters = (app) => {
     shippingMethodsRouter,
     paymentMethodsRouter,
     discountsRouter,
-    addressRouter,
+    shippingAddressRouter,
     ordersRouter,
     wishlistsRouter,
     homePagesRouter,
@@ -37,6 +38,7 @@ const renderRouters = (app) => {
     productInCategoryRouter,
     seoRouter,
     reviewRouter,
+    noteRouter,
   ];
 
   listRouters.map((item) => app.use("/", item));

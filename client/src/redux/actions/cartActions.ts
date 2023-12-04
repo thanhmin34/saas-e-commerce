@@ -19,10 +19,11 @@ export const removeCart = () => {
       total_quantity: 0,
       price: null,
       payment_methods: null,
-      shipping_method: null,
+      shipping_methods: null,
       shipping_address: null,
       products: [],
       discount: null,
+      notes: '',
     },
   }
   return action

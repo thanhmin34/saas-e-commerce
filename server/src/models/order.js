@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const { DEFAULT_ORDER_NUMBER } = require("../constants/variables");
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {
@@ -24,10 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
         field: "id",
-        defaultValue: 10000000,
+        autoIncrementStart: DEFAULT_ORDER_NUMBER,
       },
       customer_id: DataTypes.INTEGER,
       status: DataTypes.STRING,
+      cart_id: DataTypes.STRING,
     },
     {
       sequelize,

@@ -1,5 +1,5 @@
-@import "@scss/variables";
-@import "@scss/mixins";
+@import '@scss/variables';
+@import '@scss/mixins';
 
 .inputPhone {
   display: flex;
@@ -13,7 +13,7 @@
   &:focus-within {
     border-color: $black;
   }
-  &:focus-within:not([value=""]:not(:focus):invalid) {
+  &:focus-within:not([value='']:not(:focus):invalid) {
     border-color: $black;
   }
 
@@ -79,4 +79,18 @@
   align-items: center;
   gap: 6px;
   padding: 0px 7.5px;
+}
+.messageError {
+  margin-top: 4px;
+  margin-left: 12px;
+  color: #f63248;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 100%;
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }

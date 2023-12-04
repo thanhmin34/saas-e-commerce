@@ -12,9 +12,18 @@ const addressSchema = Joi.object({
     country: Joi.string().required(),
     city: Joi.string().required(),
     street: Joi.string().required(),
-    post_code: Joi.number().required(),
+    post_code: Joi.string().required(),
     phone: Joi.string().required(),
-    email: Joi.string().email(),
+    firstname: Joi.string().required(),
+    lastname: Joi.string().required(),
+    region: Joi.string().required(),
+    email: Joi.string().allow(),
+    address_number: Joi.string(),
+    label: Joi.string(),
+    tempLatLng: Joi.object({
+      latitude: Joi.number(),
+      longitude: Joi.number(),
+    }),
   }),
 });
 
@@ -25,7 +34,20 @@ const validateFieldBySchema = (data, schema) => {
 const addShippingAddress = asyncHandler(async (req, res) => {
   const { body } = req || {};
   const { cart_id, address } = body || {};
-  const { country, city, street, post_code, email, phone } = address || {};
+  const {
+    country,
+    city,
+    street,
+    post_code,
+    email,
+    phone,
+    tempLatLng,
+    address_number = "",
+    firstname,
+    lastname,
+    label = "",
+    region,
+  } = address || {};
   try {
     const { error } = validateFieldBySchema(body, addressSchema);
     if (error) {
@@ -53,7 +75,13 @@ const addShippingAddress = asyncHandler(async (req, res) => {
         post_code,
         email,
         phone,
+        tempLatLng,
         cart_id: cart?.id,
+        address_number,
+        firstname,
+        lastname,
+        label,
+        region,
       });
     } else {
       await ShippingAddress.update(address, { where: { id: addressId } });

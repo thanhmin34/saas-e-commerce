@@ -11,11 +11,9 @@ import TabPaneBlock from '../tab-pane-block'
 import LoginPhoneNumber from '../login-phone-number'
 import QuestionRegister from '../question-register'
 import LoginByEmail from '../login-in-by-email'
-import LocalStorageManager from '@utils/simplePersistence'
 
 const Login = () => {
   const { device } = useDetectDevice()
-
   const [showTabId, setShowTabId] = useState(SELECT_TAB_ID.TAB_LOGIN_PHONE)
 
   const title = useMemo(() => {

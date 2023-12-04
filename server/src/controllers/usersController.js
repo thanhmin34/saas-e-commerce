@@ -1,6 +1,7 @@
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
+const moment = require("moment");
 const { User, Wallet, Cart } = require("../models");
 const {
   notificationMessageError,
@@ -15,6 +16,16 @@ const createUserSchema = Joi.object({
   lastName: Joi.string().trim().required(),
   email: Joi.string().email(),
   password: Joi.string().min(6).required(),
+});
+
+const editUserSchema = Joi.object({
+  firstname: Joi.string().trim().required(),
+  lastname: Joi.string().trim().required(),
+  email: Joi.string().email(),
+  phone_number: Joi.string().min(8).required(),
+  gender: Joi.string().required(),
+  birth_date: Joi.string().required(),
+  id: Joi.number().required(),
 });
 
 const loginUserSchema = Joi.object({
@@ -49,7 +60,6 @@ const getUserInformation = asyncHandler(async (req, res) => {
 
   try {
     const token = getToken(headers);
-
     const user = await User.findOne({
       where: {
         token,
@@ -65,19 +75,80 @@ const getUserInformation = asyncHandler(async (req, res) => {
         },
       ],
     });
+    if (!user) {
+      return notificationMessageError(res, "invalid token");
+    }
 
-    const { firstName, lastName, id, email, phoneNumber, userCart } =
-      user || {};
+    const {
+      firstname,
+      lastname,
+      id,
+      email,
+      phone_number,
+      userCart,
+      gender,
+      birth_date,
+    } = user || {};
 
     return notificationMessageSuccess(res, {
       user: {
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         id,
         email,
-        phoneNumber,
+        phone_number,
+        gender,
+        birth_date: birth_date ? moment(birth_date).format("L") : "",
       },
       cart_id: userCart?.cart_id,
+    });
+  } catch (error) {
+    return notificationMessageError(res, "Internal server error");
+  }
+});
+
+const editUserInformation = asyncHandler(async (req, res) => {
+  const { body } = req || {};
+  const { firstname, lastname, id, email, phone_number, gender, birth_date } =
+    body || {};
+
+  try {
+    const { error } = validateFieldByCreateUser(body, editUserSchema);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+    const user = await User.findOne({
+      where: {
+        id,
+      },
+      attributes: {
+        exclude: ["updatedAt", "createdAt", "password", "address"],
+      },
+    });
+    if (!user) {
+      return notificationMessageError(res, "invalid user");
+    }
+    user.firstname = firstname;
+    user.lastname = lastname;
+    user.email = email;
+    user.phone_number = phone_number;
+    user.birth_date = birth_date;
+    user.gender = gender;
+
+    await user.save();
+
+    return notificationMessageSuccess(res, {
+      status: true,
+      message: "Edit information successfully",
+      user: {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        email: user.email,
+        phone_number: user.phone_number,
+        birth_date: user.birth_date,
+        gender: user.gender,
+        id: user?.id,
+      },
     });
   } catch (error) {
     return notificationMessageError(res, "Internal server error");
@@ -106,8 +177,8 @@ const registerByEmail = asyncHandler(async (req, res) => {
     const user = await User.create({
       email,
       password,
-      firstName,
-      lastName,
+      firstname: firstName,
+      lastname: lastName,
     });
 
     if (user?.dataValues?.id) {
@@ -187,4 +258,5 @@ module.exports = {
   loginByEmail,
   getUserInformation,
   logOut,
+  editUserInformation,
 };

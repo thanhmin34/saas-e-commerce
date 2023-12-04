@@ -1,16 +1,21 @@
 'use client'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import LocalStorageManager from '@utils/simplePersistence'
-import STORAGE_KEYS from '@constants/storageKeys'
+import { useCallback, useEffect, useRef } from 'react'
 import { TWE } from '@constants/variables'
-import { useDispatch } from 'react-redux'
+import STORAGE_KEYS from '@constants/storageKeys'
+import LocalStorageManager from '@utils/simplePersistence'
+import { RootState } from '@redux/reducers'
+import { useDispatch, useSelector } from 'react-redux'
 import { setIsSignIn } from '@redux/actions/userInfoAction'
+import useLoginExpired from '@lib/auth/useLoginExpired'
+import useAccount from '@lib/account-information/useAccount'
 
-const TTL = 60 * 60
+const TTL = 24 * 60 * 60
 
 const useAuth = () => {
   const dispatch = useDispatch()
   const storage = new LocalStorageManager()
+  const { handleLoginExpired } = useLoginExpired()
+  const { userInfo } = useSelector((state: RootState) => state.userInfo)
   let jsonToken =
     typeof window !== 'undefined'
       ? storage.getItem(STORAGE_KEYS.TOKEN)
@@ -19,14 +24,16 @@ const useAuth = () => {
       : null
 
   const calledRef = useRef<boolean>()
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
+  const isSignedInRef = useRef<boolean>(false)
   const now = Date.now()
 
-  const { timeStored } = jsonToken || {}
+  const { timeStored, value } = jsonToken || {}
+
+  useAccount({ enabled: isSignedInRef.current })
   const handleSignOut = useCallback(async () => {
     try {
       if (!!timeStored && !calledRef.current) {
-        storage.removeItem(STORAGE_KEYS.TOKEN)
+        handleLoginExpired()
         calledRef.current = true
       }
       setTimeout(() => {
@@ -45,6 +52,7 @@ const useAuth = () => {
     if (timeStored && TTL) {
       const timeRemainExpired = now - timeStored
       const timeout = TTL * 1000 - timeRemainExpired - TWE * 1000
+
       let checkAuthTimeout: NodeJS.Timeout
       // If timestored is has value, it mean has token and user login
       if (!!timeStored) {
@@ -64,9 +72,32 @@ const useAuth = () => {
 
   useEffect(() => {
     dispatch(setIsSignIn(!!timeStored))
-  }, [timeStored])
+    if (userInfo && value) {
+      isSignedInRef.current = !('id' in userInfo)
+    }
+  }, [timeStored, userInfo, value])
 
-  return { isSignedIn }
+  // useEffect(() => {
+  //   const onRemoveSignInToken = async (e: StorageEvent) => {
+  //     try {
+  //       if (e.key === `${STORAGE_KEYS.TOKEN}` && !e.newValue) {
+  //         // const token = JSON.parse(e?.oldValue)
+  //         // const authToken = JSON.parse(token?.value)
+  //         //signOut TODO
+  //         handleLoginExpired()
+  //         // handle checkout data
+  //       } else if (e.newValue === e.oldValue && !e.newValue && !e.oldValue && !e.key && e.storageArea?.length === 0) {
+  //         handleLoginExpired()
+  //         // handle checkout data
+  //       } else return
+  //     } catch (error) {
+  //       return
+  //     }
+  //   }
+  //   window.addEventListener('storage', onRemoveSignInToken)
+  // }, [])
+
+  return {}
 }
 
 export default useAuth

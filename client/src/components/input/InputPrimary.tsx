@@ -11,15 +11,26 @@ interface InputPrimary {
   message: string
   refInput: object
   onBlur: ChangeEventHandler<HTMLInputElement>
+  disabled: boolean
 }
 
 type InputOption = Partial<InputPrimary>
 
-const InputPrimary = React.forwardRef((props: InputOption, ref: React.LegacyRef<HTMLInputElement> | undefined) => {
-  const { type = 'text', placeholder = 'Enter the input', name, className, message, refInput, onChange, onBlur } = props
+const InputPrimary = React.forwardRef((props: InputOption, ref?: React.LegacyRef<HTMLInputElement> | undefined) => {
+  const {
+    type = 'text',
+    placeholder = 'Enter the input',
+    name,
+    className,
+    message,
+    onChange,
+    onBlur,
+    disabled,
+    ...refInput
+  } = props
 
   return (
-    <>
+    <div className={styles.container}>
       <div className={`${styles.inputElement} ${className}`}>
         <div className={styles.inputWrapper}>
           <input
@@ -30,13 +41,14 @@ const InputPrimary = React.forwardRef((props: InputOption, ref: React.LegacyRef<
             onChange={onChange}
             onBlur={onBlur}
             className={styles.input}
+            disabled={!!disabled}
             {...refInput}
           />
           <span className={styles.label}>{placeholder}</span>
         </div>
       </div>
       {message ? <div className={styles.messageError}>{message}</div> : ''}
-    </>
+    </div>
   )
 })
 

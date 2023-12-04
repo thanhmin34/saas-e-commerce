@@ -29,7 +29,7 @@ const useCart = () => {
   const dispatch = useDispatch()
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['cart'],
+    queryKey: ['cart', refCart.current],
     queryFn: getCart,
     refetchOnWindowFocus: false,
     onSuccess(data) {
@@ -48,7 +48,7 @@ const useCart = () => {
   return {
     isLoading,
     data,
-    refetch,
+    refetchCart: refetch,
     getCartDetails,
   }
 }

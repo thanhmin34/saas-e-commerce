@@ -22,7 +22,7 @@ export default function CartCalculationArea() {
         <SummaryContainer />
         <PriceInformationContainer />
         <DiscountForm />
-        <Button onClick={() => push(ROUTER_PATHS.CHECK_OUT)}>{localizeMessage('Proceed to Checkout')}</Button>
+        <Button onClick={() => push(ROUTER_PATHS.CHECKOUT)}>{localizeMessage('Proceed to Checkout')}</Button>
       </div>
     </div>
   )

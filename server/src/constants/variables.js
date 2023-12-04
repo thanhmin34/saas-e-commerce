@@ -1,0 +1,5 @@
+const DEFAULT_ORDER_NUMBER = 10000000;
+
+module.exports = {
+  DEFAULT_ORDER_NUMBER,
+};

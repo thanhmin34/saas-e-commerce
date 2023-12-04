@@ -18,6 +18,10 @@ export interface IConfigApp {
   url_media_backend: string
   prefix_url_media: string
   national_flags_image: string
+  country_code: string
+  mask_input_phone: string
+  place_holder_country: string
+  image_country_input: string
 }
 export interface ConfigAction {
   type: string

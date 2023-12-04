@@ -7,12 +7,12 @@ import { RootState } from '@redux/reducers'
 import useIntl from '@hooks/useIntl'
 import styles from './styles.module.scss'
 import useCoupon from '@lib/discount/useDiscount'
+import Loading from '@components/loading'
 
 const DiscountForm = ({ className }: { className?: string }) => {
   const { localizeMessage } = useIntl()
   const cart = useSelector((state: RootState) => state.cartData)
   const { handleAddCoupon, handleRemoveCoupon, isLoading, error } = useCoupon()
-  console.log('error', error)
 
   const [couponCode, setCouponCode] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -81,6 +81,7 @@ const DiscountForm = ({ className }: { className?: string }) => {
       {renderCouponInput()}
       {renderSubmitButton()}
       {errorMessage && <p className={styles.errorMessage}>{localizeMessage(errorMessage)}</p>}
+      {isLoading && <Loading />}
     </div>
   )
 }

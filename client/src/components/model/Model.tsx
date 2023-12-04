@@ -8,10 +8,11 @@ type Props = {
   isOpen: boolean
   children: React.ReactNode
   handleClose: () => void
+  className?: string
 }
 
 const Model = (props: Props) => {
-  const { isOpen, handleClose, children } = props
+  const { isOpen, handleClose, children, className } = props
 
   const style = {
     position: 'absolute' as 'absolute',
@@ -30,6 +31,7 @@ const Model = (props: Props) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={className}
     >
       <Box sx={style}>
         <div className={styles.model}>

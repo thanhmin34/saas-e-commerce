@@ -11,8 +11,14 @@ import WrapperToggle from './WrapperToggle'
 import CheckoutNote from './CheckoutNote'
 import DiscountForm from '@components/cart-page/cart-calculation-area/DiscountForm'
 
-const CheckoutReview = () => {
-  const [numberOffset, setNumberOffset] = useState(0)
+interface INotesProps {
+  onAddNotes: (notes: string) => void
+  notes: string
+  onSubmitOrder: () => void
+  isDisabled: boolean
+}
+const CheckoutReview = (props: INotesProps) => {
+  const { onAddNotes, notes, onSubmitOrder, isDisabled } = props || {}
   const { localizeMessage } = useIntl()
   const cartFromRedux = useSelector((state: RootState) => state.cartData)
   const { currency } = useSelector((state: RootState) => state.configApp)
@@ -20,35 +26,6 @@ const CheckoutReview = () => {
   const containerRef = useRef(null)
   // const checkoutContainer = document.getElementById('checkoutContainer')
   // const headerElement = document.querySelector('.header')
-  const onPlaceOrder = () => {}
-
-  // * Implement this for keep data in Checkout page when create cart after checkout
-  const [cart, updateCart] = useState<ICart | null>(null)
-
-  useEffect(() => {
-    if (cartFromRedux && cartFromRedux.cart_id && cartFromRedux.total_quantity === 0) {
-      return
-    }
-    updateCart(cartFromRedux)
-  }, [cartFromRedux])
-
-  //TODO: Should revert code after delete top header banner
-  // useEffect(() => {
-  //   if (window && typeof window !== 'undefined' && typeof window.getComputedStyle === 'function') {
-  //     if (checkoutContainer) {
-  //       if (headerElement) {
-  //         const heightHeader = parseInt(window.getComputedStyle(headerElement).getPropertyValue('height'))
-  //         const rect = checkoutContainer.getBoundingClientRect()
-  //         const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-
-  //         // Number 15 is subtracted from top style 200 set statically on the class checkout review
-  //         // and real top space with that element to the top of the site
-  //         const numberOffset = rect.top + scrollTop - heightHeader - 15
-  //         setNumberOffset(numberOffset)
-  //       }
-  //     }
-  //   }
-  // }, [checkoutContainer, headerElement])
 
   const { price } = cartFromRedux || {}
 
@@ -93,6 +70,34 @@ const CheckoutReview = () => {
       display: true,
     },
   ]
+
+  // * Implement this for keep data in Checkout page when create cart after checkout
+  const [cart, updateCart] = useState<ICart | null>(null)
+
+  useEffect(() => {
+    if (cartFromRedux && cartFromRedux.cart_id && cartFromRedux.total_quantity === 0) {
+      return
+    }
+    updateCart(cartFromRedux)
+  }, [cartFromRedux])
+
+  //TODO: Should revert code after delete top header banner
+  // useEffect(() => {
+  //   if (window && typeof window !== 'undefined' && typeof window.getComputedStyle === 'function') {
+  //     if (checkoutContainer) {
+  //       if (headerElement) {
+  //         const heightHeader = parseInt(window.getComputedStyle(headerElement).getPropertyValue('height'))
+  //         const rect = checkoutContainer.getBoundingClientRect()
+  //         const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+
+  //         // Number 15 is subtracted from top style 200 set statically on the class checkout review
+  //         // and real top space with that element to the top of the site
+  //         const numberOffset = rect.top + scrollTop - heightHeader - 15
+  //         setNumberOffset(numberOffset)
+  //       }
+  //     }
+  //   }
+  // }, [checkoutContainer, headerElement])
 
   // const discountsFormatted =
   //   discounts?.length > 0 &&
@@ -144,19 +149,17 @@ const CheckoutReview = () => {
       <div className={styles.title}>{localizeMessage('Review your requests')}</div>
       <div className={styles.content}>
         {reviewLine.length > 0 && reviewLine.map((item, index) => <ReviewLineItem key={index} item={item} />)}
-        {/* {discountsFormatted.length > 0 &&
-          discountsFormatted.map((item, index) => <ReviewLineItem key={index} item={item} discount={true} />)} */}
       </div>
       <div className={styles.discount}>
         <WrapperToggle title={'Use a discount code'}>
           <DiscountForm className={styles.discountFormInput} />
         </WrapperToggle>
         <WrapperToggle title={'Add a note'}>
-          <CheckoutNote initialValue="" onSubmit={(value: string) => {}} />
+          <CheckoutNote initialValue={notes} onSubmit={onAddNotes} />
         </WrapperToggle>
       </div>
 
-      <PlaceOrderButton disabled={false} handleSubmit={onPlaceOrder} />
+      <PlaceOrderButton disabled={isDisabled} handleSubmit={onSubmitOrder} />
     </div>
   )
 }

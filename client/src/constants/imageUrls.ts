@@ -14,4 +14,13 @@ export const imageUrls = {
   bankTBPayment: '/assets/icon/tb-payment.png',
   checkoutSelect: '/assets/icon/checkout-select.svg',
   checkoutSelectActive: '/assets/icon/checkout-select-active.svg',
+  checkoutOrderSuccess: '/assets/icon/order-success.png',
+  checkoutOrderError: '/assets/icon/order-error.png',
+  iconAccountInfo: '/assets/icon/account-info.jpg',
+  iconAccountAddress: '/assets/icon/account-address.jpg',
+  iconAccountOrder: '/assets/icon/account-order.jpg',
+  iconAccountWishlist: '/assets/icon/account-wishlist.jpg',
+  iconAccountLogout: '/assets/icon/account-logout.jpg',
+  iconEdit: '/assets/icon/icon-edit.png',
+  iconFlagUsa: '/assets/icon/flag-usa.png',
 }
