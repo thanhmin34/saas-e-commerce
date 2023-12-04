@@ -30,7 +30,7 @@ export const removeCoupon = async ({ cart_id }: { cart_id: string }) => {
 }
 
 const useCoupon = () => {
-  const { refetch } = useCart()
+  const { refetchCart } = useCart()
   const { showToast, typeToast } = useToastMessage()
   const cart = useSelector((state: RootState) => state.cartData)
 
@@ -63,13 +63,10 @@ const useCoupon = () => {
       onSuccess(data, variables, context) {
         if ('status' in data) {
           showToast(data?.message, typeToast.success)
-          refetch()
+          refetchCart()
           return
         }
-        // showToast(data?.message, typeToast.error)
-      },
-      onError(error, variables, context) {
-        console.log('error', error)
+        showToast(data?.response?.data?.message, typeToast.error)
       },
     })
   }
@@ -84,13 +81,11 @@ const useCoupon = () => {
     removeToCartMutation(params, {
       onSuccess(data, variables, context) {
         if ('status' in data) {
-          refetch()
+          refetchCart()
           showToast(data?.message, typeToast.success)
           return
         }
-      },
-      onError(error, variables, context) {
-        console.log('error', error)
+        showToast(data?.response?.data?.message, typeToast.error)
       },
     })
   }

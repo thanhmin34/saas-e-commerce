@@ -3,27 +3,10 @@ import Link from 'next/link'
 import React, { useMemo } from 'react'
 
 import styles from './styles.module.scss'
-import Image from 'next/image'
 import { DEVICE } from '@constants/device'
 import useDetectDevice from '@hooks/useDetectDevice'
+import Image from 'next/legacy/image'
 
-// const data = {
-//   banner_cart_left_desktop: {
-//     url: 'https://media.9ten.cloud/media/snaptec/pwa/stores/15/Cart-Banner-Half-Shea-Butter-EN-min_1.png',
-//     alt: 'image',
-//     link: '/',
-//   },
-//   banner_cart_right_desktop: {
-//     url: 'https://media.9ten.cloud/media/snaptec/pwa/stores/15/Cart-Banner-Free-Shipping-EN-min_1.png',
-//     alt: 'image',
-//     link: '/',
-//   },
-//   banner_cart_mobile: {
-//     url: 'https://media.9ten.cloud/media/snaptec/pwa/stores/15/Cart-Banner-Half-Shea-Butter-EN-min_1.png',
-//     alt: 'image',
-//     link: '/',
-//   },
-// }
 export default function CartBanner() {
   const { device } = useDetectDevice()
 
@@ -31,7 +14,7 @@ export default function CartBanner() {
     return (
       <Link href={link}>
         <div className={styles.imageContainer}>
-          <Image className="img-fluid w-100" src={src} alt={alt} layout="fill" />
+          <Image className="img-fluid w-100" src={src} alt={alt} layout="fill" priority />
         </div>
       </Link>
     )

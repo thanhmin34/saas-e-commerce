@@ -1,4 +1,4 @@
-import { ISignInAction, IUserInfo, IUserInfoAction } from '@interfaces/redux/userInfo'
+import { ISignInAction, IUserInfo, IUserInfoAction, IUserInfoData } from '@interfaces/redux/userInfo'
 import { SET_IS_SIGN_IN, SET_USER_INFO } from '@redux/actions/userInfoAction'
 import LocalStorageManager from '@utils/simplePersistence'
 import STORAGE_KEYS from '@constants/storageKeys'
@@ -11,14 +11,14 @@ let jsonToken =
       : null
     : null
 
-const initState: IUserInfo = {
+const initState = {
   userInfo: {},
   isSignedIn: jsonToken ? !!jsonToken : false,
-}
+} satisfies IUserInfoData
 
 type IAction = IUserInfoAction | ISignInAction
 
-const userInfoReducer = (state = initState, action: IAction): IUserInfo => {
+const userInfoReducer = (state = initState, action: IAction): IUserInfoData => {
   switch (action.type) {
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload }

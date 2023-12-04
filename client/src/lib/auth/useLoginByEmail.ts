@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import useToastMessage from '@hooks/useToastMessage'
 import apiClient from '@network/apiClient'
 import LocalStorageManager from '@utils/simplePersistence'
+import { useAfterLogin } from './useAfterLogin'
 
 type IUser = {
   email: string
@@ -35,8 +36,9 @@ const loginSchema = z.object({
 })
 
 const useLoginByEmail = () => {
-  const localStorageManager = new LocalStorageManager()
   const { replace } = useRouter()
+  const { handleCartAfterLogin } = useAfterLogin()
+  const localStorageManager = new LocalStorageManager()
   const { mutate, isLoading } = useMutation({
     mutationKey: 'loginByEmail',
     mutationFn: (user: IUser) => loginByEmail(user),
@@ -58,7 +60,7 @@ const useLoginByEmail = () => {
           showToast(data?.message, typeToast.success)
           localStorageManager.setItem(STORAGE_KEYS.TOKEN, data.token, TTL)
           replace(ROUTER_PATHS.ACCOUNT_INFORMATION)
-          // handle after login
+          handleCartAfterLogin()
         }
         if (data && 'response' in data) {
           showToast(get(data, 'response.data.message'), typeToast.error)

@@ -14,7 +14,7 @@ export default function CartItemImageContainer({
 }) {
   const { url, label } = image || {}
 
-  let images = <Image src={url} width={100} height={100} alt={label} />
+  let images = <Image src={url} width={100} height={100} alt={label} priority />
 
   //   if (size === SIZE_IMAGE.SMALL) images = <Image src={productImg} width={60} height={70} alt={productName} />
 

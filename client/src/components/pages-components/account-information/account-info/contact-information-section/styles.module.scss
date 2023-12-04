@@ -1,0 +1,25 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.editContainer {
+  @include flex(flex-start, flex-start);
+  gap: 20px;
+
+  @include breakpoint-max(767px) {
+    flex-direction: column;
+  }
+
+  input[type='date'] {
+    color: $black;
+    background: $white;
+
+    &:disabled {
+      color: $optionalTextColor;
+      background: $greyThirteen;
+    }
+  }
+}
+.inputElement {
+  margin: 0 !important;
+  width: 100%;
+  max-width: 720px !important;
+}

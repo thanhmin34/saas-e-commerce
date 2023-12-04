@@ -19,4 +19,10 @@ export const APIS = {
   REVIEWS: 'reviews',
   SHIPPING_METHOD: 'shipping-method',
   PAYMENT_METHOD: 'payment-method',
+  SHIPPING_ADDRESS: 'shipping-address',
+  NOTES: 'notes',
+  SUBMIT_ORDER: 'order',
+  CUSTOMER_INFO: 'users',
+  CONFIG: 'config-app',
+  ACCOUNT_INFORMATION: 'users',
 }

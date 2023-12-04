@@ -32,6 +32,7 @@ const selectPaymentMethodToCart = asyncHandler(async (req, res) => {
   const { cart_id, payment_methods } = body || {};
   const { id } = payment_methods || {};
   try {
+    if (!id) return notificationMessageError(res, "Payment method unavailable");
     const newCart = await Cart.update(
       {
         payment_method_id: id,
@@ -40,7 +41,7 @@ const selectPaymentMethodToCart = asyncHandler(async (req, res) => {
         where: { cart_id },
       }
     );
-    if (!newCart?.length > 0) {
+    if (!newCart) {
       return notificationMessageError(res, "Cannot add payment method");
     }
     return notificationMessageSuccess(res, {

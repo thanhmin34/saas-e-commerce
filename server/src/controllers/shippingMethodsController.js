@@ -32,6 +32,9 @@ const selectShippingMethodToCart = asyncHandler(async (req, res) => {
   const { cart_id, shipping_methods } = body || {};
   const { id } = shipping_methods || {};
   try {
+    if (!id) {
+      return notificationMessageError(res, "Cannot add shipping method");
+    }
     const newCart = await Cart.update(
       {
         shipping_method_id: id,
@@ -40,7 +43,7 @@ const selectShippingMethodToCart = asyncHandler(async (req, res) => {
         where: { cart_id },
       }
     );
-    if (!newCart?.length > 0) {
+    if (!newCart) {
       return notificationMessageError(res, "Cannot add shipping method");
     }
     return notificationMessageSuccess(res, {

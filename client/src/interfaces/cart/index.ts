@@ -29,3 +29,8 @@ export interface ICartItemForCartPage {
     url: string
   }
 }
+
+export interface IMergeCartParams {
+  source_cart_id: string
+  destination_cart_id: string
+}

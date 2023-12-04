@@ -1,0 +1,19 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.modalRecipientInfo {
+  color: $black;
+  .MuiBox-root {
+    width: 100%;
+    max-width: 400px !important;
+  }
+}
+.buttonSubmit {
+  margin-top: 20px;
+  max-width: 888px !important;
+  border-radius: 0 !important;
+}
+.modalBlock {
+  width: 100%;
+  max-width: 500px !important;
+  margin: auto;
+}

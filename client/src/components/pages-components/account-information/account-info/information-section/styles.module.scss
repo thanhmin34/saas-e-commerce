@@ -1,0 +1,57 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.editContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 30px;
+  row-gap: 25px;
+  column-gap: 30px;
+  @include breakpoint-max(767px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  input[type='date'] {
+    color: $black;
+    background: $white;
+
+    &:disabled {
+      color: $optionalTextColor;
+      background: $greyThirteen;
+    }
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+
+  button {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    min-height: 2.5rem;
+    line-height: 1.25rem;
+    width: 90px;
+    border: none;
+    border: 2px solid $optionalTextColor;
+    margin-inline-start: 12px;
+    background: $greyThirteen;
+  }
+
+  .savingButton {
+    background: $primaryColor;
+    color: $white;
+
+    &:disabled {
+      background: $greyThirteen;
+      color: $black;
+    }
+  }
+
+  .resendOtpButton {
+    background: $primaryColor;
+    color: $white;
+    font-size: 12px;
+  }
+}

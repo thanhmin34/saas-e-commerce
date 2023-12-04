@@ -1,54 +1,56 @@
-import React, { ChangeEventHandler, useState } from 'react'
-import InputMask from 'react-input-mask'
-const PHONE_INPUT_MASK_DEFAULT = '999-999-9999'
+import React, { ChangeEventHandler, Fragment, LegacyRef, useRef, useState } from 'react'
+import InputMask, { BeforeMaskedStateChangeStates, ReactInputMask } from 'react-input-mask'
 import styles from './styles.module.scss'
+import { imageUrls } from '@constants/imageUrls'
+import { useSelector } from 'react-redux'
+import { RootState } from '@redux/reducers'
+import { DEFAULT_COUNTRY_CODE, DEFAULT_PLACE_HOLDER_INPUT, PHONE_INPUT_MASK_DEFAULT } from '@constants/login'
+import { UseFormRegisterReturn } from 'react-hook-form'
+
 interface InputProps {
-  phone: number | string
-  onChange: ChangeEventHandler<HTMLInputElement>
+  phone?: number | string
+  onChange?: ChangeEventHandler<HTMLInputElement>
   className?: string
   disabled?: boolean
   name?: string
   isRequired?: boolean
+  onBlur?: ChangeEventHandler<HTMLInputElement>
+  paramsRef?: UseFormRegisterReturn<'phone_number'>
+  message?: string
 }
 const InputPhone = (props: InputProps) => {
-  const { phone, onChange, className, disabled, name = 'phone', isRequired = false } = props
-  const countryCode = '+996'
-  const phoneInputMaskCountry = '999-999-9999'
-  const placeholderCountry = '50-000-0000'
-  const nationalFlagsImage = ''
+  const { paramsRef, phone, onChange, className, disabled, name = 'phone', isRequired = false, message } = props
+
+  const { country_code, mask_input_phone, place_holder_country, image_country_input } = useSelector(
+    (state: RootState) => state.configApp
+  )
+  const countryCode = country_code || DEFAULT_COUNTRY_CODE
+  const phoneInputMaskCountry = mask_input_phone || PHONE_INPUT_MASK_DEFAULT
+  const placeholderCountry = place_holder_country || DEFAULT_PLACE_HOLDER_INPUT
 
   const [mask, updateMask] = useState(phoneInputMaskCountry)
-  const url = 'https://media.9ten.cloud/media/snaptec/pwa/default/SA-square_1_1.png'
+  const url = image_country_input || imageUrls.iconFlagUsa
 
-  //   function beforeMaskedValueChange(newState, oldState, userInput) {
-  //     let { value, selection } = newState || {};
-  //     var { value: oldValue } = oldState;
+  function beforeMaskedValueChange(beforeMask: BeforeMaskedStateChangeStates) {
+    let { previousState, currentState, nextState } = beforeMask || {}
+    const { value, selection } = previousState || {}
 
-  //     if (userInput) {
-  //       userInput = userInput.trim();
+    let newValue = value
+    if (nextState && nextState.value) {
+      const prefix = countryCode?.startsWith('+') ? countryCode?.slice(1) : countryCode
 
-  //       const prefix = countryCode?.startsWith("+")
-  //         ? countryCode?.slice(1)
-  //         : countryCode;
+      if (prefix && (nextState.value.startsWith(`+${prefix}`) || nextState.value.startsWith(prefix))) {
+        newValue = nextState.value.replace(prefix, '').replace('+', '').replace(/\s/g, '')
+      }
+    }
 
-  //       if (
-  //         prefix &&
-  //         (userInput.startsWith(`+${prefix}`) || userInput.startsWith(prefix))
-  //       ) {
-  //         value = userInput
-  //           .replace(prefix, "")
-  //           .replace("+", "")
-  //           .replace(/\s/g, "");
-  //       }
-  //     }
+    if (newValue.startsWith('0')) newValue = newValue.slice(1)
 
-  //     if (value.startsWith("0")) value = value.slice(1);
-
-  //     return {
-  //       value,
-  //       selection,
-  //     };
-  //   }
+    return {
+      value: newValue,
+      selection,
+    }
+  }
 
   const onChangePhone = (e: React.ChangeEvent<HTMLInputElement>) => {
     let { value } = e.target
@@ -56,32 +58,50 @@ const InputPhone = (props: InputProps) => {
       updateMask(phoneInputMaskCountry)
     } else updateMask(PHONE_INPUT_MASK_DEFAULT)
 
-    onChange(e)
+    onChange && onChange(e)
+  }
+
+  const valuePhone = () => {
+    if (phone) {
+      return { value: phone }
+    }
+    return { defaultValue: '' }
+  }
+
+  const renderParamsRef = () => {
+    if (paramsRef) {
+      return paramsRef
+    }
+    return {}
   }
 
   return (
-    <div className={`${styles.inputPhone} ${styles.element} ${className ? className : ''} `}>
-      <div className={disabled ? styles.disabledInput : styles.enableInput}>
-        <div className="input-phone__img-container">
-          <div className={styles.img}>
-            <img src={url} alt="icon-country" width={30} height={20} />
+    <div className={styles.container}>
+      <div className={`${styles.inputPhone} ${styles.element} ${className ? className : ''} `}>
+        <div className={disabled ? styles.disabledInput : styles.enableInput}>
+          <div>
+            <div className={styles.img}>
+              <img src={url} alt="icon-country" width={30} height={20} />
+            </div>
           </div>
+          <span className={styles.placeholder}>{countryCode}</span>
         </div>
-        <span className={styles.placeholder}>{countryCode}</span>
+        <InputMask
+          mask={mask}
+          className={styles.inputMask}
+          placeholder={placeholderCountry}
+          type="tel"
+          {...valuePhone()}
+          name={name}
+          onChange={onChangePhone}
+          maskChar={null}
+          disabled={disabled ?? false}
+          beforeMaskedStateChange={beforeMaskedValueChange}
+          {...renderParamsRef()}
+        />
+        {isRequired && <div className={styles.iconRequired}>*</div>}
       </div>
-      <InputMask
-        mask={mask}
-        className={styles.inputMask}
-        placeholder={placeholderCountry || '500-000-000'}
-        type="tel"
-        value={phone}
-        name={name}
-        onChange={onChangePhone}
-        // beforeMaskedValueChange={beforeMaskedValueChange}
-        maskChar={null}
-        disabled={disabled ?? false}
-      />
-      {isRequired && <div className={styles.iconRequired}>*</div>}
+      {message ? <div className={styles.messageError}>{message}</div> : ''}
     </div>
   )
 }

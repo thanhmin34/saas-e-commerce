@@ -47,7 +47,7 @@ export const updateProductToCart = async (params: {
 }
 
 const useUpdateCart = () => {
-  const { refetch } = useCart()
+  const { refetchCart } = useCart()
   const cart = useSelector((state: RootState) => state.cartData)
 
   const { handleAddCartToModal } = useCartContext()
@@ -83,7 +83,7 @@ const useUpdateCart = () => {
           // reset cart
           handleAddCartToModal(params)
           showToast(data?.message, typeToast.success)
-          refetch()
+          refetchCart()
         } else if ('response' in data) {
           showToast(data?.response?.data?.message, typeToast.error)
         }
@@ -105,7 +105,7 @@ const useUpdateCart = () => {
       onSuccess(data, variables, context) {
         if ('status' in data) {
           showToast(data?.message, typeToast.success)
-          refetch()
+          refetchCart()
         } else if ('response' in data) {
           showToast(data?.response?.data?.message, typeToast.error)
         }
@@ -128,7 +128,7 @@ const useUpdateCart = () => {
       onSuccess(data, variables, context) {
         if ('status' in data) {
           showToast(data?.message, typeToast.success)
-          refetch()
+          refetchCart()
         } else if ('response' in data) {
           showToast(data?.response?.data?.message, typeToast.error)
         }

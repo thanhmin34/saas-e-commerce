@@ -15,8 +15,6 @@ const CartBanner = dynamic(() => import('./cart-banner'), {
 })
 
 const Cart = () => {
-  const [isQuantityEditing, setIsQuantityEditing] = useState(false)
-
   const { localizeMessage } = useIntl()
   const cart = useSelector((state: RootState) => state.cartData)
   const { total_quantity } = cart || {}

@@ -19,4 +19,11 @@ const totalRating = (review_list) => {
   return +starAverage.toFixed(2);
 };
 
-module.exports = { checkFilterByCategory, totalRating };
+const getShippingAddress = (address) => {
+  if (!address) return null;
+  const { tempLatLng } = address || {};
+  address.tempLatLng = JSON.parse(tempLatLng);
+  return address;
+};
+
+module.exports = { getShippingAddress, checkFilterByCategory, totalRating };

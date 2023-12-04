@@ -21,6 +21,10 @@ const initState: IConfigApp = {
   url_media_backend: '',
   prefix_url_media: '',
   national_flags_image: '',
+  country_code: '',
+  mask_input_phone: '',
+  place_holder_country: '',
+  image_country_input: '',
 }
 
 const configReducer = (state = initState, action: ConfigAction) => {

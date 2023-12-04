@@ -1,0 +1,55 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.container {
+  @include flex(center, center);
+  margin: 50px auto 150px;
+  width: 100%;
+  max-width: 670px;
+  flex-direction: column;
+  height: 640px;
+  padding: 0 20px;
+  @include respond(large-mobile) {
+    padding: 0 20px;
+  }
+
+  .blockImage {
+    margin-bottom: 70px;
+  }
+  .content {
+    margin: 0 auto;
+    .title,
+    .description {
+      text-align: center;
+    }
+    .title {
+      font-weight: 500;
+      font-size: 32px;
+      line-height: 130%;
+      margin-bottom: 24px;
+      @include respond(large-mobile) {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+    }
+    .description {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 140%;
+      margin-bottom: 30px;
+    }
+  }
+  .continueShopping {
+    width: 100%;
+    height: 48px;
+    max-width: 200px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 120%;
+    @include flex(center, center);
+    margin: 0 auto;
+  }
+}

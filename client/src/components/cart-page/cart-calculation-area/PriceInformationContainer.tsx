@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import styles from './styles.module.scss'
 import { RootState } from '@redux/reducers'
 import useIntl from '@hooks/useIntl'
-import SimplePrice from '@components/productItem/PriceBlock/SimplePrice'
+import Price from '@components/productItem/Price'
 
 export default function PriceInformationContainer({}) {
   const { localizeMessage } = useIntl()
@@ -48,7 +48,7 @@ export default function PriceInformationContainer({}) {
   ]
 
   const renderPrice = priceInfo.map((item, index) => {
-    const { line, value, label, className } = item || {}
+    const { line, value = 0, label, className } = item || {}
     if (line) {
       return <div key={index} className={styles.lineDivine} />
     }
@@ -57,7 +57,7 @@ export default function PriceInformationContainer({}) {
       <div key={index} className={styles.line}>
         <span className={`${styles.label} ${className ? className : ''}`}>{label}</span>
         <span className={`${styles.price} ${className ? className : ''}`}>
-          <SimplePrice price={+value} />
+          <Price value={+value} />
         </span>
       </div>
     )

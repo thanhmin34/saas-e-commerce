@@ -1,0 +1,96 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.privateAccountMenu {
+  background: $white;
+  display: grid;
+  gap: 20px;
+  .menuHeader {
+    display: none;
+  }
+  .sidebar {
+    display: flex;
+  }
+  .mobile {
+    width: 100vw;
+    overflow-x: auto;
+    .menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 56px;
+      padding: 16px;
+      box-shadow: 0px 4px 7px rgb(0 0 0 / 5%);
+      margin-bottom: 30px;
+      // @media (min-width: 1023px){
+      //   display: none;
+      // }
+    }
+  }
+
+  .button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .menuItem {
+    @include transparent-button;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-inline-start: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 280px;
+    height: 75px;
+    &:last-child {
+      margin-bottom: 50px;
+    }
+    @include respond(small-desktop) {
+      padding-inline-start: 20px;
+    }
+  }
+  .menuActive {
+    @include respond(large-mobile) {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+    }
+    background-color: $backGroundMenuActive;
+  }
+
+  .icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  .title {
+    margin-inline-start: 20px;
+    text-align: start;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  z-index: $zIndexSidebar;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 360px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  left: -100%;
+  transition: left 0.3s;
+}
+.sidebarEnabled {
+  right: 0;
+  transition: left 0.3s;
+}

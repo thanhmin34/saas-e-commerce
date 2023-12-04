@@ -56,7 +56,7 @@ export const checkRouteUnauthorized = (path: string) => {
 }
 
 export const checkRouteNeedAuthorized = (path: string) => {
-  const authRouters = [ROUTER_PATHS.ACCOUNT_INFORMATION, ROUTER_PATHS.WISH_LIST, ROUTER_PATHS.CHECK_OUT]
+  const authRouters = [ROUTER_PATHS.ACCOUNT_INFORMATION, ROUTER_PATHS.WISH_LIST, ROUTER_PATHS.CHECKOUT]
   if (authRouters.includes(path)) {
     return true
   }
@@ -93,4 +93,33 @@ export const renderFormatterPrice = (value: number, currency?: string) => {
   const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: currency || 'USD' })
   const formattedNumber = formatter.format(value)
   return formattedNumber
+}
+
+export const getFullYear = () => {
+  const currentYear = new Date().getFullYear()
+  const DEFAULTS_MAX_YEAR = 150
+  let results = []
+  for (let i = currentYear - DEFAULTS_MAX_YEAR; i < currentYear; i++) {
+    const value = i + 1
+    results.push({ value: value.toString(), label: value.toString() })
+  }
+  return results.reverse()
+}
+
+export const getDays = (year: number, month: number) => {
+  return new Date(year, month, 0).getDate()
+}
+
+const convertDay = (daysNumber: number) => {
+  let results = []
+  for (let i = 0; i < daysNumber; i++) {
+    const value = i + 1 > 10 ? (i + 1).toString() : '0' + (i + 1)
+    results.push({ value, label: value })
+  }
+  return results
+}
+
+export const getDayByYearAndMonth = (year: number, month: number) => {
+  const daysNumber = getDays(year, month)
+  return convertDay(daysNumber)
 }

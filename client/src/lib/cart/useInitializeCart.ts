@@ -9,11 +9,6 @@ import STORAGE_KEYS from '@constants/storageKeys'
 import LocalStorageManager from '@utils/simplePersistence'
 import useCart from './useCartDetails'
 
-export interface IDataCheckCartIsAuth {
-  status: string
-  message: string
-  cart_id: string
-}
 export const checkCartIsAuth = async (params: { cart_id: string }) => {
   const { post } = apiClient()
 
@@ -31,42 +26,40 @@ const useInitializeCart = () => {
   const { handleCreateNewCart } = useCreateCart()
   const { getCartDetails } = useCart()
 
-  const { mutate, reset, error, isLoading } = useMutation('cartIsAuth', {
+  const { mutate, isLoading } = useMutation('cartIsAuth', {
     mutationFn: checkCartIsAuth,
   })
 
-  const handleCheckCartIsAuth = async (cart_id: any, callback: (data: IDataCheckCartIsAuth) => void) => {
+  const handleCheckCartIsAuth = async (cart_id: string) => {
     mutate(
       {
         cart_id,
       },
       {
         onSuccess: (data) => {
-          callback(data)
+          if (data && 'cart_id' in data) {
+            const cartId = get(data, 'cart_id')
+            if (cartId) {
+              getCartDetails(cartId)
+            }
+          }
         },
       }
     )
-    // return data
-  }
-
-  const handleAfterCheckCart = async (data: IDataCheckCartIsAuth) => {
-    const cartId = get(data, 'cart_id')
-
-    if (cartId) {
-      // if there was cart id from storage, refetch cart
-      await getCartDetails(cartId)
-    } else {
-      // error
-    }
   }
 
   const initializeCart = async () => {
     try {
       const cartIdFromStorage = await storage.getItem(STORAGE_KEYS.CART_ID)
       if (!cartIdFromStorage) {
-        handleCreateNewCart(handleAfterCheckCart)
+        const responsive = handleCreateNewCart()
+        responsive.then((data) => {
+          const cartId = get(data, 'cart_id')
+          if (!cartId) return
+          getCartDetails(cartId)
+        })
       } else {
-        await handleCheckCartIsAuth(cartIdFromStorage?.value, handleAfterCheckCart)
+        await handleCheckCartIsAuth(cartIdFromStorage?.value)
       }
     } catch (error) {
       return

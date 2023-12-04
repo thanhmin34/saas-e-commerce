@@ -18,6 +18,7 @@ const {
 } = require("../models");
 const { mergeProducts } = require("../utils/mergeProducts");
 const { getToken } = require("../utils/getToken");
+const { getShippingAddress } = require("../utils/helper");
 
 const cartSchema = Joi.object({
   cart_id: Joi.string().required(),
@@ -156,7 +157,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
     const fieldExclude = ["createdAt", "updatedAt", "id"];
     const cart = await Cart.findOne({
       where: { cart_id },
-      attributes: ["cart_id"],
+      attributes: ["cart_id", "notes"],
       include: [
         {
           model: CartItem,
@@ -183,14 +184,14 @@ const getCartDetails = asyncHandler(async (req, res) => {
           model: PaymentMethods,
           as: "cartPaymentMethod",
           attributes: {
-            exclude: fieldExclude,
+            exclude: ["createdAt", "updatedAt"],
           },
         },
         {
           model: ShippingMethods,
           as: "cartShippingMethods",
           attributes: {
-            exclude: fieldExclude,
+            exclude: ["createdAt", "updatedAt"],
           },
         },
         {
@@ -270,10 +271,11 @@ const getCartDetails = asyncHandler(async (req, res) => {
             currency,
           },
           payment_methods: cart?.cartPaymentMethod,
-          shipping_method: cart?.cartShippingMethods,
-          shipping_address: cart?.cartShippingAddress,
+          shipping_methods: cart?.cartShippingMethods,
+          shipping_address: getShippingAddress(cart?.cartShippingAddress),
           products,
           discount: cart?.cartDiscount,
+          notes: cart?.notes || "",
         },
       });
     }
@@ -312,7 +314,6 @@ const checkCartIsAuth = asyncHandler(async (req, res) => {
 
 const createCart = asyncHandler(async (req, res) => {
   try {
-    console.log("!@3");
     const cart_id = generateCartId();
     const cart = await Cart.create({ cart_id });
     if (cart?.id) {
