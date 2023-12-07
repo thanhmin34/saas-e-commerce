@@ -1,0 +1,91 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.myWishlist {
+  display: flex;
+  flex-direction: column;
+  color: $black;
+
+  .noItems {
+    font-size: 16px;
+    line-height: 20px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .body {
+    display: flex;
+    flex-direction: column;
+    .action {
+      @include flex(center, space-between);
+      width: 100%;
+      gap: 30px;
+      padding-top: 17px;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      color: $textColor;
+      span {
+        cursor: pointer;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+    .content {
+      @include grid(3);
+      @include respond(extra-large-mobile) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      @include respond(large-mobile) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      @include respond(small-mobile) {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+
+      gap: 30px;
+    }
+  }
+}
+
+.wishlistButton {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+.myWishListTitle {
+  justify-content: space-between;
+  border: none;
+  h1 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 130%;
+    margin: 0;
+  }
+}
+.addToCart {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.myWishListCount {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.wishlistButtonMobile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 30px;
+
+  .addToCartMobile {
+    height: 48px;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+}

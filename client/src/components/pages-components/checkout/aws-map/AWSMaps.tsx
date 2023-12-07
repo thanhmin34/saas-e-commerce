@@ -61,9 +61,11 @@ const transformRequest = (credentials: ICredentials) => (url: string, resourceTy
 const CheckoutAWSMap = ({
   currentAddress,
   onChangeAddress,
+  styleCss,
 }: {
   currentAddress: ICurrentAddress
   onChangeAddress: (data: IPlace) => void
+  styleCss?: { height: number }
 }) => {
   const { showToast, typeToast } = useToastMessage()
 
@@ -146,6 +148,7 @@ const CheckoutAWSMap = ({
     <div className={styles.map}>
       {credentials ? (
         <ReactMapGL
+          style={styleCss ? styleCss : {}}
           ref={mapRef}
           {...viewport}
           transformRequest={transformRequest(credentials)}

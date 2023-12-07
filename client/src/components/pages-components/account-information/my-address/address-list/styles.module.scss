@@ -1,0 +1,43 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.addressList {
+  .header {
+    @include flex(center, space-between);
+    .buttonAddress {
+      border: 0 !important;
+      max-width: 182px !important;
+    }
+    h1 {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 32px;
+    }
+  }
+}
+.addressContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .addressContent {
+    width: 100%;
+    display: grid;
+    justify-content: flex-start;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 30px;
+    margin-top: 30px;
+
+    @media (max-width: 1360px) {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    @media (max-width: 767px) {
+      grid-template-columns: repeat(1, 1fr) !important;
+    }
+  }
+}
+.noAddress {
+  margin-top: 32px;
+  @include flex(center, center);
+  text-align: center;
+}

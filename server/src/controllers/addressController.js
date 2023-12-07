@@ -4,26 +4,29 @@ const {
   notificationMessageSuccess,
   notificationMessageError,
 } = require("../utils/notificationMessageStatus");
-const { ShippingAddress, Cart } = require("../models");
+const { Address, User } = require("../models");
+const { getToken } = require("../utils/getToken");
 
 const addressSchema = Joi.object({
-  cart_id: Joi.string().required(),
   address: Joi.object({
     country: Joi.string().required(),
     city: Joi.string().required(),
     street: Joi.string().required(),
     post_code: Joi.string().required(),
     phone: Joi.string().required(),
-    firstname: Joi.string().required(),
-    lastname: Joi.string().required(),
     region: Joi.string().required(),
-    email: Joi.string().allow(),
-    address_number: Joi.string(),
-    label: Joi.string(),
+    email: Joi.string(),
     tempLatLng: Joi.object({
-      latitude: Joi.number(),
-      longitude: Joi.number(),
-    }),
+      latitude: Joi.number().allow("", null).optional(),
+      longitude: Joi.number().allow("", null).optional(),
+    })
+      .allow(null)
+      .optional(),
+    address_number: Joi.string().allow("").optional(),
+    label: Joi.string().allow("").optional(),
+    first_name: Joi.string().allow("").optional(),
+    last_name: Joi.string().allow("").optional(),
+    is_default_address: Joi.boolean().allow("").optional(),
   }),
 });
 
@@ -31,65 +34,118 @@ const validateFieldBySchema = (data, schema) => {
   return schema.validate(data);
 };
 
-const addShippingAddress = asyncHandler(async (req, res) => {
-  const { body } = req || {};
-  const { cart_id, address } = body || {};
-  const {
-    country,
-    city,
-    street,
-    post_code,
-    email,
-    phone,
-    tempLatLng,
-    address_number = "",
-    firstname,
-    lastname,
-    label = "",
-    region,
-  } = address || {};
+const addMyAddress = asyncHandler(async (req, res) => {
+  const { headers, body } = req || {};
+
+  const { address } = body || {};
+
   try {
     const { error } = validateFieldBySchema(body, addressSchema);
     if (error) {
       return notificationMessageError(res, error.details[0].message);
     }
 
-    const cart = await Cart.findOne({
+    const token = getToken(headers);
+    const user = await User.findOne({
       where: {
-        cart_id,
+        token,
       },
-      attributes: ["id"],
+      attributes: ["id", "token"],
       include: {
-        model: ShippingAddress,
-        as: "cartShippingAddress",
-        attributes: ["id"],
+        model: Address,
+        as: "userAddress",
       },
     });
 
-    const addressId = cart?.cartShippingAddress?.id;
-    if (!addressId) {
-      await ShippingAddress.create({
-        country,
-        city,
-        street,
-        post_code,
-        email,
-        phone,
-        tempLatLng,
-        cart_id: cart?.id,
-        address_number,
-        firstname,
-        lastname,
-        label,
-        region,
-      });
-    } else {
-      await ShippingAddress.update(address, { where: { id: addressId } });
+    if (!user) {
+      return notificationMessageError(res, "Invalid user");
+    }
+
+    const params = {
+      ...address,
+      customer_id: user?.id,
+    };
+
+    const newAddress = await Address.create(params);
+
+    return notificationMessageSuccess(res, {
+      message: "Create address successfully",
+      status: true,
+      newAddress,
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
+const getMyAddress = asyncHandler(async (req, res) => {
+  const { headers } = req || {};
+
+  try {
+    const token = getToken(headers);
+    const user = await User.findOne({
+      where: {
+        token,
+      },
+      attributes: ["token", "id"],
+      include: {
+        model: Address,
+        as: "userAddress",
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
+    });
+    if (!user) {
+      return notificationMessageError(res, "Invalid token");
     }
 
     return notificationMessageSuccess(res, {
-      message: "Save address success fully",
+      message: "get address successfully",
       status: true,
+      address: user?.userAddress || [],
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
+const deleteMyAddress = asyncHandler(async (req, res) => {
+  const { headers, params } = req || {};
+  const { id } = params || {};
+
+  try {
+    const token = getToken(headers);
+    const user = await User.findOne({
+      where: {
+        token,
+      },
+      attributes: ["token", "id"],
+      include: {
+        model: Address,
+        as: "userAddress",
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
+    });
+    if (!user) {
+      return notificationMessageError(res, "Invalid token");
+    }
+    console.log("user", user);
+    console.log("id", id);
+    const isSuccess = await Address.destroy({
+      where: {
+        id,
+      },
+    });
+    if (!isSuccess)
+      return notificationMessageError(res, "Cannot delete Address");
+
+    return notificationMessageSuccess(res, {
+      message: "delete address success fully",
+      status: true,
+      isSuccess,
     });
   } catch (error) {
     return notificationMessageError(res, error);
@@ -97,5 +153,7 @@ const addShippingAddress = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  addShippingAddress,
+  addMyAddress,
+  getMyAddress,
+  deleteMyAddress,
 };

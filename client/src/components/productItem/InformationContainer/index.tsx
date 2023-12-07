@@ -8,8 +8,9 @@ import ProductName from '@components/productItem/ProductName'
 import BrandName from '@components/productItem/BrandName'
 import PriceBlock from '@components/productItem/PriceBlock'
 import { ProductItemInterface } from '@interfaces/product'
+import { IProductInWishlist } from '@interfaces/wishlist'
 
-const InformationContainer = ({ item }: { item: ProductItemInterface }) => {
+const InformationContainer = ({ item }: { item: ProductItemInterface | IProductInWishlist }) => {
   const { device } = useDetectDevice()
   const { name, brand_name, price, special_price } = item || {}
 
@@ -29,14 +30,14 @@ const InformationContainer = ({ item }: { item: ProductItemInterface }) => {
               />
             </div>
           </div>
-          <BrandName brandName={brand_name} />
+          {brand_name && <BrandName brandName={brand_name} />}
         </div>
       )
     }
     return (
       <div className={styles.informationContainer}>
         <ProductName productName={name} />
-        <BrandName brandName={brand_name} />
+        {brand_name && <BrandName brandName={brand_name} />}
         <div className={styles.priceContainer}>
           <PriceBlock
             price={price}

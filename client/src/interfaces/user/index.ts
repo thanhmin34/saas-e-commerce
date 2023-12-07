@@ -52,3 +52,37 @@ export interface IRenderInputBirthDate {
   disabled: boolean
   value: string | number
 }
+
+export interface IMyAddressItem {
+  id: number
+  customer_id: number
+  country: string
+  city: string
+  street: string
+  post_code: string
+  phone: string
+  email: string
+  region: string
+  tempLatLng: {
+    latitude: number
+    longitude: number
+  }
+  address_number: string
+  label: string
+  is_default_address: boolean
+}
+
+type TAddress = Omit<IMyAddressItem, 'id' | 'is_default_address' | 'email' | 'phone' | 'customer_id'>
+
+export type TCreateAddressParams = Omit<IMyAddressItem, 'id' | 'customer_id'>
+
+export interface IMyAddressContact extends Pick<IMyAddressItem, 'phone' | 'email'> {
+  first_name: string
+  last_name: string
+  is_default_address: boolean
+  address: TAddress
+}
+
+export interface IMyAddressList {
+  address: IMyAddressItem[]
+}

@@ -1,16 +1,34 @@
-import React, { Fragment } from 'react'
+'use client'
+import dynamic from 'next/dynamic'
+import React, { Fragment, Suspense } from 'react'
 import styles from './styles.module.scss'
 import Loading from '@components/loading'
-import { DEVICE } from '@constants/device'
 import useDetectDevice from '@hooks/useDetectDevice'
-import PrivateAccountMenu from './account-menu/PrivateAccountMenu'
 import { LIST_ACCOUNT_MENU } from '@constants/account'
-import MyProfileInfo from './account-info/MyProfileInfo'
 import { usePrivateAccountMenuContext } from '@context/PrivateAccountContext'
+import useMyAddress from '@lib/account-information/useMyAddress'
+import useWishlist from '@lib/account-information/useWishlist'
+
+const PrivateAccountMenu = dynamic(() => import('./account-menu/PrivateAccountMenu'), {
+  ssr: false,
+})
+const MyAddress = dynamic(() => import('./my-address'), {
+  ssr: false,
+})
+
+const MyProfileInfo = dynamic(() => import('./account-info/MyProfileInfo'), {
+  ssr: false,
+})
+
+const MyWishlist = dynamic(() => import('./my-wishlist'), {
+  ssr: false,
+})
 
 const AccountInformation = () => {
   const { device } = useDetectDevice()
   const { selectedTabId } = usePrivateAccountMenuContext()
+  const { addressData, onCreateAddress, onDeleteAddress, isLoading } = useMyAddress()
+  const { onAddProductInWishlist, onDeleteProductWishlist } = useWishlist({ enabled: true })
 
   function renderNameBreadcrumb() {
     // switch (selectedTabId) {
@@ -22,27 +40,38 @@ const AccountInformation = () => {
   }
 
   function renderContent() {
-    switch (selectedTabId) {
-      case LIST_ACCOUNT_MENU.MY_ACCOUNT:
-        return <MyProfileInfo />
-      case LIST_ACCOUNT_MENU.MY_WISHLIST:
-        return <div>123</div>
-      default:
-        return <MyProfileInfo />
+    interface IViewUi {
+      [x: string]: React.JSX.Element
     }
+
+    const viewUi: IViewUi = {
+      [LIST_ACCOUNT_MENU.MY_ACCOUNT]: <MyProfileInfo />,
+      [LIST_ACCOUNT_MENU.MY_ADDRESSES]: (
+        <MyAddress addressData={addressData} onCreateAddress={onCreateAddress} onDeleteAddress={onDeleteAddress} />
+      ),
+      [LIST_ACCOUNT_MENU.MY_WISHLIST]: (
+        <MyWishlist onAddProductInWishlist={onAddProductInWishlist} onDeleteProductWishlist={onDeleteProductWishlist} />
+      ),
+    }
+
+    if (viewUi && viewUi[selectedTabId as keyof IViewUi]) {
+      return <Suspense fallback={<Loading />}>{viewUi[selectedTabId]}</Suspense>
+    }
+    return <Fragment />
   }
 
   return (
     <Fragment>
       <div className={styles.privateAccountPageContainer}>
         <div className={styles.privateAccountMenuContainer}>
-          <PrivateAccountMenu onSignOut={() => {}} />
+          <Suspense fallback={<Loading />}>
+            <PrivateAccountMenu onSignOut={() => {}} />
+          </Suspense>
         </div>
         {/* {device === DEVICE.MOBILE && <AccountInfomationBreadcrumbs name={renderNameBreadcrumb()} />} */}
         <div className={styles.customContent}>{renderContent()}</div>
       </div>
-
-      {/* {loading && <Loading />} */}
+      {isLoading && <Loading />}
     </Fragment>
   )
 }

@@ -1,5 +1,5 @@
 export const ZOOM_LEVEL = 10
-export const ZOOM_LEVEL_LOCATION = 6
+export const ZOOM_LEVEL_LOCATION = 12
 export const DEFAULT_VALUE = {
   latitude: 47.23929,
   longitude: -122.430692,

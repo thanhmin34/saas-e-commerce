@@ -1,6 +1,7 @@
 'use client'
-import React from 'react'
+import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
+import Loading from '@components/loading'
 import PrivateAccountMenuProvider from '@context/PrivateAccountContext'
 
 const AccountInformation = dynamic(() => import('@components/pages-components/account-information'), {
@@ -10,7 +11,9 @@ const AccountInformation = dynamic(() => import('@components/pages-components/ac
 const AccountInformationPage = () => {
   return (
     <PrivateAccountMenuProvider>
-      <AccountInformation />
+      <Suspense fallback={<Loading />}>
+        <AccountInformation />
+      </Suspense>
     </PrivateAccountMenuProvider>
   )
 }

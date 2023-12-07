@@ -1,5 +1,5 @@
 'use client'
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useMemo, useState } from 'react'
 import parse from 'html-react-parser'
 import styles from './styles.module.scss'
 import useIntl from '@hooks/useIntl'
@@ -10,22 +10,17 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import {
-  WhatsApp as WhatsAppIcon,
-  Twitter as TwitterIcon,
-  LinkedIn as LinkedInIcon,
-  Instagram as InstagramIcon,
-  Facebook as FacebookIcon,
-} from '@mui/icons-material'
 import Button from '@components/button'
-import Link from 'next/link'
-import { SHARE_SOCIAL } from '@constants/variables'
-import { OverridableComponent } from '@mui/material/OverridableComponent'
-import { SvgIconTypeMap } from '@mui/material'
 import { IProductItemProps } from '@interfaces/product/productDetails'
 import { REGEX_CHECK_INPUT_TYPE_INTEGER } from '@constants/regex'
 import useUpdateCart from '@lib/products/useUpdateCart'
 import Loading from '@components/loading'
+import useWishlist from '@lib/account-information/useWishlist'
+import { find, isEmpty } from 'lodash'
+import { RootState } from '@redux/reducers'
+import { useSelector } from 'react-redux'
+import useToastMessage from '@hooks/useToastMessage'
+import SubInfoContent from './SubInfoContent'
 
 const ProductInformation = (props: IProductItemProps) => {
   const { localizeMessage } = useIntl()
@@ -43,9 +38,39 @@ const ProductInformation = (props: IProductItemProps) => {
     total_rating = 0,
     review_count = 0,
   } = product || {}
+  const {
+    isLoading: isLoadingWishlist,
+    onAddProductInWishlist,
+    onDeleteProductWishlist,
+  } = useWishlist({ enabled: false })
+  const { showToast, typeToast } = useToastMessage()
+  const { isSignedIn } = useSelector((state: RootState) => state.userInfo)
+  const { wishlist } = useSelector((state: RootState) => state.wishlistData)
 
   const [quantityCount, setQuantityCount] = useState<number>(1)
   const { handleAddToCart, isLoading } = useUpdateCart()
+
+  const isInWishlist = useMemo(() => {
+    if (isSignedIn && !isEmpty(wishlist)) {
+      const index = find(wishlist, (item) => item.id === id)
+      return !!index
+    }
+    return false
+  }, [isSignedIn, wishlist, id])
+
+  const onToggleFavorites = useCallback(async () => {
+    if (!isSignedIn) {
+      showToast(localizeMessage('Please login first'), typeToast.error)
+      return
+    }
+    if (isInWishlist) {
+      onDeleteProductWishlist(id)
+      return
+    }
+    onAddProductInWishlist({
+      product_id: id,
+    })
+  }, [isInWishlist, isSignedIn])
 
   const handleChangeQty = useCallback(
     (type: string) => {
@@ -159,19 +184,17 @@ const ProductInformation = (props: IProductItemProps) => {
     )
   }, [out_of_stock])
 
-  const isWishList = false
-
   const renderWishlistButton = useCallback(() => {
     return (
-      <button
-        // disabled={loading}
-        className={styles.wishlistFour}
-        // onClick={handleToggleFavorites}
-      >
-        {isWishList ? <FavoriteIcon color={'inherit'} width={25} /> : <FavoriteBorderIcon color="inherit" width={25} />}
+      <button disabled={isLoadingWishlist || isLoading} className={styles.wishlistFour} onClick={onToggleFavorites}>
+        {isInWishlist ? (
+          <FavoriteIcon color={'inherit'} width={25} />
+        ) : (
+          <FavoriteBorderIcon color="inherit" width={25} />
+        )}
       </button>
     )
-  }, [])
+  }, [isInWishlist])
 
   const renderAction = () => {
     return (
@@ -183,68 +206,14 @@ const ProductInformation = (props: IProductItemProps) => {
     )
   }
 
-  const renderShareSocialContent = () => {
-    return SHARE_SOCIAL.map((item, index) => {
-      const { enable, id_share_social, link } = item || {}
-      const key = `share-social-${index}-${id_share_social}`
-      if (enable) {
-        type SocialMediaList = {
-          [key in string]: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-            muiName: string
-          }
-        }
-
-        const socialData: SocialMediaList = {
-          facebook: FacebookIcon,
-          instagram: InstagramIcon,
-          twitter: TwitterIcon,
-          whatApp: WhatsAppIcon,
-          linkedIn: LinkedInIcon,
-        }
-
-        if (id_share_social && socialData[id_share_social]) {
-          const Icon = socialData[id_share_social] || <Fragment />
-          return (
-            <Link href={link} key={key}>
-              <Icon width={16} />
-            </Link>
-          )
-        }
-
-        return <Fragment />
-      }
-    })
-  }
-
-  const renderInfoContent = () => {
-    const skuTitle = localizeMessage('Product code:')
-    const stockStatus = localizeMessage(!!out_of_stock ? 'Unavailable' : 'Available')
-
-    return (
-      <div className={styles.otherInfo}>
-        <div className={styles.sku}>
-          <span className={styles.title}>{skuTitle}</span>
-          <span className={styles.value}>{sku}</span>
-          <span className={styles.status}>{stockStatus}</span>
-        </div>
-        <div className={styles.share}>
-          <span className={`${styles.heavy}`}>{localizeMessage('Share:')}</span>
-          <div className={styles.value}>
-            <ul className={styles.socialIcons}>{renderShareSocialContent()}</ul>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <Fragment>
       {renderTopContent()}
       {renderPrice()}
       {renderDescription()}
       {renderAction()}
-      {renderInfoContent()}
-      {isLoading && <Loading />}
+      <SubInfoContent outOfStock={!!out_of_stock} sku={sku} />
+      {(isLoading || isLoadingWishlist) && <Loading />}
     </Fragment>
   )
 }

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setIsSignIn } from '@redux/actions/userInfoAction'
 import useLoginExpired from '@lib/auth/useLoginExpired'
 import useAccount from '@lib/account-information/useAccount'
+import useWishlist from '@lib/account-information/useWishlist'
 
 const TTL = 24 * 60 * 60
 
@@ -30,6 +31,7 @@ const useAuth = () => {
   const { timeStored, value } = jsonToken || {}
 
   useAccount({ enabled: isSignedInRef.current })
+  useWishlist({ enabled: isSignedInRef.current })
   const handleSignOut = useCallback(async () => {
     try {
       if (!!timeStored && !calledRef.current) {

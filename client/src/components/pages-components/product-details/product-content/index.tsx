@@ -1,12 +1,28 @@
 'use client'
+import dynamic from 'next/dynamic'
 import React, { Fragment } from 'react'
 import styles from './styles.module.scss'
-import ImageGalleryLeftThumb from './ImageGalleryLeftThumb'
-import ProductInformation from './ProductInformation'
-import ProductDescriptionTab from './ProductDescriptionTab'
 import { IProductItemProps } from '@interfaces/product/productDetails'
-import TamaraWidgetButton from './TamaraWidgetButton'
-import TabbyWidgetButton from './TabbyWidgetButton'
+
+const ProductInformation = dynamic(() => import('./ProductInformation'), {
+  ssr: false,
+})
+
+const ProductDescriptionTab = dynamic(() => import('./ProductDescriptionTab'), {
+  ssr: false,
+})
+
+const ImageGalleryLeftThumb = dynamic(() => import('./ImageGalleryLeftThumb'), {
+  ssr: true,
+})
+
+const TabbyWidgetButton = dynamic(() => import('./TabbyWidgetButton'), {
+  ssr: false,
+})
+
+const TamaraWidgetButton = dynamic(() => import('./TamaraWidgetButton'), {
+  ssr: false,
+})
 
 const ProductContent = (props: IProductItemProps) => {
   const { product } = props || {}

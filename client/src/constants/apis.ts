@@ -21,8 +21,10 @@ export const APIS = {
   PAYMENT_METHOD: 'payment-method',
   SHIPPING_ADDRESS: 'shipping-address',
   NOTES: 'notes',
-  SUBMIT_ORDER: 'order',
+  SUBMIT_ORDER: 'orders',
   CUSTOMER_INFO: 'users',
   CONFIG: 'config-app',
   ACCOUNT_INFORMATION: 'users',
+  MY_ADDRESS: 'my-address',
+  MY_WISHLIST: 'wishlist',
 }
