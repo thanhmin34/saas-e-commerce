@@ -8,9 +8,10 @@ import WishlistButton from '@components/Wishlist/WishlistButton'
 import ProductRatingBlock from './ProductRatingBlock'
 import { ProductItemInterface } from '@interfaces/product'
 import Link from 'next/link'
+import { IProductInWishlist } from '@interfaces/wishlist'
 
-const ProductItem = ({ item }: { item: ProductItemInterface }) => {
-  const { image, total_rating = 0, review_count = 0, out_of_stock, url_path } = item || {}
+const ProductItem = ({ item }: { item: ProductItemInterface | IProductInWishlist }) => {
+  const { image, total_rating = 0, review_count = 0, out_of_stock, url_path, id } = item || {}
   const { url, label } = image || {}
 
   return (
@@ -26,7 +27,7 @@ const ProductItem = ({ item }: { item: ProductItemInterface }) => {
             isOutOfStock={!!out_of_stock}
             className={`${styles.atcButton} ${styles.hoverDisplayItem}`}
           />
-          <WishlistButton />
+          <WishlistButton productId={id} />
         </div>
         <ProductRatingBlock ratingSummary={total_rating} reviewCount={review_count} />
       </div>

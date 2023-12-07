@@ -64,7 +64,7 @@ const useUpdateCart = () => {
     mutationFn: updateProductToCart,
   })
 
-  const handleAddToCart = (params: IAddProductItem) => {
+  const handleAddToCart = (params: IAddProductItem, isDisabledAction?: boolean) => {
     const { product } = params || {}
     const { id, quantity, sku } = product || {}
 
@@ -77,17 +77,22 @@ const useUpdateCart = () => {
       cart_id: cart?.cart_id,
     }
 
-    addToCartMutation(newParams, {
-      onSuccess(data, variables, context) {
-        if ('status' in data) {
-          // reset cart
-          handleAddCartToModal(params)
-          showToast(data?.message, typeToast.success)
-          refetchCart()
-        } else if ('response' in data) {
-          showToast(data?.response?.data?.message, typeToast.error)
-        }
-      },
+    return new Promise<boolean>((resolve, reject) => {
+      addToCartMutation(newParams, {
+        onSuccess(data, variables, context) {
+          if ('status' in data) {
+            resolve(true)
+            if (!isDisabledAction) {
+              handleAddCartToModal(params)
+              showToast(data?.message, typeToast.success)
+              refetchCart()
+            }
+          } else if ('response' in data) {
+            showToast(data?.response?.data?.message, typeToast.error)
+            resolve(false)
+          }
+        },
+      })
     })
   }
   const handleRemoveToCart = async (params: { product_id: number }) => {

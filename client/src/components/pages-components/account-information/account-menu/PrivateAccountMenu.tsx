@@ -34,6 +34,9 @@ export default function PrivateAccountMenu(props: IProps) {
   const { isMenuSidebarShowed, handleToggleSidebar, selectedTabId, handleSelectedTab } = usePrivateAccountMenuContext()
 
   const { userInfo } = useSelector((state: RootState) => state.userInfo)
+  const { address } = useSelector((state: RootState) => state.addressData)
+  const { wishlist } = useSelector((state: RootState) => state.wishlistData)
+
   const { firstname = '', lastname = '', email = '' } = userInfo as IUserInfo
   const fullname = `${firstname} ${lastname}`
 
@@ -63,13 +66,12 @@ export default function PrivateAccountMenu(props: IProps) {
       ...DEFAULT_ICON_SIZE,
       title: renderTitleAccountInfo(),
     },
-    // {
-    //   id: LIST_ACCOUNT_MENU.MY_ADDRESSES,
-    //   iconActive: addressLogo,
-    //   icon: addressLogo,
-    //   ...DEFAULT_ICON_SIZE,
-    //   title: createTitle('My Addresses', `Saved addresses`, addresses.length),
-    // },
+    {
+      id: LIST_ACCOUNT_MENU.MY_ADDRESSES,
+      icon: imageUrls.iconAccountAddress,
+      ...DEFAULT_ICON_SIZE,
+      title: createTitle('My Addresses', `Saved addresses`, address?.length || 0),
+    },
     // {
     //   id: LIST_ACCOUNT_MENU.MY_ORDERS,
     //   iconActive: myOrderLogo,
@@ -81,7 +83,7 @@ export default function PrivateAccountMenu(props: IProps) {
       id: LIST_ACCOUNT_MENU.MY_WISHLIST,
       icon: imageUrls.iconAccountWishlist,
       ...DEFAULT_ICON_SIZE,
-      title: createTitle('My Wish List', `Product items`, 23),
+      title: createTitle('My Wish List', `Product items`, wishlist?.length || 0),
     },
     {
       id: LIST_ACCOUNT_MENU.LOGOUT,

@@ -15,7 +15,7 @@ interface InputProps {
   name?: string
   isRequired?: boolean
   onBlur?: ChangeEventHandler<HTMLInputElement>
-  paramsRef?: UseFormRegisterReturn<'phone_number'>
+  paramsRef?: UseFormRegisterReturn<'phone_number' | 'phone'>
   message?: string
 }
 const InputPhone = (props: InputProps) => {
@@ -76,8 +76,8 @@ const InputPhone = (props: InputProps) => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.inputPhone} ${styles.element} ${className ? className : ''} `}>
+    <div className={`${styles.container} ${className ? className : ''}`}>
+      <div className={`${styles.inputPhone} ${styles.element} `}>
         <div className={disabled ? styles.disabledInput : styles.enableInput}>
           <div>
             <div className={styles.img}>
@@ -96,7 +96,7 @@ const InputPhone = (props: InputProps) => {
           onChange={onChangePhone}
           maskChar={null}
           disabled={disabled ?? false}
-          beforeMaskedStateChange={beforeMaskedValueChange}
+          // beforeMaskedStateChange={beforeMaskedValueChange}
           {...renderParamsRef()}
         />
         {isRequired && <div className={styles.iconRequired}>*</div>}

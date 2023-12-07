@@ -55,3 +55,8 @@ export const MONTH_OPTIONS = [
   { label: 'November', value: '11', dataOfMonth: 30 },
   { label: 'December', value: '12', dataOfMonth: 31 },
 ]
+
+export const VIEW_CONTENT_ADDRESS = {
+  ADDRESS_LIST: 'address-list',
+  CREATE_ADDRESS: 'create-address',
+}

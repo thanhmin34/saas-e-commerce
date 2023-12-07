@@ -17,6 +17,7 @@ const productInCategoryRouter = require("./productInCategoryRouter.js");
 const seoRouter = require("./seoRouter.js");
 const reviewRouter = require("./reviewRouter.js");
 const noteRouter = require("./notesRouter.js");
+const addressRouter = require("./addressRouter.js");
 
 const renderRouters = (app) => {
   const listRouters = [
@@ -39,6 +40,7 @@ const renderRouters = (app) => {
     seoRouter,
     reviewRouter,
     noteRouter,
+    addressRouter,
   ];
 
   listRouters.map((item) => app.use("/", item));

@@ -2,7 +2,7 @@ const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const moment = require("moment");
-const { User, Wallet, Cart } = require("../models");
+const { User, Wallet, Cart, Wishlist } = require("../models");
 const {
   notificationMessageError,
   notificationMessageSuccess,
@@ -181,7 +181,10 @@ const registerByEmail = asyncHandler(async (req, res) => {
       lastname: lastName,
     });
 
-    if (user?.dataValues?.id) {
+    if (user?.id) {
+      await Wishlist.create({
+        customer_id: user?.id,
+      });
       return res.status(201).json({
         status: true,
         message: "Create user successfully",

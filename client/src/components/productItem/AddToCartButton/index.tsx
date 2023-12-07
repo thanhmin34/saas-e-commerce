@@ -1,8 +1,8 @@
 'use client'
 import Button from '@components/button'
-import styles from './styles.module.scss'
 import { ProductItemInterface } from '@interfaces/product'
 import useUpdateCart from '@lib/products/useUpdateCart'
+import { IProductInWishlist } from '@interfaces/wishlist'
 
 const AddToCartButton = ({
   className,
@@ -11,7 +11,7 @@ const AddToCartButton = ({
 }: {
   className: string
   isOutOfStock: boolean
-  item: ProductItemInterface
+  item: ProductItemInterface | IProductInWishlist
 }) => {
   const { handleAddToCart } = useUpdateCart()
 

@@ -1,12 +1,4 @@
-interface IImage {
-  url: string
-  label: string
-}
-
-interface IMediaGallery {
-  url: string
-  label: string
-}
+import { IImage } from './productDetails'
 
 export interface PriceTypes {
   value: number
@@ -21,15 +13,15 @@ export interface RegularPriceTypes {
 export interface ProductItemInterface {
   id: number
   sku: string
-  image?: IImage
-  media_gallery: IMediaGallery
+  image: IImage
+  media_gallery: IImage[]
   name: string
   price: number
   quantity: number
-  type?: string
-  special_price?: number | null
-  total_rating?: number | undefined
-  review_count?: number | undefined
+  type: string
+  special_price: number | null
+  total_rating: number | undefined
+  review_count: number | undefined
   out_of_stock: boolean | undefined
   url_path: string
   special_to_date: string | null

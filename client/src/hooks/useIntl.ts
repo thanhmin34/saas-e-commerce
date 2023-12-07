@@ -9,7 +9,7 @@ interface LanguageData {
 }
 const useIntl = () => {
   const pathname = useParams()
-  const { lang } = pathname
+  const lang = pathname?.lang ? pathname?.lang : ''
 
   const languages: LanguageData = useMemo(() => {
     return lang === 'en' ? en : vn
