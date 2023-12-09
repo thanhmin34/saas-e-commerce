@@ -19,6 +19,14 @@ const {
 const { mergeProducts } = require("../utils/mergeProducts");
 const { getToken } = require("../utils/getToken");
 const { getShippingAddress } = require("../utils/helper");
+const {
+  getTotalPriceCart,
+  getTotalExclPriceCart,
+  getDiscountAmount,
+  getTotalPayment,
+  getProductByCart,
+} = require("../utils/calculatorTotalCart");
+const { TAX_AMOUNT } = require("../constants/variables");
 
 const cartSchema = Joi.object({
   cart_id: Joi.string().required(),
@@ -149,10 +157,10 @@ const getCartDetails = asyncHandler(async (req, res) => {
   const { cart_id } = query || {};
 
   try {
-    // const { error } = validateFieldBySchema(body, cartSchema);
-    // if (error) {
-    //   return notificationMessageError(res, error.details[0].message);
-    // }
+    const { error } = validateFieldBySchema(query, cartSchema);
+    if (error) {
+      return notificationMessageError(res, error.details[0].message);
+    }
 
     const fieldExclude = ["createdAt", "updatedAt", "id"];
     const cart = await Cart.findOne({
@@ -211,52 +219,25 @@ const getCartDetails = asyncHandler(async (req, res) => {
       ],
     });
 
-    const total =
-      cart?.listCartItem?.length > 0
-        ? cart?.listCartItem.reduce((acc, cur) => {
-            return (acc += cur?.price);
-          }, 0)
-        : 0;
+    const total = getTotalPriceCart(cart?.listCartItem);
 
-    const tax_amount = 0.05;
-    const total_excl = +(0.05 * +total).toFixed(2);
+    const total_excl = getTotalExclPriceCart(total);
     const shipping_amount = lodash.get(cart, "cartShippingMethods.price", 0);
-    const discount_amount = lodash.get(cart, "cartDiscount.value", 0) * total;
+    const discount_amount = getDiscountAmount(
+      lodash.get(cart, "cartDiscount.value", 0),
+      total
+    );
     const currency = "USD";
-    const totalPayment =
-      (total + tax_amount + shipping_amount) * discount_amount;
+    const totalPayment = getTotalPayment(
+      total,
+      TAX_AMOUNT,
+      shipping_amount,
+      discount_amount
+    );
 
     if (cart) {
-      const products =
-        cart?.listCartItem?.length > 0
-          ? cart?.listCartItem.map((item) => {
-              const { productCartItem, product_id, quantity, options } =
-                item || {};
+      const products = getProductByCart(cart?.listCartItem);
 
-              const {
-                name,
-                sku,
-                image,
-                price,
-                special_price,
-                special_from_date,
-              } = productCartItem || {};
-              const currentDate = new Date();
-
-              const newPrice = special_price
-                ? special_price * quantity
-                : price * quantity;
-              return {
-                product_id,
-                quantity,
-                price: newPrice,
-                options,
-                name,
-                sku,
-                image: JSON.parse(image),
-              };
-            })
-          : [];
       return notificationMessageSuccess(res, {
         cart: {
           cart_id: cart?.cart_id,
@@ -264,8 +245,8 @@ const getCartDetails = asyncHandler(async (req, res) => {
           price: {
             total,
             total_excl: total_excl ? +total_excl.toFixed(2) : 0,
-            total_payment: total ? +totalPayment.toFixed(2) : 0,
-            tax_amount,
+            total_payment: totalPayment ? +totalPayment.toFixed(2) : 0,
+            tax_amount: TAX_AMOUNT,
             shipping_amount,
             discount_amount: discount_amount ? +discount_amount.toFixed(2) : 0,
             currency,
@@ -313,9 +294,16 @@ const checkCartIsAuth = asyncHandler(async (req, res) => {
 });
 
 const createCart = asyncHandler(async (req, res) => {
+  const { body } = req;
+  const { customer_id } = body;
   try {
     const cart_id = generateCartId();
-    const cart = await Cart.create({ cart_id });
+
+    const params = {
+      cart_id,
+    };
+    if (customer_id) params.customer_id = customer_id;
+    const cart = await Cart.create(params);
     if (cart?.id) {
       return notificationMessageSuccess(res, {
         message: "Create cart successfully",

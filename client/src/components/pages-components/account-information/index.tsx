@@ -8,6 +8,8 @@ import { LIST_ACCOUNT_MENU } from '@constants/account'
 import { usePrivateAccountMenuContext } from '@context/PrivateAccountContext'
 import useMyAddress from '@lib/account-information/useMyAddress'
 import useWishlist from '@lib/account-information/useWishlist'
+import MyOrders from './my-orders'
+import useMyOrders from '@lib/account-information/useMyOrder'
 
 const PrivateAccountMenu = dynamic(() => import('./account-menu/PrivateAccountMenu'), {
   ssr: false,
@@ -29,6 +31,7 @@ const AccountInformation = () => {
   const { selectedTabId } = usePrivateAccountMenuContext()
   const { addressData, onCreateAddress, onDeleteAddress, isLoading } = useMyAddress()
   const { onAddProductInWishlist, onDeleteProductWishlist } = useWishlist({ enabled: true })
+  useMyOrders({ enabled: true })
 
   function renderNameBreadcrumb() {
     // switch (selectedTabId) {
@@ -52,6 +55,7 @@ const AccountInformation = () => {
       [LIST_ACCOUNT_MENU.MY_WISHLIST]: (
         <MyWishlist onAddProductInWishlist={onAddProductInWishlist} onDeleteProductWishlist={onDeleteProductWishlist} />
       ),
+      [LIST_ACCOUNT_MENU.MY_ORDERS]: <MyOrders />,
     }
 
     if (viewUi && viewUi[selectedTabId as keyof IViewUi]) {

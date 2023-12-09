@@ -1,3 +1,5 @@
+import { IPaymentMethodsItem, IShippingAddress, IShippingMethodsItem } from '@interfaces/checkout'
+import { IDiscount, IPriceCart } from '@interfaces/redux/cart'
 import { UseFormRegisterReturn } from 'react-hook-form'
 
 export interface User {
@@ -85,4 +87,39 @@ export interface IMyAddressContact extends Pick<IMyAddressItem, 'phone' | 'email
 
 export interface IMyAddressList {
   address: IMyAddressItem[]
+}
+export interface IOrdersItemInfo {
+  id: number
+  customer_id: number
+  status: string
+  notes: string
+}
+
+export interface IProductItemByOrders {
+  product_id: number
+  quantity: number
+  price: number
+  options: null | {}
+  name: string
+  sku: string
+  image: {
+    label: string
+    url: string
+  }
+}
+export interface IOrdersItem extends IOrdersItemInfo {
+  shipping_address: IShippingAddress
+  discount: IDiscount
+  shipping_methods: IShippingMethodsItem
+  payment_methods: IPaymentMethodsItem
+  products: IProductItemByOrders[]
+  prices: IPriceCart
+}
+export interface IActionsOrders {
+  type: string
+  payload: IOrdersItem[]
+}
+
+export interface IInitStateOrders {
+  orders: IOrdersItem[] | []
 }

@@ -20,7 +20,7 @@ import {
   addShippingMethods,
   getPaymentMethods,
   getShippingMethods,
-  submitOrderByCOD,
+  submitOrder,
 } from './checkoutLib'
 import useIntl from '@hooks/useIntl'
 import { useRouter } from 'next/navigation'
@@ -29,6 +29,8 @@ import useCreateCart from '@lib/cart/useCreateCart'
 
 import STORAGE_KEYS from '@constants/storageKeys'
 import LocalStorageManager from '@utils/simplePersistence'
+import { PAYMENT_METHODS } from '@constants/checkout'
+import { IUserInfo } from '@interfaces/redux/userInfo'
 
 const useCheckout = () => {
   const { push } = useRouter()
@@ -82,8 +84,8 @@ const useCheckout = () => {
     }
   )
 
-  const { mutate: submitOrderByCODMutation, isLoading: isLoadingSubmitOrderCOD } = useMutation('submitOrderByCOD', {
-    mutationFn: submitOrderByCOD,
+  const { mutate: submitOrderMutation, isLoading: isLoadingSubmitOrder } = useMutation('submitOrder', {
+    mutationFn: submitOrder,
   })
 
   const shippingMethodSelected: IShippingMethodsItem | null = useMemo(() => {
@@ -189,9 +191,11 @@ const useCheckout = () => {
     })
   }
 
-  const createCartAfterPlaceOrder = async () => {
+  const createCartAfterPlaceOrder = useCallback(async () => {
+    const { userInfo } = userData || {}
+    const { id } = (userInfo as IUserInfo) || {}
     try {
-      const responsive = handleCreateNewCart()
+      const responsive = handleCreateNewCart(id)
       responsive
         .then((data) => {
           // console.log('data', data)
@@ -200,28 +204,62 @@ const useCheckout = () => {
           console.log('error', error)
         })
     } catch (error) {}
-  }
+  }, [userData])
 
   const onSubmitCOD = () => {
-    const params = { cart_id }
-    if (!cart_id) {
-      return showToast(localizeMessage('cart id unavailable'), typeToast.error)
-    }
-    submitOrderByCODMutation(params, {
-      onSuccess(data) {
-        if (data && 'status' in data && data?.status) {
-          const { message, order_id } = data || {}
-          showToast(message, typeToast.success)
-          createCartAfterPlaceOrder()
-          if (order_id) {
-            storage.setItem(STORAGE_KEYS.ORDER_NUMBER, order_id)
-            push(`${ROUTER_PATHS.CHECKOUT_SUCCESS}`)
+    try {
+      const params = { cart_id }
+      if (!cart_id) {
+        return showToast(localizeMessage('cart id unavailable'), typeToast.error)
+      }
+      submitOrderMutation(params, {
+        onSuccess(data) {
+          console.log('data', data)
+
+          if (data && 'status' in data && data?.status) {
+            const { message, order_id } = data || {}
+            showToast(message, typeToast.success)
+            createCartAfterPlaceOrder()
+            if (order_id) {
+              storage.setItem(STORAGE_KEYS.ORDER_NUMBER, order_id)
+              push(`${ROUTER_PATHS.CHECKOUT_SUCCESS}`)
+            }
+            return
           }
-          return
-        }
-        showToast(data?.response?.data?.message, typeToast.error)
-      },
-    })
+          showToast(data?.response?.data?.message, typeToast.error)
+        },
+      })
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  const onSubmitCheckoutCom = () => {
+    try {
+      push(`${ROUTER_PATHS.CHECKOUT_COM}`)
+    } catch (error) {}
+  }
+
+  const onSubmitCheckoutStripe = () => {
+    try {
+      const params = { cart_id }
+      if (!cart_id) {
+        return showToast(localizeMessage('cart id unavailable'), typeToast.error)
+      }
+      submitOrderMutation(params, {
+        onSuccess(data) {
+          if (data && 'url' in data && 'order_id' in data) {
+            createCartAfterPlaceOrder()
+            storage.setItem(STORAGE_KEYS.ORDER_NUMBER, data?.order_id)
+            window.location.href = data?.url
+            return
+          }
+          showToast(data?.response?.data?.message, typeToast.error)
+        },
+      })
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   const handleErrorMessage = useCallback(() => {
@@ -255,8 +293,9 @@ const useCheckout = () => {
 
     const { code } = payment_methods || {}
     const paymentCheckout: IPaymentCheckout = {
-      cod: onSubmitCOD,
-      visa: () => {},
+      [PAYMENT_METHODS.COD]: onSubmitCOD,
+      [PAYMENT_METHODS.STRIPE]: onSubmitCheckoutStripe,
+      [PAYMENT_METHODS.CHECKOUT_COM]: onSubmitCheckoutCom,
     }
     if (code && paymentCheckout[code as keyof IPaymentCheckout]) {
       paymentCheckout[code]()
@@ -278,7 +317,7 @@ const useCheckout = () => {
       !!isLoadingPaymentMethods ||
       !!isLoadingNotes ||
       !!isLoadingShippingAddress ||
-      !!isLoadingSubmitOrderCOD ||
+      !!isLoadingSubmitOrder ||
       !!isLoadingCreateCart,
     shippingMethodSelected,
     paymentMethodSelected,

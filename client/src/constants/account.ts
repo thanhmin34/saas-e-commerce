@@ -60,3 +60,8 @@ export const VIEW_CONTENT_ADDRESS = {
   ADDRESS_LIST: 'address-list',
   CREATE_ADDRESS: 'create-address',
 }
+
+export const PAGE_SIZE = {
+  MOBILE: 8,
+  DESKTOP: 8,
+}

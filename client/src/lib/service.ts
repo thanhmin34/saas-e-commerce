@@ -3,6 +3,7 @@ import { IMergeCartParams } from '@interfaces/cart'
 import { IMyAddressItem, IMyAddressList, IUserInformationParams, TCreateAddressParams } from '@interfaces/user'
 import { IAddProductInWishListParams } from '@interfaces/wishlist'
 import apiClient from '@network/apiClient'
+import { AxiosError } from 'axios'
 
 export const getCustomerInfo = async () => {
   const { get } = apiClient()
@@ -112,6 +113,29 @@ export const deleteProductWishlist = async (productId: number) => {
   try {
     const url = `${APIS.MY_WISHLIST}?productId=${productId}`
     const responsive = await remove(url)
+    return responsive
+  } catch (error) {
+    return error
+  }
+}
+
+export const createCart = async (customerId?: number) => {
+  const { post } = apiClient()
+
+  try {
+    let url = `${APIS.CART}`
+    const responsive = await post(url, { customer_id: customerId ? customerId : null })
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const getMyOrderList = async () => {
+  const { get } = apiClient()
+  try {
+    const url = `${APIS.SUBMIT_ORDER}`
+    const responsive = await get(url)
     return responsive
   } catch (error) {
     return error

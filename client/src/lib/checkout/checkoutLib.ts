@@ -65,7 +65,7 @@ export const addShippingAddress = async (params: IParamsAddShippingAddress) => {
   }
 }
 
-export const submitOrderByCOD = async (params: { cart_id: string }) => {
+export const submitOrder = async (params: { cart_id: string }) => {
   const { post } = apiClient()
   try {
     let url = `${APIS.SUBMIT_ORDER}`

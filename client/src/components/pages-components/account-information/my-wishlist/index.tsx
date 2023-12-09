@@ -12,6 +12,7 @@ import { map } from 'lodash'
 import ProductItem from '@components/productItem'
 import useUpdateCart from '@lib/products/useUpdateCart'
 import Loading from '@components/loading'
+import useCart from '@lib/cart/useCartDetails'
 
 interface IProps {
   onAddProductInWishlist: (params: IAddProductInWishListParams) => void
@@ -22,6 +23,7 @@ const MyWishlist = (props: IProps) => {
   const { device } = useDetectDevice()
   const { localizeMessage } = useIntl()
   const { wishlist } = useSelector((state: RootState) => state.wishlistData)
+  const { refetchCart } = useCart()
   const { handleAddToCart, isLoading } = useUpdateCart()
 
   const handleAddAllToCart = useCallback(async () => {
@@ -40,7 +42,8 @@ const MyWishlist = (props: IProps) => {
       )
       return () => results
     })
-    await Promise.all(newWishlist.map((i) => i()))
+    // await Promise.all(newWishlist.map((i) => i()))
+    // refetchCart()
   }, [wishlist])
 
   const renderAction = () => {

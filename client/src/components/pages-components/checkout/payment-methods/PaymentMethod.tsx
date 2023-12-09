@@ -32,21 +32,21 @@ const PaymentMethod = (props: IPaymentMethodsProps) => {
     if (!first(paymentMethodList?.data)) return []
 
     const paymentMethodIcons = {
-      [PAYMENT_METHODS.cod]: [
+      [PAYMENT_METHODS.COD]: [
         {
           icon: imageUrls.codPayment,
           widthIcon: 20,
           heightIcon: 20,
         },
       ],
-      [PAYMENT_METHODS.pay]: [
+      [PAYMENT_METHODS.STRIPE]: [
         {
-          icon: imageUrls.bankTBPayment,
+          icon: imageUrls.iconCheckoutStripe,
           widthIcon: 20,
           heightIcon: 20,
         },
       ],
-      [PAYMENT_METHODS.blp]: [
+      [PAYMENT_METHODS.CHECKOUT_COM]: [
         {
           icon: imageUrls.codPayment,
           widthIcon: 20,
@@ -64,8 +64,8 @@ const PaymentMethod = (props: IPaymentMethodsProps) => {
       .filter((item) => {
         const { code } = item || {}
         return !(
-          (code === PAYMENT_METHODS.tabby && invalidTabbyValue) ||
-          (code === PAYMENT_METHODS.tamara && invalidTamaraValue)
+          (code === PAYMENT_METHODS.TABBY && invalidTabbyValue) ||
+          (code === PAYMENT_METHODS.TAMARA && invalidTamaraValue)
         )
       })
   }, [paymentMethodList, invalidTabbyValue, invalidTamaraValue])
