@@ -23,4 +23,5 @@ export const imageUrls = {
   iconAccountLogout: '/assets/icon/account-logout.jpg',
   iconEdit: '/assets/icon/icon-edit.png',
   iconFlagUsa: '/assets/icon/flag-usa.png',
+  iconCheckoutStripe: '/assets/icon/stripe.webp',
 }

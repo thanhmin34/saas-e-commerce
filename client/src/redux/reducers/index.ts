@@ -6,6 +6,7 @@ import userInfoReducer from './userInfoReducer'
 import productsListReducer from './productsListReducer'
 import addressReducer from './addressReducer'
 import wishlistReducer from './wishlistReducer'
+import ordersReducer from './ordersReducer'
 
 //Redux
 import { CombinedState, Reducer, combineReducers } from 'redux'
@@ -17,6 +18,7 @@ import { MegaMenu, MegaMenuAction } from '@interfaces/redux/megaMenu'
 import { ICart, ICartAction } from '@interfaces/redux/cart'
 import { IActionsAddress, IIniStateAddress } from '@interfaces/redux/address'
 import { IActionsProductInWishlist, IProductInWishlistData } from '@interfaces/wishlist'
+import { IActionsOrders, IInitStateOrders } from '@interfaces/user'
 
 const rootReducer: Reducer<
   CombinedState<{
@@ -27,6 +29,7 @@ const rootReducer: Reducer<
     productsList: IProductsList
     addressData: IIniStateAddress
     wishlistData: IProductInWishlistData
+    ordersData: IInitStateOrders
   }>,
   | ICartAction
   | ConfigAction
@@ -36,6 +39,7 @@ const rootReducer: Reducer<
   | ISignInAction
   | IActionsAddress
   | IActionsProductInWishlist
+  | IActionsOrders
 > = combineReducers({
   cartData: cartReducer,
   configApp: configReducer,
@@ -44,6 +48,7 @@ const rootReducer: Reducer<
   productsList: productsListReducer,
   addressData: addressReducer,
   wishlistData: wishlistReducer,
+  ordersData: ordersReducer,
 })
 
 export default rootReducer

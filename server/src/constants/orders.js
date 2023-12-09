@@ -6,6 +6,7 @@ const STATUS_ORDERS = {
   CANCELLED: "cancel",
   ON_HOLD: "on hold",
   COMPLETE: "complete",
+  UNPAID: "unpaid",
 };
 
 module.exports = {

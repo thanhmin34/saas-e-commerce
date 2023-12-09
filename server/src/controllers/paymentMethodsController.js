@@ -14,7 +14,7 @@ const getPaymentMethods = asyncHandler(async (req, res) => {
         exclude: ["createdAt", "updatedAt"],
       },
     });
-    console.log("paymentMethodList", paymentMethodList);
+
     if (!paymentMethodList) {
       return notificationMessageError(res, "Cannot find payment Method");
     }

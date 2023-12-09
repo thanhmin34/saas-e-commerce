@@ -2,11 +2,11 @@ import { DEFAULT_VALUE } from './map'
 import { IShippingAddress } from '@interfaces/checkout'
 
 export const PAYMENT_METHODS = {
-  cod: 'cod',
-  tabby: 'tabby_installments',
-  tamara: 'tamara_pay_by_instalments',
-  pay: 'pay',
-  blp: 'blp',
+  COD: 'cod',
+  TABBY: 'tabby_installments',
+  TAMARA: 'tamara_pay_by_instalments',
+  STRIPE: 'stripe',
+  CHECKOUT_COM: 'checkoutCom',
 }
 export const DEFAULT_SHIPPING_ADDRESS: IShippingAddress = {
   firstname: '',

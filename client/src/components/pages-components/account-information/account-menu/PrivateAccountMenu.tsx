@@ -72,13 +72,12 @@ export default function PrivateAccountMenu(props: IProps) {
       ...DEFAULT_ICON_SIZE,
       title: createTitle('My Addresses', `Saved addresses`, address?.length || 0),
     },
-    // {
-    //   id: LIST_ACCOUNT_MENU.MY_ORDERS,
-    //   iconActive: myOrderLogo,
-    //   icon: myOrderLogo,
-    //   ...DEFAULT_ICON_SIZE,
-    //   title: createTitle('My Orders', `Orders`, get(currentUser, 'order_count', 0)),
-    // },
+    {
+      id: LIST_ACCOUNT_MENU.MY_ORDERS,
+      icon: imageUrls.iconAccountOrder,
+      ...DEFAULT_ICON_SIZE,
+      title: createTitle('My Orders', `Orders`, 2),
+    },
     {
       id: LIST_ACCOUNT_MENU.MY_WISHLIST,
       icon: imageUrls.iconAccountWishlist,
