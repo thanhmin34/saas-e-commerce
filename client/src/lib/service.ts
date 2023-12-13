@@ -131,10 +131,10 @@ export const createCart = async (customerId?: number) => {
   }
 }
 
-export const getMyOrderList = async () => {
+export const getMyOrderList = async ({ currentPage, pageSize }: { currentPage: number; pageSize: number }) => {
   const { get } = apiClient()
   try {
-    const url = `${APIS.SUBMIT_ORDER}`
+    const url = `${APIS.SUBMIT_ORDER}?current_page=${currentPage}&&page_size=${pageSize}`
     const responsive = await get(url)
     return responsive
   } catch (error) {

@@ -1,3 +1,13 @@
+import {
+  COLOR_STATUS_ORDER_CANCELED,
+  COLOR_STATUS_ORDER_CLOSED,
+  COLOR_STATUS_ORDER_COMPLETE,
+  COLOR_STATUS_ORDER_DELIVERED,
+  COLOR_STATUS_ORDER_PENDING,
+  COLOR_STATUS_ORDER_PENDING_PAYMENT,
+  COLOR_STATUS_ORDER_PROCESSING,
+} from './colors'
+
 export const LIST_ACCOUNT_MENU = {
   MY_ACCOUNT: 'my-account',
   LOGOUT: 'logout',
@@ -65,3 +75,48 @@ export const PAGE_SIZE = {
   MOBILE: 8,
   DESKTOP: 8,
 }
+
+export const DEFAULT_DISPLAY_PAGINATION = 8
+export interface IStatusOrders {
+  [key: string]: string
+}
+
+export const STATUS_ORDERS: IStatusOrders = {
+  PENDING: 'pending',
+  PROCESSING: 'processing',
+  SHIPPING: 'shipping',
+  DELIVERED: 'Delivered',
+  CANCELLED: 'cancel',
+  ON_HOLD: 'on hold',
+  COMPLETE: 'complete',
+  UNPAID: 'unpaid',
+}
+
+export const STATUS_NUMBER = {
+  ZERO: 0,
+  ONE: 1,
+  TWO: 2,
+  THREE: 3,
+}
+
+export const STATUS_COLOR: IStatusOrders = {
+  closed: COLOR_STATUS_ORDER_CLOSED,
+  pending: COLOR_STATUS_ORDER_PENDING,
+  unpaid: COLOR_STATUS_ORDER_PENDING_PAYMENT,
+  canceled: COLOR_STATUS_ORDER_CANCELED,
+  complete: COLOR_STATUS_ORDER_COMPLETE,
+  delivered: COLOR_STATUS_ORDER_DELIVERED,
+  processing: COLOR_STATUS_ORDER_PROCESSING,
+}
+
+export const TAB_ORDER = {
+  ITEM_ORDER: 0,
+  INVOICES: 1,
+  ORDER_SHIPMENTS: 2,
+  REVIEW_ORDER: 3,
+}
+export const TABS_TABLE = ['Items Ordered', 'invoices', 'Order Shipments', 'Review Ordered']
+
+export const HEADER_ROW_ITEMS = ['Product Name', 'SKU', 'Price', 'Qty', 'Subtotal']
+export const PAGE_RANGE_DISPLAYED = 3
+export const TITLE_INFORMATION_ORDER = ['Shipping Address', 'Shipping Method', 'Billing Address', 'Payment Method']

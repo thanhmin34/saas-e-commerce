@@ -22,7 +22,7 @@ const totalRating = (review_list) => {
 const getShippingAddress = (address) => {
   if (!address) return null;
   const { tempLatLng } = address || {};
-  address.tempLatLng = JSON.parse(tempLatLng);
+  // address.tempLatLng = JSON.parse(tempLatLng);
   return address;
 };
 

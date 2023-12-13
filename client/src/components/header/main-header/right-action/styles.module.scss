@@ -6,7 +6,7 @@
 
   .action {
     @include flex(center, flex-start);
-    gap: 6px;
+    gap: 12px;
     .title {
       font-size: 14px;
       font-weight: normal;

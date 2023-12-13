@@ -1,0 +1,51 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.myOrderItemMobile {
+  width: 100%;
+  padding: 26px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border: 1px solid $greyLight;
+  margin-bottom: 20px;
+}
+.myOrderRow {
+  @include flex(center, space-between);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  &:first-child {
+    .myOrderRowName {
+      font-weight: 600;
+    }
+    .myOrderRowValue {
+      font-size: 16px;
+      color: $yellow;
+      cursor: pointer;
+    }
+  }
+  &:nth-child(4) {
+    .myOrderRowName {
+      font-weight: 600;
+    }
+  }
+}
+
+.status {
+  padding: 3px 8px;
+  color: $white;
+  border-radius: 2px;
+}
+.actions {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  @include flex(center, space-between);
+  .button {
+    @include flex(center, flex-start);
+    gap: 12px;
+    color: $primaryColor;
+    cursor: pointer;
+  }
+}

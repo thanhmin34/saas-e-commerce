@@ -39,3 +39,7 @@ export interface ITamaraProductWidget {
 export interface ITabbyPromo {
   new (options: { selector: string; currency: string; price: number }): any
 }
+
+export interface IKeyOfOject {
+  [x: string]: React.JSX.Element
+}

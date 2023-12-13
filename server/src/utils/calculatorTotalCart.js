@@ -2,7 +2,7 @@ const { TAX_AMOUNT } = require("../constants/variables");
 
 const getTotalPriceCart = (productList) => {
   const total =
-    productList.length > 0
+    productList?.length > 0
       ? productList.reduce((acc, cur) => {
           const { productCartItem, quantity } = cur || {};
           const { special_price, price } = productCartItem || {};
@@ -34,8 +34,9 @@ const getTotalPayment = (total, tax_amount, shipping_amount, discount) => {
 };
 
 const getProductByCart = (products) => {
-  if (products.length <= 0) return [];
-  return products.map((item) => {
+  if (products?.length <= 0) return [];
+
+  return products?.map((item) => {
     const { productCartItem, product_id, quantity, options } = item || {};
 
     const { name, sku, image, price, special_price, special_from_date } =
@@ -52,7 +53,7 @@ const getProductByCart = (products) => {
       options,
       name,
       sku,
-      image: JSON.parse(image),
+      image,
     };
   });
 };

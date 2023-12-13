@@ -25,42 +25,49 @@ export const useAfterLogin = () => {
   })
 
   const mergeCarts = async (params: { sourceCartId: string; destinationCartId: string }) => {
-    try {
-      const { sourceCartId, destinationCartId } = params || {}
-      mergeCartsMutation(
-        {
-          source_cart_id: sourceCartId,
-          destination_cart_id: destinationCartId,
-        },
-        {
-          onSuccess: (data) => {
-            const { newCartId } = data || {}
-            if (newCartId) {
-              storage.setItem(STORAGE_KEYS.CART_ID, newCartId)
-              getCartDetails(newCartId)
-              dispatch(setIsSignIn(true))
-            }
+    return new Promise<boolean>((resolve, reject) => {
+      try {
+        const { sourceCartId, destinationCartId } = params || {}
+        mergeCartsMutation(
+          {
+            source_cart_id: sourceCartId,
+            destination_cart_id: destinationCartId,
           },
-        }
-      )
-    } catch (error) {
-      return error
-    }
+          {
+            onSuccess: (data) => {
+              const { newCartId } = data || {}
+              if (newCartId) {
+                storage.setItem(STORAGE_KEYS.CART_ID, newCartId)
+                getCartDetails(newCartId)
+                dispatch(setIsSignIn(true))
+                resolve(true)
+                return
+              }
+              resolve(false)
+            },
+          }
+        )
+      } catch (error) {
+        return error
+      }
+    })
   }
 
   const handleCartAfterLogin = useCallback(async () => {
-    try {
-      const oldCartId = get(cart, 'cart_id')
-      const customer = await getCustomerInfo()
-      const { cart_id, user } = customer || {}
-
-      user && dispatch(setUserInfo(user))
-      await mergeCarts({
-        sourceCartId: oldCartId,
-        destinationCartId: cart_id,
-      })
-      return customer
-    } catch (error) {}
+    return new Promise<boolean>(async (resolve, reject) => {
+      try {
+        const oldCartId = get(cart, 'cart_id')
+        const customer = await getCustomerInfo()
+        const { cart_id, user } = customer || {}
+        user && dispatch(setUserInfo(user))
+        const value = await mergeCarts({
+          sourceCartId: oldCartId,
+          destinationCartId: cart_id,
+        })
+        resolve(value)
+        // return customer
+      } catch (error) {}
+    })
   }, [cart])
 
   return {

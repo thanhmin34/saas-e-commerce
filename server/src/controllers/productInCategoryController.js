@@ -4,6 +4,7 @@ const {
   ProductCategories,
   Products,
   Reviews,
+  User,
 } = require("../models");
 const {
   notificationMessageSuccess,
@@ -12,6 +13,7 @@ const {
 const Joi = require("joi");
 const { Op } = require("sequelize");
 const { checkFilterByCategory, totalRating } = require("../utils/helper");
+const { DEFAULT_CURRENT_PAGE } = require("../constants/variables");
 
 const validateProductInCategory = Joi.object({
   category_id: Joi.number().required(),
@@ -68,7 +70,7 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
   const { query } = req || {};
   const {
     id,
-    current_page = 1,
+    current_page = DEFAULT_CURRENT_PAGE,
     page_size = 20,
     order_name,
     order_value,
@@ -89,6 +91,7 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
       },
     })
       .then(async (category) => {
+        console.log("category", category);
         if (!category) {
           return notificationMessageError(res, "Category does not exist");
         }
@@ -152,7 +155,7 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
           offset: offset,
           order,
         });
-        console.log("products", products);
+
         const newProducts = products?.rows.map((item) => {
           const {
             id,
@@ -179,8 +182,8 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
             quantity,
             label,
             type,
-            image: JSON.parse(image),
-            media_gallery: JSON.parse(media_gallery),
+            image,
+            media_gallery,
             brand,
             url_path,
             special_price,
@@ -199,7 +202,9 @@ const getProductsInCategory = asyncHandler(async (req, res) => {
       .catch((error) => {
         return notificationMessageError(res, error);
       });
-  } catch (error) {}
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
 });
 
 const urlResolver = asyncHandler(async (req, res) => {

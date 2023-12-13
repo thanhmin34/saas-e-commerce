@@ -1,5 +1,6 @@
 import { IPaymentMethodsItem, IShippingAddress, IShippingMethodsItem } from '@interfaces/checkout'
 import { IDiscount, IPriceCart } from '@interfaces/redux/cart'
+import React from 'react'
 import { UseFormRegisterReturn } from 'react-hook-form'
 
 export interface User {
@@ -93,6 +94,7 @@ export interface IOrdersItemInfo {
   customer_id: number
   status: string
   notes: string
+  order_date: string
 }
 
 export interface IProductItemByOrders {
@@ -117,9 +119,19 @@ export interface IOrdersItem extends IOrdersItemInfo {
 }
 export interface IActionsOrders {
   type: string
-  payload: IOrdersItem[]
+  payload: {
+    orders: IOrdersItem[]
+    total_count: number
+  }
 }
 
 export interface IInitStateOrders {
   orders: IOrdersItem[] | []
+  total_count: number
+}
+
+export interface IAddressInfo {
+  icon: React.JSX.Element
+  title: string
+  value: string
 }

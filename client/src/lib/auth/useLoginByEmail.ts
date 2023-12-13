@@ -59,8 +59,12 @@ const useLoginByEmail = () => {
         if (data && 'status' in data) {
           showToast(data?.message, typeToast.success)
           localStorageManager.setItem(STORAGE_KEYS.TOKEN, data.token, TTL)
-          replace(ROUTER_PATHS.ACCOUNT_INFORMATION)
-          handleCartAfterLogin()
+          const results = handleCartAfterLogin()
+          results.then((data) => {
+            if (data) {
+              replace(ROUTER_PATHS.ACCOUNT_INFORMATION)
+            }
+          })
         }
         if (data && 'response' in data) {
           showToast(get(data, 'response.data.message'), typeToast.error)

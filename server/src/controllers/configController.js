@@ -30,7 +30,7 @@ const getConfig = asyncHandler(async (req, res) => {
     } = config;
     return notificationMessageSuccess(res, {
       config_app: {
-        button: JSON.parse(button),
+        button,
         font_size,
         font_weight,
         hover_text,

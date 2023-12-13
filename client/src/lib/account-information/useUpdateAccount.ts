@@ -64,9 +64,10 @@ const useUpdateAccount = () => {
     }
     const newBirthDate = birth_date ? birth_date.split('/') : []
     if (birth_date && !isEmpty(newBirthDate) && newBirthDate.length > 2) {
+      // format date follow month/day/year
       return {
-        day: newBirthDate[0],
-        month: newBirthDate[1],
+        day: newBirthDate[1],
+        month: newBirthDate[0],
         year: newBirthDate[2],
       }
     }

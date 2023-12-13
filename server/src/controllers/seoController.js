@@ -3,10 +3,12 @@ const {
   notificationMessageSuccess,
   notificationMessageError,
 } = require("../utils/notificationMessageStatus");
-
+const { User } = require("../models");
 const seoPages = asyncHandler(async (req, res) => {
+  const users = await User.findAll();
   try {
     return notificationMessageSuccess(res, {
+      users,
       message: "Save address success fully",
       status: true,
       seo: {

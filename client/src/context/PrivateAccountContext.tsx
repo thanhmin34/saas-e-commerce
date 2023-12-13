@@ -15,11 +15,10 @@ export default function PrivateAccountMenuProvider({ children }: { children: Rea
   const pathRouter = usePathname()
   const [isMenuSidebarShowed, setIsMenuSidebarShowed] = useState<boolean>(false)
   const [selectedTabId, setSelectedTabId] = useState<string>(LIST_ACCOUNT_MENU.MY_ACCOUNT)
-  const lang = params?.lang as string
-  const pathName = pathRouter ? pathRouter.replace(`/${lang}`, '') : ''
 
   useEffect(() => {
     const hash = window.location.hash
+
     const tabId = hash.slice(1)
     if (!!tabId) {
       setSelectedTabId(tabId)
@@ -30,10 +29,11 @@ export default function PrivateAccountMenuProvider({ children }: { children: Rea
 
   const handleSelectedTab = useCallback(
     (id: string) => {
+      router.push(`${pathRouter}#${id}`)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       setSelectedTabId(id)
-      router.push(`${pathName}#${id}`)
     },
-    [selectedTabId, setSelectedTabId, router]
+    [selectedTabId, setSelectedTabId, router, pathRouter]
   )
 
   const handleToggleSidebar = useCallback(() => {

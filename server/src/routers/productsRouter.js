@@ -9,7 +9,7 @@ productsRouter.get(
   "/products/:productSku",
   ProductsController.getProductsDetails
 );
-productsRouter.post("/products", auth, ProductsController.CreateProducts);
+productsRouter.post("/products", ProductsController.CreateProducts);
 productsRouter.put(
   "/products/:productSku",
   auth,

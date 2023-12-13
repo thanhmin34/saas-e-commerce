@@ -33,6 +33,8 @@ const {
   TAX_AMOUNT,
   CURRENCY,
   DEFAULT_CONFIG_APP_ID,
+  DEFAULT_CURRENT_PAGE,
+  DEFAULT_PAGE_SIZE,
 } = require("../constants/variables.js");
 
 const submitOrder = asyncHandler(async (req, res) => {
@@ -131,9 +133,9 @@ const submitOrder = asyncHandler(async (req, res) => {
         price_total: totalPayment,
         currency,
       };
-      const { url, id: payment_id } = await paymentMethodsList["stripe"](
-        params
-      );
+      const { url, id: payment_id } = await paymentMethodsList[
+        paymentMethodCode
+      ](params);
       // check payment method /to do update
       const statusList = {
         cod: STATUS_ORDERS.PENDING,
@@ -169,20 +171,27 @@ const submitOrder = asyncHandler(async (req, res) => {
 });
 
 const getOrderById = asyncHandler(async (req, res) => {
-  const { headers } = req || {};
+  const { headers, query } = req || {};
 
   try {
+    const {
+      current_page = DEFAULT_CURRENT_PAGE,
+      page_size = DEFAULT_PAGE_SIZE,
+    } = query || {};
+    const offset = (+current_page - 1) * +page_size;
+
     const fieldExclude = ["createdAt", "updatedAt"];
     const token = getToken(headers);
+
     const userOrderData = await User.findOne({
       where: { token },
       attributes: ["id", "token"],
       include: {
         model: Order,
         as: "userOrder",
-        attributes: {
-          exclude: fieldExclude,
-        },
+        // attributes: {
+        //   exclude: fieldExclude,
+        // },
         include: {
           model: Cart,
           as: "cartOrder",
@@ -241,6 +250,8 @@ const getOrderById = asyncHandler(async (req, res) => {
             },
           ],
         },
+        limit: +page_size,
+        offset: offset,
       },
     });
     if (!userOrderData)
@@ -258,10 +269,11 @@ const getOrderById = asyncHandler(async (req, res) => {
         cartShippingAddress,
         listCartItem,
         notes,
+        createdAt,
       } = cartOrder || {};
-      cartShippingAddress.tempLatLng = JSON.parse(
-        cartShippingAddress.tempLatLng
-      );
+      // cartShippingAddress.tempLatLng = JSON.parse(
+      //   cartShippingAddress.tempLatLng
+      // );
 
       const products = getProductByCart(listCartItem);
       const total = getTotalPriceCart(listCartItem);
@@ -277,7 +289,9 @@ const getOrderById = asyncHandler(async (req, res) => {
         shipping_amount,
         discount_amount
       );
+
       return {
+        order_date: createdAt,
         id,
         customer_id,
         status,
@@ -298,8 +312,15 @@ const getOrderById = asyncHandler(async (req, res) => {
         },
       };
     });
+    const totalOrder = await Order.findAndCountAll({
+      where: { customer_id: userOrderData?.id },
+      attributes: ["customer_id"],
+    });
 
-    return notificationMessageSuccess(res, { orders: newOrderList });
+    return notificationMessageSuccess(res, {
+      total_count: totalOrder?.count || 0,
+      orders: newOrderList,
+    });
   } catch (error) {
     return notificationMessageError(res, { error });
   }
