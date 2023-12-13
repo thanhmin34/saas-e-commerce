@@ -41,7 +41,7 @@ const User = (sequelize, DataTypes) => {
       lastname: DataTypes.STRING,
       email: DataTypes.STRING,
       phone_number: DataTypes.STRING,
-      address: DataTypes.STRING,
+      // address: DataTypes.STRING,
       password: DataTypes.STRING,
       token: DataTypes.STRING,
       birth_date: DataTypes.DATE,

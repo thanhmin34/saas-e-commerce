@@ -1,17 +1,18 @@
 {
-  "development": {
+  "development1": {
     "username": "root",
     "password": null,
     "database": "saas-e-commerce",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+  "development": {
+    "username": "uv2grn6mbjfxgwwt",
+    "password": "alBglsjHU2qpPwRkbpsx",
+    "database": "b3f3ezsepkgygqgddkk5",
+    "host": "b3f3ezsepkgygqgddkk5-mysql.services.clever-cloud.com",
+    "dialect": "mysql",
+    "port": "3306"
   },
   "production": {
     "username": "root",

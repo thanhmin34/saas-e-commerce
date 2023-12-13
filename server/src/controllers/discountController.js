@@ -29,13 +29,13 @@ const getAllDiscounts = asyncHandler(async (req, res) => {
 const addDiscount = asyncHandler(async (req, res) => {
   const { body } = req || {};
   const { cart_id, code } = body || {};
+
   try {
     const discountItem = await Discount.findOne({
       where: {
-        code: code,
+        code,
       },
     });
-
     if (!discountItem?.id) {
       return notificationMessageError(res, "Wrong discount code");
     }

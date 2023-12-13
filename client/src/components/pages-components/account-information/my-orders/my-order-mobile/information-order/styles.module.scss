@@ -1,0 +1,45 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.orderInformationMobile {
+  margin-top: 32px;
+  .titleOrderInformation {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 130%;
+    // margin-bottom: 1px;
+  }
+  .wrapperTitle,
+  .orderInformationRow {
+    @include grid(1);
+    gap: 10px;
+  }
+  .titleRow {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 130%;
+    width: 100%;
+    max-width: 188px;
+  }
+  .orderInformationColumn {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    max-width: 188px;
+    min-height: 48px;
+    font-weight: 400;
+    .title {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 130%;
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+}

@@ -236,12 +236,12 @@ const getCartDetails = asyncHandler(async (req, res) => {
     );
 
     if (cart) {
-      const products = getProductByCart(cart?.listCartItem);
+      const products = getProductByCart(cart?.listCartItem) || [];
 
       return notificationMessageSuccess(res, {
         cart: {
           cart_id: cart?.cart_id,
-          total_quantity: cart?.listCartItem.length || 0,
+          total_quantity: cart?.listCartItem?.length || 0,
           price: {
             total,
             total_excl: total_excl ? +total_excl.toFixed(2) : 0,
@@ -262,6 +262,7 @@ const getCartDetails = asyncHandler(async (req, res) => {
     }
     return notificationMessageError(res, "Cannot find cart");
   } catch (error) {
+    console.log("error", error);
     return notificationMessageError(res, error);
   }
 });

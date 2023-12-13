@@ -89,7 +89,7 @@ const getWishlistsByUser = asyncHandler(async (req, res) => {
           quantity,
           label,
           type,
-          image: JSON.parse(image),
+          image,
           url_path,
           review_count: review_list?.length || 0,
           total_rating: totalRating(review_list),

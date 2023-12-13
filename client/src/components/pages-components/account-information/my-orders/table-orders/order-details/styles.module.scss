@@ -1,0 +1,81 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+// header
+.title {
+  display: flex;
+  flex-direction: column;
+}
+.orderWrapper {
+  @include flex(center, space-between);
+  margin-bottom: 10px;
+}
+
+.orderTitle {
+  @include flex(center, flex-start);
+  gap: 14px;
+
+  h2 {
+    font-weight: 500;
+    font-size: 24px;
+    text-shadow: $textShadow;
+    @include respond(large-mobile) {
+      font-weight: 400;
+      font-size: 20px;
+    }
+    @include respond(extra-small-mobile) {
+      font-weight: 400;
+      font-size: 18px;
+    }
+  }
+}
+.orderNumber {
+  margin-inline-start: 4px;
+}
+.status {
+  padding: 4px 10px;
+  color: $white;
+  border-radius: 2px;
+  @include respond(large-mobile) {
+    font-weight: 400;
+    font-size: 16px;
+  }
+  @include respond(extra-small-mobile) {
+    font-weight: 300;
+    font-size: 13px;
+  }
+}
+.timeOrder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+  @include respond(extra-small-mobile) {
+    font-weight: 300;
+    font-size: 13px;
+  }
+}
+.buttonWrapper {
+  @include flex(center, flex-start);
+  gap: 30px;
+}
+
+.back {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 5px;
+  @include flex(center, flex-start);
+  gap: 10px;
+  &:hover {
+    opacity: 0.7;
+  }
+  background-color: transparent;
+  span {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+  }
+}
+
+.iconBack {
+  transform: rotate(180deg);
+}

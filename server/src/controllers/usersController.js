@@ -23,7 +23,7 @@ const editUserSchema = Joi.object({
   lastname: Joi.string().trim().required(),
   email: Joi.string().email(),
   phone_number: Joi.string().min(8).required(),
-  gender: Joi.string().required(),
+  gender: Joi.number().required(),
   birth_date: Joi.string().required(),
   id: Joi.number().required(),
 });
@@ -151,6 +151,7 @@ const editUserInformation = asyncHandler(async (req, res) => {
       },
     });
   } catch (error) {
+    console.log("error", error);
     return notificationMessageError(res, "Internal server error");
   }
 });

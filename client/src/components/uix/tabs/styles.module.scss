@@ -1,0 +1,17 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.button {
+  width: 100%;
+  height: 50px;
+  @include flex(center, center);
+  outline: none;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 130%;
+  background: #e7e8eb;
+}
+.isActive {
+  background: $primaryColor;
+  color: $white;
+}

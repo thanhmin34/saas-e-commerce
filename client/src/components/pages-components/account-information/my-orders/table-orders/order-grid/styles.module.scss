@@ -1,0 +1,48 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.myOrderListDesktop {
+  margin-top: 40px;
+}
+.table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // gap: 35px;
+}
+
+.titleOrder {
+  @include respond(large-mobile) {
+    display: none;
+  }
+}
+.pagination {
+  margin: 50px 0 200px;
+  ul {
+    @include flex(center, flex-end);
+    gap: 10px;
+    li,
+    li a {
+      width: 40px;
+      height: 40px;
+      @include flex(center, center);
+      color: $blackFour;
+      cursor: pointer;
+      // a {
+      //   @include flex(center, center);
+      //   width: 40px;
+      //   height: 40px;
+      // }
+      &:first-child,
+      &:last-child {
+        width: 100px;
+      }
+    }
+  }
+}
+
+.selected {
+  background: $greyFifteen;
+  border-radius: 2px;
+  color: $basicColor;
+}

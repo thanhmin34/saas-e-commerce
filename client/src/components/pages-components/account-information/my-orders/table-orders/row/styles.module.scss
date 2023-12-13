@@ -1,0 +1,46 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.itemRow {
+  width: 100%;
+  padding: 17px 0;
+  border-bottom: $border !important;
+
+  tr {
+    width: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    @include flex(center, space-between);
+    td {
+      text-align: start;
+      width: 19%;
+      &:nth-child(5),
+      &:nth-child(6) {
+        width: 12%;
+        color: $primaryColor;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.itemRow:nth-child(1) {
+  border-top: $border !important;
+}
+
+.statusOrder {
+  padding: 3px 7px;
+  color: $white;
+  border-radius: 2px;
+  background: $primaryColor;
+}
+.viewOrder {
+  @include flex(center, flex-start);
+}
+.boundary {
+  margin: 0 auto;
+  width: 1px;
+  height: 10px;
+  background-color: $border;
+}
