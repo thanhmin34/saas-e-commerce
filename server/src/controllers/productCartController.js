@@ -31,6 +31,7 @@ const addProductToCart = asyncHandler(async (req, res) => {
   const { body } = req || {};
   const { cart_id, product } = body || {};
   const { id, quantity, price, options } = product || {};
+  console.log("v");
   try {
     const { error } = validateFieldBySchema(body, addProductSchema);
     if (error) {
@@ -53,7 +54,12 @@ const addProductToCart = asyncHandler(async (req, res) => {
     const checkCartItem = await CartItem.findOne({
       where: { cart_id: cart?.id, product_id: id },
     });
-
+    if (+product?.quantity < +quantity) {
+      return notificationMessageError(res, {
+        status: false,
+        message: "You reach the max QTY for order",
+      });
+    }
     if (!checkCartItem) {
       const item = await CartItem.create({
         cart_id: cart?.id,
@@ -68,6 +74,7 @@ const addProductToCart = asyncHandler(async (req, res) => {
           message: "Product added successfully",
         });
     }
+
     checkCartItem.quantity += quantity;
     await checkCartItem.save();
     return notificationMessageSuccess(res, {

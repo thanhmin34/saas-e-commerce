@@ -75,6 +75,7 @@ const submitOrder = asyncHandler(async (req, res) => {
                 "price",
                 "special_price",
                 "special_from_date",
+                "quantity",
               ],
             },
           ],
@@ -111,7 +112,7 @@ const submitOrder = asyncHandler(async (req, res) => {
       cod: placeOrderByCOD,
     };
 
-    const paymentMethodCode = cart?.cartPaymentMethod.code;
+    const paymentMethodCode = cart?.cartPaymentMethod?.code;
 
     if (paymentMethodCode && paymentMethodsList[paymentMethodCode]) {
       const { currency } = configApp || {};
@@ -132,6 +133,7 @@ const submitOrder = asyncHandler(async (req, res) => {
       const params = {
         price_total: totalPayment,
         currency,
+        products: listCartItem,
       };
       const { url, id: payment_id } = await paymentMethodsList[
         paymentMethodCode
@@ -155,7 +157,6 @@ const submitOrder = asyncHandler(async (req, res) => {
 
       cart.customer_id = null;
       await cart.save();
-
       return notificationMessageSuccess(res, {
         status: true,
         message: "Create order successfully",
@@ -166,6 +167,7 @@ const submitOrder = asyncHandler(async (req, res) => {
 
     return notificationMessageError(res, "Invalid Payment Methods");
   } catch (error) {
+    console.log("error", error);
     return notificationMessageError(res, error);
   }
 });
