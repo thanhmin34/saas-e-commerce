@@ -12,6 +12,8 @@ const ROUTER_PATHS = {
   CHECKOUT_SUCCESS: '/checkout/success',
   CHECKOUT_FAILS: '/checkout/fails',
   CHECKOUT_COM: '/checkout-com',
+  CONTACT_US: 'contact-us',
+  SEARCH: 'search',
 }
 
 const ROUTER_AUTH = ['/checkout', '/account-information']

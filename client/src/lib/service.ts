@@ -141,3 +141,14 @@ export const getMyOrderList = async ({ currentPage, pageSize }: { currentPage: n
     return error
   }
 }
+
+export const searchTerm = async ({ searchInput }: { searchInput: string }) => {
+  const { get } = apiClient()
+  try {
+    const url = `${APIS.SEARCH}?params=${searchInput}`
+    const responsive: unknown = await get(url)
+    return responsive
+  } catch (error) {
+    return error
+  }
+}

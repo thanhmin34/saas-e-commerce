@@ -6,6 +6,7 @@ productInCategoryRouter.post(
   "/products-in-category",
   productInCategoryController.insertProductInCategory
 );
+productInCategoryRouter.get("/search", productInCategoryController.search);
 productInCategoryRouter.get(
   "/products-in-category",
   productInCategoryController.getProductsInCategory

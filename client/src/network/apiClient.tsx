@@ -1,12 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
-import { BACKEND_URL } from '@utils/runtimeEnvironment'
 import STORAGE_KEYS from '@constants/storageKeys'
+import { BACKEND_URL } from '@constants/variables'
 
 const apiClient = () => {
   const token = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEYS.TOKEN) : null
   const newToken = token ? JSON.parse(token) : null
   const reqInstance = axios.create({
-    baseURL: BACKEND_URL || 'http://localhost:5000/',
+    baseURL: BACKEND_URL,
     timeout: 60000,
     headers: {
       'Content-Type': 'application/json',

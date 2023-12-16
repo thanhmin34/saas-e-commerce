@@ -1,4 +1,4 @@
-interface CategoryItem {
+export interface ICategoryItem {
   description: string
   image: string | undefined
   id: number
@@ -6,14 +6,12 @@ interface CategoryItem {
   parent_id: number
   slug: string
   title: string | undefined
-  children_category: CategoryItem[] | []
+  children_category: ICategoryItem[] | []
 }
 
-export interface MegaMenu {
-  children_category: CategoryItem[]
-}
+export type IMegaMenu = ICategoryItem[]
 
-export interface MegaMenuAction {
+export interface IMegaMenuAction {
   type: string
-  megaMenu: MegaMenu
+  payload: IMegaMenu
 }

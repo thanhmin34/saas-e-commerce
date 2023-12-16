@@ -1,12 +1,12 @@
-import { MegaMenu, MegaMenuAction } from '@interfaces/redux/megaMenu'
+import { IMegaMenu, IMegaMenuAction } from '@interfaces/redux/megaMenu'
 import { SET_MEGA_MENU } from '@redux/actions/megaMenuAction'
 
-const initState: MegaMenu | {} = {}
+const initState: IMegaMenu | [] = []
 
-const megaMenuReducer = (state = initState, action: MegaMenuAction) => {
+const megaMenuReducer = (state = initState, action: IMegaMenuAction) => {
   switch (action.type) {
     case SET_MEGA_MENU:
-      return action.megaMenu
+      return action.payload
     default:
       return state
   }

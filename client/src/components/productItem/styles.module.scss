@@ -5,8 +5,12 @@
   display: flex;
   flex-direction: column;
   row-gap: 15px;
-  @media (max-width: 767px) {
-    padding: 0;
+
+  @include breakpoint-max(677px) {
+    padding: 10px;
+  }
+  @include respond(extra-small-mobile) {
+    padding: 8px;
   }
   padding: 15px;
   background: $white !important;
@@ -38,9 +42,8 @@
     position: relative;
     width: 100%;
     height: 270px;
-
     @media (max-width: 540px) {
-      max-width: 45vw;
+      // max-width: 45vw;
       max-height: 222px;
     }
   }
@@ -106,6 +109,8 @@
   }
   @media (max-width: 480px) {
     width: 100%;
-    max-width: 183px;
+    @include flex(center, center);
+    margin: 0 auto;
+    // max-width: 183px;
   }
 }

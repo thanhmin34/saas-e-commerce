@@ -7,11 +7,15 @@ import SortDropdown from './SortDropdown'
 import { useSelector } from 'react-redux'
 import { RootState } from '@redux/reducers'
 import { IProductsList } from '@interfaces/redux/product'
+import TuneIcon from '@mui/icons-material/Tune'
+import Button from '@components/button'
+import { useProductsListContext } from '@context/productsListContext'
 type Props = {}
 
 const SortProducts = (props: Props) => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, localizeMessage } = useIntl()
   const productsList: IProductsList = useSelector((state: RootState) => state.productsList)
+  const { onToggleSideBarFilter } = useProductsListContext()
 
   return (
     <div className={styles.sortProducts}>
@@ -20,6 +24,12 @@ const SortProducts = (props: Props) => {
       </div>
 
       <div className={styles.sortBlock}>
+        <Button onClick={onToggleSideBarFilter} className={styles.buttonFilter}>
+          <div className={styles.filter}>
+            {localizeMessage('Filter')}
+            <TuneIcon width={20} color="inherit" />
+          </div>
+        </Button>
         <SortDropdown />
         <SortButtonValue />
       </div>

@@ -3,6 +3,16 @@
 .sortProducts {
   @include flex(center, space-between);
 
+  @include respond(large-mobile) {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 16px;
+  }
+  // @include respond(large-mobile) {
+  //   display: flex !important;
+  // }
+
   .resultsProducts {
     font-size: 13px;
     font-weight: 400;
@@ -15,6 +25,10 @@
     gap: 4px;
     width: 100%;
     max-width: 272px;
+
+    @include respond(large-mobile) {
+      max-width: 370px;
+    }
   }
 
   .sortIcon {
@@ -28,4 +42,22 @@
 .sortDropdown {
   width: 100%;
   max-width: 210px !important;
+}
+.buttonFilter {
+  border-radius: 0 !important;
+  max-width: 110px !important;
+  height: 40px !important;
+  display: none !important;
+  @include respond(extra-large-mobile) {
+    display: flex !important;
+  }
+  @include respond(large-mobile) {
+    display: flex !important;
+  }
+  .filter {
+    @include flex(center, center);
+    gap: 16px;
+    font-size: 16px;
+    font-weight: 500;
+  }
 }

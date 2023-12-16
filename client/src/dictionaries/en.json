@@ -17,5 +17,6 @@
   "Apply discount code": "Apply discount code",
   "Remove": "Remove",
   "Submitting": "Submitting",
-  "Your order number #{value} was completed successfully": "Your order number #{value} was completed successfully"
+  "Your order number #{value} was completed successfully": "Your order number #{value} was completed successfully",
+  "${value} items": "${value} items"
 }

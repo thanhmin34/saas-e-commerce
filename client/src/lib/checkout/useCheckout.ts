@@ -195,14 +195,10 @@ const useCheckout = () => {
     const { userInfo } = userData || {}
     const { id } = (userInfo as IUserInfo) || {}
     try {
-      const responsive = handleCreateNewCart(id)
-      responsive
-        .then((data) => {
-          // console.log('data', data)
-        })
-        .catch((error) => {
-          console.log('error', error)
-        })
+      const responsive = await handleCreateNewCart(id)
+      console.log('responsive', responsive)
+
+      return Promise.resolve(responsive)
     } catch (error) {}
   }, [userData])
 
@@ -213,13 +209,11 @@ const useCheckout = () => {
         return showToast(localizeMessage('cart id unavailable'), typeToast.error)
       }
       submitOrderMutation(params, {
-        onSuccess(data) {
-          console.log('data', data)
-
+        async onSuccess(data) {
           if (data && 'status' in data && data?.status) {
             const { message, order_id } = data || {}
             showToast(message, typeToast.success)
-            createCartAfterPlaceOrder()
+            await createCartAfterPlaceOrder()
             if (order_id) {
               storage.setItem(STORAGE_KEYS.ORDER_NUMBER, order_id)
               push(`${ROUTER_PATHS.CHECKOUT_SUCCESS}`)
@@ -247,9 +241,9 @@ const useCheckout = () => {
         return showToast(localizeMessage('cart id unavailable'), typeToast.error)
       }
       submitOrderMutation(params, {
-        onSuccess(data) {
+        async onSuccess(data) {
           if (data && 'url' in data && 'order_id' in data) {
-            createCartAfterPlaceOrder()
+            await createCartAfterPlaceOrder()
             storage.setItem(STORAGE_KEYS.ORDER_NUMBER, data?.order_id)
             window.location.href = data?.url
             return

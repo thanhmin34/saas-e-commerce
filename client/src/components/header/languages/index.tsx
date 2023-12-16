@@ -5,7 +5,7 @@ import LanguageItem from './LanguageItem'
 import { LANGUAGES } from '@constants/languages'
 import { useParams } from 'next/navigation'
 
-const Languages = () => {
+const Languages = ({ className }: { className?: string }) => {
   const { lang } = useParams()
 
   const languageItem = useMemo(() => {
@@ -13,7 +13,7 @@ const Languages = () => {
   }, [lang])
 
   return (
-    <div className={styles.languagesContainer}>
+    <div className={`${styles.languagesContainer} ${className ? className : ''}`}>
       <LanguageItem languageItem={languageItem} />
     </div>
   )

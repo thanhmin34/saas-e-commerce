@@ -1,31 +1,62 @@
+'use client'
 import Button from '@components/button'
 import InputText from '@components/input/input-text/InputText'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './styles.module.scss'
-type Props = {}
+import useSearchParams from '@lib/category/useSearchParams'
+import useOutsideClick from '@hooks/useOutsideClick'
+import SearchResults from '../search-mobile/SearchResults'
+import { ISearchParams } from '@interfaces/category'
+import useIntl from '@hooks/useIntl'
 
-const SearchBlock = (props: Props) => {
-  const onSearch = () => {}
-  const [search, setSearch] = useState('')
+const SearchBlock = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const refSearch = useRef(null)
+  const { localizeMessage } = useIntl()
+  const { searchInput, onChange, onNavigate, data, isLoading } = useSearchParams()
 
-  const onChangeText = () => {}
+  useOutsideClick({
+    ref: refSearch,
+    handleClickOutside: () => setIsOpen(false),
+  })
+
+  const handleOpenSearch = () => {
+    setIsOpen(true)
+  }
+
+  const onNavigatePress = () => {
+    setIsOpen(false)
+    onNavigate()
+  }
+
   return (
-    <div className={styles.searchBlock}>
-      <InputText
-        value={search}
-        onChange={onChangeText}
-        className={styles.inputElement}
-        placeholder="What are you looking for"
-      />
-      <Button
-        style={{
-          backgroundColor: 'rgb(20, 148, 71',
-        }}
-        className={styles.buttonElement}
-        onClick={onSearch}
-      >
-        Search
-      </Button>
+    <div ref={refSearch} className={styles.inputSearch}>
+      <div className={styles.searchBlock}>
+        <InputText
+          value={searchInput}
+          onChange={onChange}
+          className={styles.inputElement}
+          placeholder="What are you looking for"
+          onFocus={handleOpenSearch}
+        />
+        <Button
+          style={{
+            backgroundColor: 'rgb(20, 148, 71',
+          }}
+          className={styles.buttonElement}
+          onClick={onNavigatePress}
+        >
+          {localizeMessage('Search')}
+        </Button>
+      </div>
+      <div className={`${styles.searchResults} ${isOpen ? styles.active : ''}`}>
+        <SearchResults
+          data={data as ISearchParams}
+          searchInput={searchInput}
+          isLoading={isLoading}
+          onNavigate={onNavigatePress}
+        />
+      </div>
     </div>
   )
 }

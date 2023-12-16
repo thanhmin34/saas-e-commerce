@@ -53,10 +53,10 @@ export default function FilterRange({}) {
   const renderPrice = (
     <div className={styles.rangeSliderValues}>
       <div>
-        <PriceBlock price={PRICE_RANGE[0]} />
+        <PriceBlock price={initialValues?.length > 0 ? initialValues[0] : PRICE_RANGE[0]} />
       </div>
       <div>
-        <PriceBlock price={PRICE_RANGE[1]} />
+        <PriceBlock price={initialValues?.length > 1 ? initialValues[1] : PRICE_RANGE[1]} />
       </div>
     </div>
   )

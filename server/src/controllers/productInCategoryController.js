@@ -12,6 +12,7 @@ const {
 } = require("../utils/notificationMessageStatus");
 const Joi = require("joi");
 const { Op } = require("sequelize");
+const sequelize = require("../config/connectDB.js");
 const { checkFilterByCategory, totalRating } = require("../utils/helper");
 const { DEFAULT_CURRENT_PAGE } = require("../constants/variables");
 
@@ -232,11 +233,50 @@ const urlResolver = asyncHandler(async (req, res) => {
       status: true,
       resolve_url: categoryItem,
     });
-  } catch (error) {}
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
 });
 
+const search = asyncHandler(async (req, res) => {
+  const { query } = req || {};
+  const { params } = query || {};
+  const nameTerm = params ? params.toLowerCase() : params;
+
+  try {
+    const query = `
+    SELECT id, name,image, url_path, NULL AS slug, true AS is_product FROM Products WHERE LOWER(name) LIKE '%${nameTerm}%'
+      UNION
+      SELECT id, name,image, NULL AS url_path,slug, false AS is_product FROM Categories WHERE LOWER(name) LIKE '%${nameTerm}%'
+    `;
+
+    const result = await sequelize.query(query, {
+      type: sequelize.QueryTypes.SELECT,
+    });
+
+    if (!result) {
+      return notificationMessageError(res, "Internal Sever Error");
+    }
+    let products = [];
+    let category = [];
+    if (result?.length > 0) {
+      products = result.filter((item) => !!item?.is_product);
+      category = result.filter((item) => !item?.is_product);
+    }
+
+    return notificationMessageSuccess(res, {
+      status: true,
+      products,
+      category,
+      total_count: products?.length,
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
 module.exports = {
   insertProductInCategory,
   getProductsInCategory,
   urlResolver,
+  search,
 };

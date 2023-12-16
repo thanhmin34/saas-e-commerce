@@ -51,7 +51,7 @@ const ActionItem = ({ item }: { item: ActionItemType }) => {
   const renderClassCartQty = () => {
     if (LIST_SHOW_QTY.includes(title)) {
       return (
-        <div className={styles.icon}>
+        <div className={`${styles.icon}`}>
           <span className={styles.qty}>{renderQty(title)}</span>
           <Image src={icon} alt="icon" width={20} height={20} />
         </div>
@@ -59,9 +59,10 @@ const ActionItem = ({ item }: { item: ActionItemType }) => {
     }
     return <Image src={icon} alt="icon" width={20} height={20} />
   }
+  const classByTitle = title ? title.replace(' ', '').toLowerCase() : ''
 
   return (
-    <Link href={link} className={styles.action}>
+    <Link href={link} className={`${styles.action} ${styles[classByTitle]}`}>
       {renderClassCartQty()}
       <span className={styles.title}>{localizeMessage(title)}</span>
     </Link>

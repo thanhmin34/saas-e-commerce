@@ -5,4 +5,10 @@
   max-width: 100%;
   @include grid(3);
   gap: 12px;
+  @include breakpoint-max(678px) {
+    @include grid(2);
+  }
+  @include breakpoint-max(400px) {
+    @include grid(1);
+  }
 }

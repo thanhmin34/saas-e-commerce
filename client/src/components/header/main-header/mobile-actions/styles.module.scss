@@ -1,0 +1,15 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.mobileActions {
+  display: none;
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  @include respond(extra-large-mobile) {
+    @include flex(center, flex-start);
+  }
+  @include respond(large-mobile) {
+    @include flex(center, flex-start);
+  }
+}

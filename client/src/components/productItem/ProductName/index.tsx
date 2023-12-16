@@ -2,15 +2,7 @@
 import styles from './styles.module.scss'
 
 const ProductName = ({ productName }: { productName: String | undefined }) => {
-  return (
-    <div>
-      {/* <Link href={productLink}>
-        <a className={className}> */}
-      <p className={styles.name}>{productName}</p>
-      {/* </a>
-      </Link> */}
-    </div>
-  )
+  return <div className={styles.name}>{productName}</div>
 }
 
 export default ProductName

@@ -32,7 +32,8 @@
       "@interfaces/*": ["./src/interfaces/*"],
       "@network/*": ["./src/network/*"],
       "@lib/*": ["./src/lib/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@app/*": ["./src/app/[lang]/*"]
     }
   },
   "include": [

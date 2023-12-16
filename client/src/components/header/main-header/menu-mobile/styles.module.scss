@@ -1,0 +1,14 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.menuMobile {
+  height: 100%;
+  @include flex(center, center);
+
+  .button {
+    outline: none;
+    border: none;
+    @include flex(center, center);
+    background: none;
+    cursor: pointer;
+  }
+}

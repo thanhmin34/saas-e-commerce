@@ -1,0 +1,8 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.mainPage {
+  min-height: 600px;
+  @include container;
+  display: flex;
+}

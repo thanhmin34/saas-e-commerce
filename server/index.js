@@ -15,6 +15,10 @@ app.use(bodyParser.json());
 // routers
 renderRouters(app);
 
+app.use("/", (req, res) => {
+  res.send("hello");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
