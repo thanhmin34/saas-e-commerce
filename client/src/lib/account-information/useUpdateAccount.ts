@@ -119,13 +119,11 @@ const useUpdateAccount = () => {
     resolver: zodResolver(userBirthDateAndGenderSchema),
     defaultValues: {
       ...initialDataBirthDateAndGender(),
-      gender: !!gender ? gender : '2',
+      gender: !!`${gender}` ? `${gender}` : '2',
     },
   })
 
   const onSubmit: SubmitHandler<IUserName | IUserNameContact | IUserNameBirthDateAndGender> = (data) => {
-    console.log('data', data)
-
     let newParams = {
       lastname,
       firstname,
@@ -138,7 +136,7 @@ const useUpdateAccount = () => {
 
     if ('day' in data) {
       const { gender, day, month, year } = data
-      newParams = { ...newParams, gender, birth_date: `${day}/${month}/${year}` }
+      newParams = { ...newParams, gender, birth_date: `${month}/${day}/${year}` }
     } else if ('phone_number' in data) {
       const { phone_number } = data
       const newPhone = `${country_code || ''}${phone_number ? phone_number.replaceAll('-', '') : ''}`

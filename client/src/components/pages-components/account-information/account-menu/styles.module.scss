@@ -6,6 +6,18 @@
   gap: 20px;
   .menuHeader {
     display: none;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    padding: 16px;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    @include respond(large-mobile) {
+      display: flex;
+    }
+    @include respond(extra-large-mobile) {
+      display: flex;
+    }
   }
   .sidebar {
     display: flex;
@@ -48,13 +60,23 @@
     &:last-child {
       margin-bottom: 50px;
     }
+    @include respond(large-mobile) {
+      padding-left: 16px;
+    }
+    @include respond(extra-large-mobile) {
+      padding-left: 16px;
+    }
   }
   .menuActive {
     @include respond(large-mobile) {
       width: 100%;
-      max-width: 500px;
       padding: 20px;
     }
+    @include respond(extra-large-mobile) {
+      width: 100% !important;
+      padding: 20px;
+    }
+
     background-color: $backGroundMenuActive;
   }
 
@@ -79,14 +101,17 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  width: 360px;
+  width: 100%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   left: -100%;
   transition: left 0.3s;
+  @include respond(extra-large-mobile) {
+    max-width: 600px;
+  }
 }
 .sidebarEnabled {
-  right: 0;
+  left: 0;
   transition: left 0.3s;
 }

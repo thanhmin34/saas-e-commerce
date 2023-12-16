@@ -13,6 +13,7 @@ import { AppProvider } from '@context/appContextProvider'
 import CartContextProvider from '@context/cartContextProvider'
 import Wrapper from '@components/Wrapper'
 import { usePathname } from 'next/navigation'
+import PrivateAccountMenuProvider from '@context/PrivateAccountContext'
 
 const queryClient = new QueryClient()
 
@@ -39,12 +40,14 @@ const ReduceProvider = ({ children }: { children: ReactNode }) => {
         <Wrapper>
           <AppProvider>
             <CartContextProvider>
-              <Suspense fallback={<Loading />}>
-                <Header />
-              </Suspense>
-              <main className="main main-container">{children}</main>
-              <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
-              {isLoading && <Loading />}
+              <PrivateAccountMenuProvider>
+                <Suspense fallback={<Loading />}>
+                  <Header />
+                </Suspense>
+                <main className="main main-container">{children}</main>
+                <Suspense fallback={<Loading />}>{/* <Footer /> */}</Suspense>
+                {isLoading && <Loading />}
+              </PrivateAccountMenuProvider>
             </CartContextProvider>
           </AppProvider>
         </Wrapper>
