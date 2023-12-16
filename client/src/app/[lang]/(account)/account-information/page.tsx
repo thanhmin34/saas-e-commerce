@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import Loading from '@components/loading'
-import PrivateAccountMenuProvider from '@context/PrivateAccountContext'
+// import PrivateAccountMenuProvider from '@context/PrivateAccountContext'
 
 const AccountInformation = dynamic(() => import('@components/pages-components/account-information'), {
   ssr: false,
@@ -10,11 +10,11 @@ const AccountInformation = dynamic(() => import('@components/pages-components/ac
 
 const AccountInformationPage = () => {
   return (
-    <PrivateAccountMenuProvider>
-      <Suspense fallback={<Loading />}>
-        <AccountInformation />
-      </Suspense>
-    </PrivateAccountMenuProvider>
+    // <PrivateAccountMenuProvider>
+    <Suspense fallback={<Loading />}>
+      <AccountInformation />
+    </Suspense>
+    // </PrivateAccountMenuProvider>
   )
 }
 

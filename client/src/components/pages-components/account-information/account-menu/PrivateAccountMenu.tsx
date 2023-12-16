@@ -1,6 +1,6 @@
 import { map } from 'lodash'
 import { useSelector } from 'react-redux'
-import React, { Fragment, useCallback } from 'react'
+import React, { Fragment, useCallback, useRef } from 'react'
 
 import useIntl from '@hooks/useIntl'
 import { RootState } from '@redux/reducers'
@@ -16,6 +16,7 @@ import { LIST_ACCOUNT_MENU } from '@constants/account'
 import CloseIcon from '@mui/icons-material/Close'
 import PrivateAccountMenuItem from './PrivateAccountMenuItem'
 import { usePrivateAccountMenuContext } from '@context/PrivateAccountContext'
+
 //constants
 
 const DEFAULT_ICON_SIZE = {
@@ -30,7 +31,6 @@ export default function PrivateAccountMenu(props: IProps) {
   const { localizeMessage } = useIntl()
   const { onSignOut } = props || {}
   const { device } = useDetectDevice()
-
   const { isMenuSidebarShowed, handleToggleSidebar, selectedTabId, handleSelectedTab } = usePrivateAccountMenuContext()
 
   const { userInfo } = useSelector((state: RootState) => state.userInfo)
@@ -126,10 +126,9 @@ export default function PrivateAccountMenu(props: IProps) {
     if (device !== DEVICE.DESKTOP) {
       className += ` ${styles.mobile} ${styles.sidebar}`
       if (isMenuSidebarShowed) {
-        className += ` ${styles.sidebar} ${styles.sidebarEnabled}`
+        className += `  ${styles.sidebarEnabled}`
         return className
       }
-      className += ` ${styles.sidebar}`
     }
 
     return className
