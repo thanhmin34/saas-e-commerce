@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 const apiServer = () => {
   const reqInstance = axios.create({
-    baseURL: BACKEND_URL || 'http://localhost:5000/',
+    baseURL: BACKEND_URL,
     timeout: 60000,
     headers: {
       'Content-Type': 'application/json',

@@ -5,7 +5,7 @@ const webhookController = require("../controllers/webhookController.js");
 followNotificationStripeRouter.post(
   "/webhook",
   express.raw({ type: "application/json" }),
-  webhookController.getWishlistsByUser
+  webhookController.followNotificationStripe
 );
 
 module.exports = followNotificationStripeRouter;

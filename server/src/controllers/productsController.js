@@ -113,6 +113,7 @@ const getProductsDetails = asyncHandler(async (req, res) => {
       },
     });
   } catch (error) {
+    console.log("error", error);
     return notificationMessageSuccess(res, {
       product: error,
     });

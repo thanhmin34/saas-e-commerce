@@ -156,14 +156,14 @@
 
   // 24px
   @if $breakpoint ==small-desktop {
-    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    @media only screen and (min-width: 1023px) and (max-width: 1199px) {
       @content;
     }
   }
 
   // 20px
   @if $breakpoint ==extra-large-mobile {
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
       @content;
     }
   }

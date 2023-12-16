@@ -27,4 +27,5 @@ export const APIS = {
   ACCOUNT_INFORMATION: 'users',
   MY_ADDRESS: 'my-address',
   MY_WISHLIST: 'wishlist',
+  SEARCH: 'search',
 }

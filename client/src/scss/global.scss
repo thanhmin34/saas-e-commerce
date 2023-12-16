@@ -85,6 +85,18 @@ input[type='number'] {
   display: flex;
   flex-direction: column;
   margin: 206px auto 0;
+
+  @include respond(extra-large-mobile) {
+    margin-top: 186px;
+  }
+
+  @include respond(large-mobile) {
+    margin-top: 170px;
+  }
+
+  @include respond(extra-small-mobile) {
+    margin-top: 140px;
+  }
 }
 .main-container {
   width: 100%;

@@ -1,0 +1,151 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+.menuSidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-100%);
+  z-index: -999;
+}
+.menuSidebarHidden {
+  display: block;
+}
+
+.menuContent {
+  height: 100%;
+  width: 0;
+  background-color: $white;
+  transition: transform 0.3s ease;
+  visibility: hidden;
+  opacity: 0;
+  position: relative;
+}
+.overlay {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: none;
+}
+.menuSidebarActive {
+  visibility: visible;
+  opacity: 1;
+  z-index: $zIndexModal;
+  transform: translateX(0);
+}
+.activeOverlay {
+  display: flex;
+}
+.menuContent.active {
+  visibility: visible;
+  opacity: 1;
+  width: 320px;
+  transition: width 0.3s ease;
+}
+.childrenBody {
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: height 0.3s ease-in;
+}
+.childrenBody.activeChild {
+  height: 100%;
+  opacity: 1;
+  visibility: visible;
+  transition: height 0.3s ease-in;
+}
+.headerSideBar {
+  @include flex(center, flex-start);
+  height: 56px;
+  border-bottom: 1px solid $greyTen;
+  h1 {
+    font-weight: 400;
+    font-size: 15px;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .iconClose {
+    cursor: pointer;
+    padding: 4px;
+    height: 56px;
+    width: 56px;
+    @include flex(center, center);
+  }
+}
+
+.megaMenuBody {
+  padding: 0 1.5rem;
+
+  .title {
+    font-weight: 500;
+    font-size: 15px;
+    flex-grow: 1;
+    height: 100%;
+    padding-inline-start: 2px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .itemContainer {
+    height: 3.5rem;
+    border-bottom: 1px solid $greyTen;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .button {
+      outline: none;
+
+      border: none;
+      cursor: pointer;
+      background: none;
+      transform: rotate(-90deg);
+      transition: transform 0.3s ease;
+    }
+    .active {
+      transform: rotate(0);
+    }
+  }
+}
+
+.switcher {
+  display: grid;
+  width: 100%;
+  padding: 0 1.5rem 1rem 1.5rem;
+  grid-auto-flow: row;
+}
+.switcherItem {
+  height: 3.5rem;
+  border-bottom: 1px solid $greyTen;
+  @include flex(center, space-between);
+}
+.language {
+  margin-top: auto;
+  padding-top: 20px;
+  height: 3.5rem;
+  padding: 0 1.5rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid $greyTen;
+  @include respond(large-mobile) {
+    display: block;
+    @include flex(center, flex-start);
+  }
+}
+.body {
+  height: 100%;
+  max-height: 670px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

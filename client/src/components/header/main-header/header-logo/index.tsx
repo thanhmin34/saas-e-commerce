@@ -6,10 +6,11 @@ import { DEVICE } from '@constants/device'
 import styles from './styles.module.scss'
 import useDetectDevice from '@hooks/useDetectDevice'
 import { ROUTER_PATHS } from '@constants/routerPaths'
+import { useSelector } from 'react-redux'
+import { RootState } from '@redux/reducers'
 
 export default function HeaderLogo() {
   const { device } = useDetectDevice()
-
   const urlLogo = 'https://media.9ten.cloud/media/logo/stores/15/header-logo-en_1_4.png'
 
   if (urlLogo) {

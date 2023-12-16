@@ -6,6 +6,7 @@ interface InputText {
   placeholder?: string | undefined
   type?: string | undefined
   onChange: ChangeEventHandler<HTMLInputElement>
+  onFocus?: ChangeEventHandler<HTMLInputElement>
   name?: string | undefined
   className?: string | undefined
   message?: string | undefined
@@ -19,6 +20,7 @@ const InputText = ({
   name,
   className,
   message,
+  onFocus,
 }: InputText) => {
   return (
     <div className={`${styles.inputElement}`}>
@@ -29,6 +31,7 @@ const InputText = ({
         name={name}
         type={type}
         className={`${styles.input} ${className}`}
+        onFocus={onFocus}
       />
       {message ? <div className={styles.messageError}>{message}</div> : ''}
     </div>

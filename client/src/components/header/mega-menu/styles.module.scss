@@ -1,10 +1,13 @@
-@import "@scss/variables";
-@import "@scss/mixins";
+@import '@scss/variables';
+@import '@scss/mixins';
 
 .megaMenu {
   width: 100%;
   border-top: 1px solid $primaryColor;
   border-bottom: 1px solid $greyLight;
+  @include breakpoint-max(1024px) {
+    display: none;
+  }
   z-index: $zIndexHeader;
   background-color: $white;
   @include flex(center, center);
@@ -29,7 +32,7 @@
         .text {
           &::after {
             z-index: $zIndexSidebar;
-            content: "";
+            content: '';
             display: block;
             position: absolute;
             width: 0;
@@ -72,7 +75,7 @@
       span {
         position: relative;
         &::after {
-          content: "";
+          content: '';
           display: block;
           position: absolute;
           width: 0;

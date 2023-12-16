@@ -1,28 +1,27 @@
 @import '@scss/mixins';
 .imageContainer {
   position: relative;
-  & > a {
-    position: relative;
-    display: block;
-    height: 100%;
-    width: 100%;
-  }
+  height: 100%;
+  width: 100%;
   //height: 300px;
   cursor: pointer;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
+  span {
+    width: 100% !important;
+    height: 100% !important;
+  }
   img {
     margin: auto;
     object-fit: contain;
-    width: 100%;
-    height: 100%;
-    @include respond(large-mobile) {
-      height: 150px;
-      width: 140px;
-    }
+    width: 100% !important;
+    height: 100% !important;
+    // @include respond(large-mobile) {
+    //   height: 150px;
+    //   width: 140px;
+    // }
   }
 
   :global(.lazy-load-image-background.lazy-load-image-loaded) {

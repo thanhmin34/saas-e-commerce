@@ -1,11 +1,11 @@
 const { PRICE_CONVERT_USD, CURRENCY } = require("../constants/variables");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
-const { Products } = require("../models");
+const { Products, Order, CartItem, Cart } = require("../models");
 const placeOrderByStripe = async (params) => {
-  const { price_total, currency = CURRENCY } = params || {};
+  const { price_total, currency = CURRENCY, products } = params || {};
   try {
-    const unit_amount = price_total * PRICE_CONVERT_USD;
+    const unit_amount = +(price_total * PRICE_CONVERT_USD).toFixed(2);
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -66,7 +66,65 @@ const placeOrderByCOD = async ({ products }) => {
   }
 };
 
+const handleListenAfterPayment = async ({ type, id }) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        payment_id: id,
+      },
+      attributes: ["id", "payment_id", "status"],
+      include: {
+        model: Cart,
+        as: "cartOrder",
+        attributes: ["id", "cart_id"],
+        include: [
+          {
+            model: CartItem,
+            as: "listCartItem",
+            attributes: ["id", "cart_id", "product_id", "quantity"],
+            include: [
+              {
+                model: Products,
+                as: "productCartItem",
+                attributes: ["name", "quantity"],
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    if (!order) return;
+    order.status = type;
+    const listCartItem = order?.cartOrder?.listCartItem;
+    if (listCartItem && listCartItem.length > 0) {
+      const newListCartItem = listCartItem.map((item) => {
+        return new Promise(async (resolve, reject) => {
+          const { quantity, productCartItem, product_id } = item || {};
+          const newQty = (productCartItem.quantity -= +quantity);
+          const value = await Products.update(
+            {
+              quantity: newQty,
+            },
+            {
+              where: {
+                id: product_id,
+              },
+            }
+          );
+          return resolve(value);
+        });
+      });
+    }
+    const results = await order.save();
+    return results;
+  } catch (error) {
+    console.log("err", error);
+  }
+};
+
 module.exports = {
   placeOrderByStripe,
   placeOrderByCOD,
+  handleListenAfterPayment,
 };

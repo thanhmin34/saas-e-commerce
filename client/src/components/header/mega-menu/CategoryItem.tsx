@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react'
 import styles from './styles.module.scss'
 import SubCategory from './SubCategory'
-import { Category } from '@interfaces/sub-category'
+import { Category } from '@interfaces/category'
 import lodash from 'lodash'
 import Link from 'next/link'
 import { ROUTER_PATHS } from '@constants/routerPaths'

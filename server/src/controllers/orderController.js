@@ -135,9 +135,11 @@ const submitOrder = asyncHandler(async (req, res) => {
         currency,
         products: listCartItem,
       };
-      const { url, id: payment_id } = await paymentMethodsList[
-        paymentMethodCode
-      ](params);
+      const results = await paymentMethodsList[paymentMethodCode](params);
+      const { url, id: payment_id } = results || {};
+      if (url) {
+        return notificationMessageError(res, "Cannot create order");
+      }
       // check payment method /to do update
       const statusList = {
         cod: STATUS_ORDERS.PENDING,

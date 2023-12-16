@@ -14,7 +14,7 @@ import { ISignInAction, IUserInfoAction, IUserInfoData } from '@interfaces/redux
 import { IProductsListAction, IProductsList } from '@interfaces/redux/product'
 
 import { ConfigAction, IConfigApp } from '@interfaces/redux/config'
-import { MegaMenu, MegaMenuAction } from '@interfaces/redux/megaMenu'
+import { IMegaMenu, IMegaMenuAction } from '@interfaces/redux/megaMenu'
 import { ICart, ICartAction } from '@interfaces/redux/cart'
 import { IActionsAddress, IIniStateAddress } from '@interfaces/redux/address'
 import { IActionsProductInWishlist, IProductInWishlistData } from '@interfaces/wishlist'
@@ -24,7 +24,7 @@ const rootReducer: Reducer<
   CombinedState<{
     cartData: ICart
     configApp: IConfigApp
-    megaMenu: MegaMenu | {}
+    megaMenu: IMegaMenu | []
     userInfo: IUserInfoData
     productsList: IProductsList
     addressData: IIniStateAddress
@@ -33,7 +33,7 @@ const rootReducer: Reducer<
   }>,
   | ICartAction
   | ConfigAction
-  | MegaMenuAction
+  | IMegaMenuAction
   | IProductsListAction
   | IUserInfoAction
   | ISignInAction

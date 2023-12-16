@@ -84,7 +84,7 @@ const ProductInformation = (props: IProductItemProps) => {
     [quantityCount]
   )
 
-  const handleAddToCartPress = () => {
+  const handleAddToCartPress = useCallback(() => {
     const params = {
       product: {
         quantity: quantityCount,
@@ -96,8 +96,9 @@ const ProductInformation = (props: IProductItemProps) => {
         name,
       },
     }
+
     handleAddToCart && handleAddToCart(params)
-  }
+  }, [quantityCount])
 
   const renderTopContent = useCallback(() => {
     return (
@@ -182,7 +183,7 @@ const ProductInformation = (props: IProductItemProps) => {
         )}
       </>
     )
-  }, [out_of_stock])
+  }, [out_of_stock, quantityCount])
 
   const renderWishlistButton = useCallback(() => {
     return (

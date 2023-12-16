@@ -4,12 +4,23 @@
   display: flex;
   gap: 18px;
 
+  @include respond(large-mobile) {
+    gap: 30px;
+  }
+  @include respond(extra-large-mobile) {
+    gap: 30px;
+  }
+
   .action {
     @include flex(center, flex-start);
     gap: 12px;
     .title {
       font-size: 14px;
       font-weight: normal;
+      display: none;
+      @include breakpoint-min(1224px) {
+        display: block;
+      }
     }
   }
 }
@@ -31,5 +42,13 @@
     background: $redThree;
     font-size: 10px;
     z-index: $zIndexDropdown;
+  }
+}
+.wishlist {
+  @include respond(large-mobile) {
+    display: none !important;
+  }
+  @include respond(extra-large-mobile) {
+    display: none !important;
   }
 }
