@@ -1,4 +1,4 @@
-import { Poppins } from 'next/font/google'
+import { Poppins, Roboto } from 'next/font/google'
 import type { Metadata, ResolvingMetadata } from 'next'
 import '@scss/global.scss'
 
@@ -7,9 +7,17 @@ import { GOOGLE_APP_ID, HOST } from '@constants/variables'
 import ReduceProvider from '@utils/ReduceProvider'
 import { ISeoPages } from '@interfaces/global'
 
-const inter = Poppins({
+export const poppins = Poppins({
   subsets: ['latin'],
+  style: ['normal', 'italic'],
   weight: ['300', '400', '500', '700'],
+})
+
+export const roboto = Roboto({
+  weight: ['300', '400', '500', '700', '900'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
 })
 
 interface Props {
@@ -26,6 +34,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   if (responsive && 'seo' in responsive) {
     const { seo } = responsive || {}
     const { title, keywords, description, url, image_url, authors } = seo || {}
+
     return {
       title,
       keywords,
@@ -77,7 +86,7 @@ const RootLayout = ({ params, children }: { params: Params; children: React.Reac
 
   return (
     <html lang={`${lang?.includes('en') ? 'en' : 'vn'}`}>
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <ReduceProvider>{children}</ReduceProvider>
       </body>
     </html>

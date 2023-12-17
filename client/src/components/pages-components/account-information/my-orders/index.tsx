@@ -15,6 +15,7 @@ const MyOrders = () => {
       [DEVICE.MOBILE]: <MyOrdersMobile />,
       [DEVICE.TABLET]: <MyOrdersMobile />,
     }
+
     if (device && deviceList[device as keyof IKeyOfOject]) {
       return deviceList[device]
     }

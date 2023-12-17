@@ -1,13 +1,13 @@
 @import '@scss/mixins.scss';
 @import '@scss/variables.scss';
 @import '~react-image-gallery/styles/scss/image-gallery.scss';
-
+@import 'swiper/css';
 html,
 body {
   color-scheme: light;
   padding: 0;
   margin: 0;
-  font-family: Roboto, sans-serif;
+  // font-family: Poppins, sans-serif;
   color: $black;
   background-color: $white;
   font-size: 16px;
@@ -36,7 +36,7 @@ p {
 
 * {
   box-sizing: border-box;
-  font-family: 'Rubik', sans-serif;
+  // font-family: 'Rubik', sans-serif;
 }
 
 // Scroll bar

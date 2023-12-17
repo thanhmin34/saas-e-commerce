@@ -6,7 +6,8 @@ import { Category } from '@interfaces/category'
 import lodash from 'lodash'
 import Link from 'next/link'
 import { ROUTER_PATHS } from '@constants/routerPaths'
-const CategoryItem = ({ item }: { item: Category }) => {
+import { ICategoryItem } from '@interfaces/redux/megaMenu'
+const CategoryItem = ({ item }: { item: ICategoryItem }) => {
   const { name, children_category, image, slug } = item || {}
 
   const classNames = useMemo(() => {
@@ -21,7 +22,7 @@ const CategoryItem = ({ item }: { item: Category }) => {
       <Link href={`${ROUTER_PATHS.CATEGORY}/${slug}`} className={classNames}>
         <span className={styles.text}>{name}</span>
       </Link>
-      <SubCategory className={styles.subCategory} sub_category={children_category} image={image} />
+      <SubCategory className={styles.subCategory} sub_category={children_category} imageData={image} />
     </div>
   )
 }

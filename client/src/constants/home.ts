@@ -30,3 +30,49 @@ export const RIGHT_HEADER_ACTIONS = [
 ]
 
 export const LIST_SHOW_QTY = [TITLE_ACTIONS.WISHLIST, TITLE_ACTIONS.CART]
+
+export const BREAK_POINTS_BANNER_SLIDER = {
+  320: {
+    slidesPerView: 2,
+    spaceBetween: 10,
+  },
+  410: {
+    slidesPerView: 3,
+    spaceBetween: 16,
+  },
+  767: {
+    slidesPerView: 4,
+    spaceBetween: 20,
+  },
+  1023: {
+    slidesPerView: 5,
+    spaceBetween: 32,
+  },
+  1215: {
+    slidesPerView: 6,
+    spaceBetween: 50,
+  },
+}
+
+export const BREAK_POINTS_PRODUCTS_SLIDER = {
+  320: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+  410: {
+    slidesPerView: 2,
+    spaceBetween: 16,
+  },
+  767: {
+    slidesPerView: 3,
+    spaceBetween: 18,
+  },
+  1023: {
+    slidesPerView: 4,
+    spaceBetween: 20,
+  },
+  1215: {
+    slidesPerView: 4,
+    spaceBetween: 24,
+  },
+}

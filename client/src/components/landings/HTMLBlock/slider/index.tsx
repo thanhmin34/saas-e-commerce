@@ -2,7 +2,8 @@ import { map } from 'lodash'
 import React from 'react'
 import styles from './styles.module.scss'
 import Link from 'next/link'
-import Image from 'next/image'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { ROUTER_PATHS } from '@constants/routerPaths'
 
 interface ISliderItem {
   src: string
@@ -13,13 +14,21 @@ interface ISliderItem {
 
 const SliderBlock = (props: { images: ISliderItem[] }) => {
   const { images } = props
-  const renderUi = map(images.slice(0, 1), (item, index) => (
-    <Link href={item.link} key={index} className={styles.sliderItem}>
-      <img src={item.src} alt={item.alt} />
-    </Link>
+  const renderUi = map(images, (item, index) => (
+    <SwiperSlide key={index}>
+      <Link href={`${ROUTER_PATHS.CATEGORY}/${item?.link}`} key={index} className={styles.sliderItem}>
+        <img src={item.src} alt={item.alt} />
+      </Link>
+    </SwiperSlide>
   ))
 
-  return <div className={styles.slider}>{renderUi}</div>
+  return (
+    <div className={styles.slider}>
+      <Swiper spaceBetween={50} slidesPerView={1}>
+        {renderUi}
+      </Swiper>
+    </div>
+  )
 }
 
 export default SliderBlock

@@ -11,8 +11,9 @@ interface IPropsSearchResults {
   searchInput: string
   isLoading: boolean
   onNavigate: () => void
+  onClose: () => void
 }
-const SearchResults = ({ data, searchInput, isLoading, onNavigate }: IPropsSearchResults) => {
+const SearchResults = ({ data, searchInput, isLoading, onNavigate, onClose }: IPropsSearchResults) => {
   const { category, products, total_count: totalCount } = data || {}
   const { localizeMessage } = useIntl()
 
@@ -21,7 +22,7 @@ const SearchResults = ({ data, searchInput, isLoading, onNavigate }: IPropsSearc
       // !isEmpty(category) ||
       !isEmpty(products)
     ) {
-      return <ProductsResults products={products} onNavigate={onNavigate} totalCount={totalCount} />
+      return <ProductsResults products={products} onNavigate={onNavigate} totalCount={totalCount} onClose={onClose} />
     }
 
     let text = ''

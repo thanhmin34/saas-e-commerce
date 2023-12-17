@@ -1,22 +1,10 @@
-import { AxiosError } from 'axios'
 import { useQuery } from 'react-query'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
-
-const getData = async () => {
-  const { get } = apiClient()
-  try {
-    const responsive = await get(APIS.LANDING_PAGE)
-    return responsive
-  } catch (error) {
-    const axiosError = error as AxiosError<unknown, any>
-    return axiosError
-  }
-}
+import { CACHE_TIME } from '@constants/variables'
+import { getHomePages } from '@lib/service'
 
 const useLandingPage = () => {
-  const { isLoading, error, data, refetch } = useQuery('homePages', getData, {
-    cacheTime: 50000,
+  const { isLoading, error, data, refetch } = useQuery('homePages', getHomePages, {
+    cacheTime: CACHE_TIME,
     refetchOnWindowFocus: false,
   })
 

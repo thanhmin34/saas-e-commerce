@@ -12,9 +12,12 @@
 
   .privateAccountMenuContainer {
     padding-top: 60px;
+
+    @include respond(extra-large-mobile) {
+      padding-top: 0;
+    }
     @include respond(large-mobile) {
       padding-top: 0;
-      padding-bottom: 20px;
     }
   }
 

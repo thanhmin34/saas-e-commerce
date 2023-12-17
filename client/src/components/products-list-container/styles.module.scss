@@ -1,5 +1,11 @@
 @import '@scss/variables';
 @import '@scss/mixins';
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+}
 .productsListContainer {
   width: 100%;
   max-width: 100%;
@@ -10,5 +16,15 @@
   }
   @include breakpoint-max(400px) {
     @include grid(1);
+  }
+}
+
+.noResultText {
+  margin: 50px auto 0;
+  text-align: center;
+
+  @media (max-width: 1216px) {
+    margin-right: 20px;
+    margin-left: 20px;
   }
 }

@@ -224,79 +224,84 @@ const CreateProducts = asyncHandler(async (req, res) => {
   const { options } = extension_attributes || {};
   // create product simple
   try {
-    // const isValid = await Products.findOne({
-    //   where: {
-    //     sku: sku,
-    //   },
-    // });
-
-    // if (isValid)
-    //   return notificationMessageError(res, "Product sku already exists");
-
-    // const newProduct = await Products.create({
-    //   sku,
-    //   name,
-    //   price,
-    //   quantity,
-    //   description,
-    //   thumbnail,
-    //   special_price,
-    //   store_id,
-    //   type,
-    // });
-
-    const suffix = ".html";
-    async function handleCreate(item) {
-      const {
-        brand_name,
-        type_id,
-        sku,
-        name,
-        salable_qty,
-        image,
-        media_gallery,
-        price,
-      } = item;
-      await Products.create({
-        sku,
-        name,
-        price: price.regularPrice.amount.value,
-        quantity: salable_qty,
-        image: image,
-        store_id: 1,
-        type: type_id,
-        media_gallery,
-        brand: brand_name,
-        url_path: sku ? `${sku.replaceAll(" ", "-")}${suffix}` : sku,
-      });
-    }
-    data.data.forEach((element) => {
-      handleCreate(element);
+    const isValid = await Products.findOne({
+      where: {
+        sku: sku,
+      },
     });
 
-    // if (newProduct) {
-    //   if (newProduct?.type === "configuration" && options?.length > 0) {
-    //     const productVariations = generateProductVariations(options);
-    //     productVariations.forEach((item) => {
-    //       ProductsVariations.create({
-    //         price: 0,
-    //         quantity: 0,
-    //         image: "",
-    //         product_id: newProduct?.id,
-    //         config: item,
-    //       });
-    //     });
-    //   }
-    //   notificationMessageSuccess(
-    //     res,
-    //     {
-    //       status: true,
-    //       message: "Create product successfully",
-    //       product: newProduct,
-    //     },
-    //     201
-    //   );
+    if (isValid)
+      return notificationMessageError(res, "Product sku already exists");
+
+    const newProduct = await Products.create({
+      sku,
+      name,
+      price,
+      quantity,
+      description,
+      thumbnail,
+      special_price,
+      store_id,
+      type,
+    });
+
+    const suffix = ".html";
+    // async function handleCreate(item) {
+    //   const {
+    //     brand_name,
+    //     type_id,
+    //     sku,
+    //     name,
+    //     salable_qty,
+    //     image,
+    //     media_gallery,
+    //     price,
+    //     price_range,
+    //   } = item;
+
+    //   const value = await Products.create({
+    //     sku,
+    //     name,
+    //     price:
+    //       price_range?.maximum_price?.final_price?.value ||
+    //       price_range?.maximum_price?.regular_price?.value ||
+    //       43,
+    //     quantity: salable_qty,
+    //     image: image,
+    //     store_id: 1,
+    //     type: type_id,
+    //     media_gallery,
+    //     brand: brand_name,
+    //     url_path: sku ? `${sku.replaceAll(" ", "-")}${suffix}` : sku,
+    //   });
     // }
+    // data.data.forEach((element) => {
+    //   handleCreate(element);
+    // });
+
+    if (newProduct) {
+      if (newProduct?.type === "configuration" && options?.length > 0) {
+        const productVariations = generateProductVariations(options);
+        productVariations.forEach((item) => {
+          ProductsVariations.create({
+            price: 0,
+            quantity: 0,
+            image: "",
+            product_id: newProduct?.id,
+            config: item,
+          });
+        });
+      }
+      notificationMessageSuccess(
+        res,
+        {
+          status: true,
+          message: "Create product successfully",
+          product: newProduct,
+        },
+        201
+      );
+    }
   } catch (error) {
     return res.status(404).send(error);
   }

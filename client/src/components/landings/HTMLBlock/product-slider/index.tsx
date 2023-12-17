@@ -1,100 +1,64 @@
-import React, { Fragment } from 'react'
+'use client'
+import React, { Fragment, useId } from 'react'
 import styles from './styles.module.scss'
 import { map } from 'lodash'
 import ProductItem from '@components/productItem'
 import { ProductItemInterface } from '@interfaces/product'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import Image from 'next/legacy/image'
+import { BREAK_POINTS_PRODUCTS_SLIDER } from '@constants/home'
 
-type Props = {
-  products?: ProductItemInterface[]
+interface IProductSliders {
+  products: ProductItemInterface[] | []
+  position: number
+  banner: string
+  title: string
 }
 
-const productSliders = [
-  {
-    name: 'Recycled Hair Brush - Blue - Medium',
-    sku: '',
-    price: {
-      value: 29.99,
-      currency: 'USD',
-    },
-    special_price: {
-      minimum_price: {
-        value: 19.99,
-        currency: 'USD',
-      },
-      max_price: {
-        value: 29.99,
-        currency: 'USD',
-      },
-    },
-    rating_summary: 4.2,
-    review_count: 2,
-    currency: 'USD',
-    image: {
-      url: 'https://media.9ten.cloud/media/catalog/product/h/a/hair_brush_-_green_-_large-min.jpg',
-      alt: 'test',
-    },
-    out_of_stock: false,
-  },
-  {
-    name: 'Recycled Hair Brush - Green - Large',
-    sku: '',
-    price: {
-      value: 29.99,
-      currency: 'USD',
-    },
-    special_price: null,
-    rating_summary: 0,
-    review_count: null,
-    currency: 'USD',
-    image: {
-      url: 'https://media.9ten.cloud/media/catalog/product/h/a/hair_brush_-_yallow_-_medium-min.jpg',
-      alt: '',
-    },
-    out_of_stock: false,
-  },
-  {
-    name: 'Recycled Hair Brush - Blue - Large',
-    sku: '',
-    price: {
-      value: 29.99,
-      currency: 'USD',
-    },
-    special_price: null,
-    rating_summary: 3,
-    review_count: null,
-    currency: 'USD',
-    image: {
-      url: 'https://media.9ten.cloud/media/catalog/product/h/a/hair_brush_-_yallow_-_large-min.jpg',
-      alt: '',
-    },
-    out_of_stock: false,
-  },
-  {
-    name: 'Recycled Hair Brush - Red - Large',
-    sku: '',
-    price: {
-      value: 29.99,
-      currency: 'USD',
-    },
-    special_price: null,
-    rating_summary: 0,
-    review_count: null,
-    currency: 'USD',
-    image: {
-      url: 'https://media.9ten.cloud/media/catalog/product/h/a/hair_brush_-_blue_-_medium-min.jpg',
-      alt: '2',
-    },
-    out_of_stock: true,
-  },
-]
+const ProductSliders = ({ item }: { item: IProductSliders }) => {
+  const { products, position, banner, title = '' } = item || {}
 
-const ProductSliders = (props: Props) => {
-  const renderUi = map(productSliders, (item: ProductItemInterface, index) => (
-    <Fragment key={index}>
-      <ProductItem item={item} />
+  const _id = useId()
+
+  const renderUi = map(products, (item: ProductItemInterface, index) => (
+    <Fragment key={`${_id}_${position}_${item?.sku}`}>
+      <SwiperSlide>
+        <ProductItem item={item} />
+      </SwiperSlide>
     </Fragment>
   ))
-  return <div className={styles.productsSlider}>{renderUi}</div>
+
+  const renderProducts = (
+    <div className={`${styles.productsList} ${!!banner ? styles.isBanner : ''}`}>
+      <Swiper
+        className={`${!!banner ? styles.swiper : ''}`}
+        spaceBetween={50}
+        slidesPerView={!banner ? 4 : 3}
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        breakpoints={BREAK_POINTS_PRODUCTS_SLIDER}
+      >
+        {renderUi}
+      </Swiper>
+    </div>
+  )
+  const renderBanner = (
+    <div className={`${styles.banner}`}>
+      <Image src={banner} alt="banner" layout="fill" priority />
+    </div>
+  )
+
+  return (
+    <div className={styles.productsSlider}>
+      <div className={styles.titleAction}>
+        <h1>{title}</h1>
+      </div>
+      <div className={styles.content}>
+        {/* {!!banner && renderBanner} */}
+        {renderProducts}
+      </div>
+    </div>
+  )
 }
 
 export default ProductSliders

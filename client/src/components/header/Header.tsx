@@ -8,7 +8,7 @@ import useMegaMenu from '@lib/category/useMegaMenu'
 import { CACHE_TIME } from '@constants/variables'
 
 const Header = () => {
-  useMegaMenu({ cacheTime: CACHE_TIME })
+  useMegaMenu()
 
   return (
     <header className={styles.header}>

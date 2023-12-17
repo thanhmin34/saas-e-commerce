@@ -38,6 +38,7 @@ const ActionItem = ({ item }: { item: ActionItemType }) => {
     if (total_quantity >= MAX_QTY) {
       return '99+'
     }
+
     return total_quantity || 0
   }
   const renderWishlistQty = () => {
