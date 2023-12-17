@@ -15,7 +15,7 @@ export interface ISubCategory {
 export interface Category {
   name: string
   children_category: ISubCategory[]
-  image: string | undefined
+  image: IImage
   slug: string
 }
 export interface IProductInSearchParams {

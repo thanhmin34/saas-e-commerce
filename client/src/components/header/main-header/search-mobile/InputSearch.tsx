@@ -17,7 +17,7 @@ const InputSearch = (props: PropsInputSearch) => {
   const { isOpen, setIsOpen } = props || {}
   const refSearch = useRef(null)
   const { localizeMessage } = useIntl()
-  const { searchInput, onChange, onNavigate, data, isLoading } = useSearchParams()
+  const { searchInput, onChange, onNavigate, data, isLoading, onResetSearchInput } = useSearchParams()
 
   useOutsideClick({
     ref: refSearch,
@@ -27,6 +27,11 @@ const InputSearch = (props: PropsInputSearch) => {
   const onNavigatePress = () => {
     setIsOpen(false)
     onNavigate()
+  }
+
+  const onClose = () => {
+    setIsOpen(false)
+    onResetSearchInput()
   }
 
   const searchInputBlock = (
@@ -51,6 +56,7 @@ const InputSearch = (props: PropsInputSearch) => {
         searchInput={searchInput}
         isLoading={isLoading}
         onNavigate={onNavigatePress}
+        onClose={onClose}
       />
     </div>
   )

@@ -104,3 +104,10 @@ export const SIZE_ICON = {
   WIDTH_SMALL: 20,
   HEIGHT_SMALL: 20,
 }
+
+export const TYPES_LANDING_PAGES = {
+  SLIDER: 'imageSlider',
+  BANNER_SLIDER: 'sliderBrand',
+  PRODUCT_LIST: 'productList',
+  BANNER: 'banner',
+}

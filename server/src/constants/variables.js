@@ -5,6 +5,13 @@ const PRICE_CONVERT_USD = 100;
 const DEFAULT_CONFIG_APP_ID = 1;
 const DEFAULT_CURRENT_PAGE = 1;
 const DEFAULT_PAGE_SIZE = 8;
+const ROOT_CATEGORY = 0;
+const CATEGORY_IDS_SHOW_HOME_PAGES = [1, 2, 4];
+const BANNER_SMALL_CATEGORY_IDS = [
+  "https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/tanmiah/tanmiah/Tanmiah_omega-3_1688377295684.png",
+  "",
+  "https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/tanmiah/tanmiah/Tanmiah_best_sellers_1688377882909.png",
+];
 
 module.exports = {
   DEFAULT_ORDER_NUMBER,
@@ -14,4 +21,7 @@ module.exports = {
   DEFAULT_CONFIG_APP_ID,
   DEFAULT_CURRENT_PAGE,
   DEFAULT_PAGE_SIZE,
+  CATEGORY_IDS_SHOW_HOME_PAGES,
+  BANNER_SMALL_CATEGORY_IDS,
+  ROOT_CATEGORY,
 };

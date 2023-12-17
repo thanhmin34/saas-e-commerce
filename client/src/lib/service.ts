@@ -152,3 +152,24 @@ export const searchTerm = async ({ searchInput }: { searchInput: string }) => {
     return error
   }
 }
+
+export const getMegaMenu = async () => {
+  const { get } = apiClient()
+  try {
+    const responsive = await get('megamenu')
+    return responsive?.categoryList
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const getHomePages = async () => {
+  const { get } = apiClient()
+  try {
+    const responsive = await get(APIS.LANDING_PAGE)
+    return responsive
+  } catch (error) {
+    const axiosError = error as AxiosError
+    return axiosError
+  }
+}

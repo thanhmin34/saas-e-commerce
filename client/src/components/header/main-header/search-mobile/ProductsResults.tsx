@@ -12,17 +12,20 @@ interface IPropsProductsResults {
   products: IProductInSearchParams[]
   onNavigate: () => void
   totalCount: number
+  onClose: () => void
 }
 
-const ProductsResults = ({ products, onNavigate, totalCount }: IPropsProductsResults) => {
+const ProductsResults = ({ products, onNavigate, totalCount, onClose }: IPropsProductsResults) => {
   const { localizeMessage, formatMessage } = useIntl()
 
   const renderProductsList = () => {
     return map(products?.slice(0, 3), (item) => {
       const { name = '', url_path = '', image } = item || {}
       const { url, label } = image || {}
+      console.log('url_path', url_path)
+
       return (
-        <Link href={url_path} key={item?.id} className={styles.item}>
+        <Link href={`/${url_path}`} onClick={onClose} key={item?.id} className={styles.item}>
           <div className={styles.image}>
             <Image src={url} alt={label} layout="fill" priority />
           </div>

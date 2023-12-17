@@ -1,6 +1,9 @@
 export interface ICategoryItem {
   description: string
-  image: string | undefined
+  image: {
+    image: string
+    alt: string
+  }
   id: number
   name: string
   parent_id: number

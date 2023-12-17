@@ -19,7 +19,6 @@ export const getSortProductsInCategory = async ({
   const { get } = apiClient()
 
   try {
-    console.log('order_value', order_value)
     let url = `${APIS.PRODUCTS_IN_CATEGORY}?id=${id}`
     url += getPageCriteria(page_size, current_page)
     url += getSortCriteria(order_name, order_value)
@@ -33,10 +32,10 @@ export const getSortProductsInCategory = async ({
 
 const useSortProductsInCategory = (params: IProductsListSortAndFilter) => {
   const dispatch = useDispatch()
-  const { page_size, order_name, order_value, isSubmit } = params || {}
+  const { page_size, order_name, order_value, isSubmit, id } = params || {}
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ['sort-product', order_name, order_value, page_size, isSubmit],
+    queryKey: ['sort-product', order_name, order_value, page_size, isSubmit, id],
     queryFn: () => getSortProductsInCategory(params),
     refetchOnWindowFocus: false,
     onSuccess(data) {

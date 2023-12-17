@@ -1,17 +1,15 @@
-import React from 'react'
-
-type Props = {
-  image_url: string | undefined
-}
-type ImageUrl = string | StaticImport
-
+import React, { Fragment } from 'react'
 import styles from './styles.module.scss'
-import Image from "next/legacy/image"
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+import Image from 'next/legacy/image'
 
-const ImageSubCategory = ({ image_url }: Props) => {
-  const imageUrl = image_url as ImageUrl
-  const renderImage = imageUrl && <Image src={imageUrl} alt="t" width={200} height={200} />
+const ImageSubCategory = ({ imageData }: { imageData: { image: string; alt: string } }) => {
+  const { image, alt } = imageData || {}
+  if (!imageData) {
+    return <Fragment />
+  }
+  const imageUrl = image as string
+
+  const renderImage = !!imageUrl ? <Image src={imageUrl} alt={alt} width={200} height={200} priority /> : <Fragment />
 
   return <div className={styles.imageCategory}>{renderImage}</div>
 }

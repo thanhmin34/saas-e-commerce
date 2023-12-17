@@ -85,6 +85,7 @@
         grid-template-columns: 60px 1fr;
         padding-bottom: 10px;
         min-height: 86px;
+        cursor: pointer;
         h4 {
           @include text-overflow(2);
           font-size: 13px;

@@ -18,9 +18,11 @@ const useSearchParams = () => {
     const value = e.target.value
     setSearchInput(value)
   }
+  const onResetSearchInput = () => setSearchInput('')
 
   const onNavigate = () => {
     push(`${ROUTER_PATHS.SEARCH}?params=${searchInput}`)
+    setSearchInput('')
   }
 
   const { isLoading, error, data } = useQuery(['search', debounceValue], () => searchTerm({ searchInput }), {
@@ -33,7 +35,7 @@ const useSearchParams = () => {
     enabled: !!debounceValue && debounceValue?.length >= 3,
   })
 
-  return { isLoading, error, data, searchInput, onChange, onNavigate }
+  return { isLoading, error, data, searchInput, onChange, onNavigate, onResetSearchInput }
 }
 
 export default useSearchParams
