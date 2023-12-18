@@ -173,3 +173,13 @@ export const getHomePages = async () => {
     return axiosError
   }
 }
+
+export const signOut = async ({}) => {
+  const { post } = apiClient()
+  try {
+    const responsive = await post(APIS.SIGN_OUT)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}

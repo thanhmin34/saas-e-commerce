@@ -6,12 +6,7 @@ const Login = dynamic(() => import('@components/auth/login'), {
   ssr: false,
 })
 
-type Props = {
-  lang: string
-  page: string
-}
-
-const page = ({ params }: { params: Props }) => {
+const page = () => {
   return <Login />
 }
 

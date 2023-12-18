@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     const { title, keywords, description, url, image_url, authors } = seo || {}
 
     return {
-      metadataBase: new URL(HOST as string),
+      // metadataBase: new URL(HOST),
       title,
       keywords,
       description,

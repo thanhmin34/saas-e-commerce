@@ -8,6 +8,9 @@ import { ROUTER_PATHS } from '@constants/routerPaths'
 import STORAGE_KEYS from '@constants/storageKeys'
 import LocalStorageManager from '@utils/simplePersistence'
 import { setIsSignIn, setUserInfo } from '@redux/actions/userInfoAction'
+import { removeWishlist } from '@redux/actions/wishlistActions'
+import { get } from 'lodash'
+import useCart from '@lib/cart/useCartDetails'
 
 const useLoginExpired = () => {
   const dispatch = useDispatch()
@@ -16,6 +19,7 @@ const useLoginExpired = () => {
   const pathName = usePathname()
   const storage = new LocalStorageManager()
   const { handleCreateNewCart } = useCreateCart()
+  const { getCartDetails } = useCart()
   const lang = params?.lang as string
   const newPathname = pathName ? pathName.replace(`/${lang}`, '') : ''
 
@@ -37,11 +41,18 @@ const useLoginExpired = () => {
       if (navigate) {
         handleRedirect()
       }
-      // dispatch(removeWishlist())
       dispatch(setUserInfo({}))
       dispatch(setIsSignIn(false))
+      dispatch(removeWishlist([]))
       storage.removeItem(STORAGE_KEYS.TOKEN)
-      handleCreateNewCart()
+      const cart = handleCreateNewCart()
+
+      cart.then((data) => {
+        const cartId = get(data, 'cart_id')
+        if (!cartId) return
+        getCartDetails(cartId)
+      })
+      push(ROUTER_PATHS.LOGIN)
     } catch (error) {
       //TODO:
     }
