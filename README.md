@@ -1,4 +1,4 @@
-# BestBags
+# Natural
 
 ## Table of contents
 
@@ -17,7 +17,6 @@ NOTE: Please read the RUN section before opening an issue.
 
 ![demo image](demo1.png)
 ![demo image](demo2.png)
-
 
 The application has not been deployed for display in a real environment
 
