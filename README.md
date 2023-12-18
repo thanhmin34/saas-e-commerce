@@ -1,4 +1,4 @@
-# BestBags
+# Natural
 
 ## Table of contents
 
@@ -15,8 +15,8 @@ NOTE: Please read the RUN section before opening an issue.
 
 ## Demo
 
-![demo1](demo1.png)
-![demo2](demo2.png)
+![demo image](demo1.png)
+![demo image](demo2.png)
 
 The application has not been deployed for display in a real environment
 
@@ -81,7 +81,6 @@ This repository includes the following packages:
    | `src/pages/(marketing)/[product]/page.tsx` | Page that resolve URL and return specific page from backend |
    | `src/components/` | Project UI functional components |
    | `src/scss/` | Project global styles |
-   | `src/graphql/` | G Rest Full Api configurations and service |
    | `src/network/apiClient/` | APIs that connect with Magento BE |
    | `src/network/apiServer/ ` | APIs that only run at server side |
    | `src/context/` | Project contexts |
