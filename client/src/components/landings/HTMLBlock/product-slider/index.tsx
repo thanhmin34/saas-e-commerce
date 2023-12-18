@@ -7,6 +7,7 @@ import { ProductItemInterface } from '@interfaces/product'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import Image from 'next/legacy/image'
 import { BREAK_POINTS_PRODUCTS_SLIDER } from '@constants/home'
+import useIntl from '@hooks/useIntl'
 
 interface IProductSliders {
   products: ProductItemInterface[] | []
@@ -17,7 +18,7 @@ interface IProductSliders {
 
 const ProductSliders = ({ item }: { item: IProductSliders }) => {
   const { products, position, banner, title = '' } = item || {}
-
+  const { localizeMessage } = useIntl()
   const _id = useId()
 
   const renderUi = map(products, (item: ProductItemInterface, index) => (
@@ -51,7 +52,7 @@ const ProductSliders = ({ item }: { item: IProductSliders }) => {
   return (
     <div className={styles.productsSlider}>
       <div className={styles.titleAction}>
-        <h1>{title}</h1>
+        <h1>{localizeMessage(title)}</h1>
       </div>
       <div className={styles.content}>
         {/* {!!banner && renderBanner} */}

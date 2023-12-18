@@ -15,7 +15,7 @@ const ProductDetails = dynamic(() => import('@components/pages-components/produc
   ssr: true,
 })
 
-const NotFound = dynamic(() => import('../../404/page'), {
+const NotFound = dynamic(() => import('../../(error-pages)/404/page'), {
   loading: () => <Loading />,
   ssr: false,
 })

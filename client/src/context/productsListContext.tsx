@@ -45,6 +45,7 @@ interface IProductsListContextProvider {
 
 export function ProductsListContextProvider({ children }: IProductsListContextProvider) {
   const { slug } = useParams()
+  console.log('slug', slug)
 
   const [pageSize, setPageSize] = useState<number>(20)
   const [currentPage, setCurrentPage] = useState<number>(1)
