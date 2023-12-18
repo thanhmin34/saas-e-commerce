@@ -7,29 +7,10 @@ import { APIS } from '@constants/apis'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { UserRegister } from '@interfaces/user'
+import { IUserRegisterByEmail, UserRegister } from '@interfaces/user'
 import useToastMessage from '@hooks/useToastMessage'
 import { get } from 'lodash'
-
-interface User {
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-}
-
-export const registerByEmail = async (body: User) => {
-  const { post } = apiClient()
-  try {
-    const responsive = await post(APIS.REGISTER_BY_EMAIL, body)
-
-    return responsive
-  } catch (error) {
-    console.log('error', error)
-
-    return error as AxiosError
-  }
-}
+import { registerByEmail } from '@lib/service'
 
 const registerSchema = z.object({
   firstName: z
@@ -61,7 +42,7 @@ const registerSchema = z.object({
 })
 const useRegisterByEmail = () => {
   const { mutate, reset, error, isLoading } = useMutation('registerByEmail', {
-    mutationFn: (body: User) => registerByEmail(body),
+    mutationFn: (body: IUserRegisterByEmail) => registerByEmail(body),
   })
   const { showToast, typeToast } = useToastMessage()
 

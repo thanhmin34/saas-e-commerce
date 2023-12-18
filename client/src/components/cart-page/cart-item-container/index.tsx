@@ -74,17 +74,9 @@ export default function CartItemsContainer() {
         <div className={styles.mobile}>
           {totalQuantity > 0 ? (
             <ul className={styles.productsContainer}>
-              {/* {first(items) &&
-                items.map((item) => {
-                  return (
-                    <CartItem
-                      item={item}
-                      couponCode={couponCode}
-                      key={`${item?.id}_${item?.quantity}`}
-                      setIsQuantityEditing={setIsQuantityEditing}
-                    />
-                  )
-                })} */}
+              {items?.map((item, index) => (
+                <CartItem key={`${index}`} item={item} />
+              ))}
             </ul>
           ) : (
             <NoItemMessage />

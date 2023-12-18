@@ -1,33 +1,9 @@
-import { AxiosError } from 'axios'
-import { useMutation, useQuery } from 'react-query'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
-import { IAddProductItem, IAddProductToCart } from '@interfaces/cart'
+import { useMutation } from 'react-query'
 import { useSelector } from 'react-redux'
 import { RootState } from '@redux/reducers'
 import useToastMessage from '@hooks/useToastMessage'
-import { useCartContext } from '@context/cartContextProvider'
 import useCart from '@lib/cart/useCartDetails'
-const { post, remove } = apiClient()
-
-export const addCoupon = async (params: { code: string; cart_id: string }) => {
-  try {
-    let url = `${APIS.ADD_COUPON}`
-    const responsive = await post(url, params)
-    return responsive
-  } catch (error) {
-    return error as AxiosError
-  }
-}
-export const removeCoupon = async ({ cart_id }: { cart_id: string }) => {
-  try {
-    let url = `${APIS.REMOVE_COUPON}?cart_id=${cart_id}`
-    const responsive = await remove(url)
-    return responsive
-  } catch (error) {
-    return error as AxiosError
-  }
-}
+import { addCoupon, removeCoupon } from '@lib/service'
 
 const useCoupon = () => {
   const { refetchCart } = useCart()

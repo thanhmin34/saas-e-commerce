@@ -1,25 +1,8 @@
 'use client'
-import { AxiosError } from 'axios'
 import { useMutation } from 'react-query'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
-import { IProductReviewsItem, IProductReviewsParams } from '@interfaces/product/productDetails'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { IProductReviewsParams } from '@interfaces/product/productDetails'
 import useToastMessage from '@hooks/useToastMessage'
-
-const addReviews = async (params: IProductReviewsItem) => {
-  const { post } = apiClient()
-  try {
-    const url = `${APIS.REVIEWS}`
-    const responsive = await post(url, params)
-    return responsive
-  } catch (error) {
-    const axiosError = error as AxiosError<unknown, any>
-    return axiosError
-  }
-}
+import { addReviews } from '@lib/service'
 
 const useAddReviews = ({ productId }: { productId: number }) => {
   const { showToast, typeToast } = useToastMessage()

@@ -29,158 +29,96 @@
     .productImageContainer {
       height: 100%;
     }
+    @include respond(large-mobile) {
+      @include flex(center, space-between);
+      gap: 10px;
+    }
+    @include breakpoint-max(412px) {
+      gap: 6px !important;
+    }
 
     .productDetails {
-      @media (max-width: 767px) {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        justify-content: space-between;
-      }
-
       height: 100%;
       line-height: 1.5;
       font-weight: 500;
       line-height: 22.4px;
+    }
 
-      .name {
-        position: relative;
-        grid-area: name;
-        flex-direction: column;
-        @include flex(flex-start, space-between);
+    .quantity {
+      grid-area: quantity;
+      @include flex(center, center);
+      font-weight: 500;
+      line-height: 22.4px;
+      color: $black;
 
-        .productName {
-          @include text-overflow(2);
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 20.8px;
-          color: $black;
+      .quantityContainer {
+        direction: ltr;
+        display: grid;
+        grid-template-columns: 30px 40px 30px;
+        border: none;
+
+        button,
+        input {
+          margin: auto;
+          display: inline;
+          width: 30px;
+          height: 30px;
+          border: $borderOne;
+          background: $white;
+          padding: 0;
         }
 
-        .remaining {
-          margin-top: 5px;
-          font-size: 12px;
-          font-weight: 500;
-          color: crimson;
-        }
-
-        .buttonContainer {
-          display: flex;
-          flex-direction: row;
-
-          .productButton {
-            font-size: 14px;
-            font-weight: 300;
-            line-height: 19.6px;
-            color: $black;
-            margin-inline-end: 15px;
-            background: none;
-            border: 0;
-            font-size: 100%;
-            padding: 0;
-            touch-action: manipulation;
-            user-select: none;
-            -webkit-appearance: none;
-
-            .content {
-              font-size: 13px;
-              font-weight: 300;
-              line-height: 16.9px;
-
-              @include flex(center, center);
-              gap: 0.35rem;
-              grid-auto-flow: column;
-
-              justify-items: center;
-
-              img {
-                display: flex;
-                margin-inline-end: 8px;
-              }
-
-              button {
-                height: 20px;
-                display: flex;
-                align-items: center;
-              }
-            }
+        button {
+          &:active {
+            background: $blue;
           }
-        }
-      }
 
-      .quantity {
-        grid-area: quantity;
-        @include flex(center, center);
-        font-weight: 500;
-        line-height: 22.4px;
-        color: $black;
+          &:hover {
+            border-color: $black;
+          }
 
-        .quantityContainer {
-          direction: ltr;
-          display: grid;
-          grid-template-columns: 30px 40px 30px;
-          border: none;
-
-          button,
-          input {
-            margin: auto;
-            display: inline;
-            width: 30px;
-            height: 30px;
-            border: $borderOne;
+          &:disabled {
             background: $white;
+            color: #adb5bd;
+            border: 1px solid #adb5bd;
+          }
+
+          .buttonIconContainer {
+            width: 20px;
+            height: 20px;
             padding: 0;
+            margin: auto;
           }
+        }
 
-          button {
-            &:active {
-              background: $blue;
-            }
+        input {
+          text-align: center;
+        }
 
-            &:hover {
-              border-color: $black;
-            }
-
-            &:disabled {
-              background: $white;
-              color: #adb5bd;
-              border: 1px solid #adb5bd;
-            }
-
-            .buttonIconContainer {
-              width: 20px;
-              height: 20px;
-              padding: 0;
-              margin: auto;
-            }
-          }
-
-          input {
-            text-align: center;
-          }
-
-          input[type='number']::-webkit-inner-spin-button,
-          input[type='number']::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
+        input[type='number']::-webkit-inner-spin-button,
+        input[type='number']::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
       }
+    }
 
-      .subtotal {
-        @include flex(flex-end, center);
-        flex-direction: column;
-        font-size: 13px;
-        width: 160px;
+    .subtotal {
+      @include flex(flex-end, center);
+      flex-direction: column;
+      font-size: 13px;
+      width: 160px;
+      margin-inline-start: auto;
+      @include respond(large-mobile) {
+        display: none !important;
+      }
+      .specialPrice {
+        color: $specialPriceColor;
+      }
 
-        .specialPrice {
-          color: $specialPriceColor;
-        }
-
-        .regularPrice {
-          color: $greyFour;
-          text-decoration: line-through;
-        }
+      .regularPrice {
+        color: $greyFour;
+        text-decoration: line-through;
       }
     }
   }
@@ -188,7 +126,11 @@
 .colProductName {
   display: flex;
   gap: 10px;
+  @include breakpoint-max(412px) {
+    gap: 6px;
+  }
 }
+
 .priceSubtotal {
   font-weight: 500;
   line-height: 20.8px;
@@ -197,4 +139,9 @@
   font-weight: 500;
   line-height: 22.4px;
   color: $black;
+}
+.subtotal {
+  @include respond(large-mobile) {
+    display: none !important;
+  }
 }

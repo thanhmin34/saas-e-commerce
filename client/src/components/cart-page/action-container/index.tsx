@@ -8,9 +8,12 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import useUpdateCart from '@lib/products/useUpdateCart'
+import useDetectDevice from '@hooks/useDetectDevice'
+import { DEVICE } from '@constants/device'
 
 const NameAndActionsContainer = ({ item }: { item: IProductsCart }) => {
   const { localizeMessage } = useIntl()
+  const { device } = useDetectDevice()
 
   const { handleRemoveToCart } = useUpdateCart()
 
@@ -30,7 +33,7 @@ const NameAndActionsContainer = ({ item }: { item: IProductsCart }) => {
       <div className={styles.productButton}>
         <span className={styles.content}>
           <FavoriteBorderIcon />
-          <span>{localizeMessage('Add to favorite')}</span>
+          <span>{localizeMessage(device === DEVICE.MOBILE ? 'favorite' : 'Add to favorite')}</span>
         </span>
       </div>
     </div>

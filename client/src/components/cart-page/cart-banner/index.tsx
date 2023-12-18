@@ -23,7 +23,7 @@ export default function CartBanner() {
   function renderDynamicCartBanner() {
     return (
       <>
-        <div className={true ? styles.cartBanner : styles.noCartBanner}>
+        <div className={styles.cartBanner}>
           {device === DEVICE.DESKTOP ? (
             <>
               {renderBannerItem({
@@ -38,7 +38,7 @@ export default function CartBanner() {
               })}
             </>
           ) : (
-            <div className={true ? styles.cartBannerTablet : styles.CartBannerCheckTablet}>
+            <div className={styles.cartBannerTablet}>
               {renderBannerItem({
                 link: '/',
                 src: 'https://media.9ten.cloud/media/snaptec/pwa/stores/15/Cart-Banner-Half-Shea-Butter-EN-min_1.png',

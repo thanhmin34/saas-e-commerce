@@ -1,8 +1,28 @@
 import { APIS } from '@constants/apis'
-import { IMergeCartParams } from '@interfaces/cart'
-import { IMyAddressItem, IMyAddressList, IUserInformationParams, TCreateAddressParams } from '@interfaces/user'
+import { IAddProductToCart, IMergeCartParams } from '@interfaces/cart'
+import { IResolveData, IResolverUrl } from '@interfaces/global'
+import { IProductReviewsItem } from '@interfaces/product/productDetails'
+import { IProductsListSortAndFilter } from '@interfaces/product/productList'
+import {
+  IMyAddressItem,
+  IMyAddressList,
+  IUserInformationParams,
+  IUserLoginByEmail,
+  IUserRegisterByEmail,
+  TCreateAddressParams,
+} from '@interfaces/user'
+import {
+  IParamsAddNotes,
+  IParamsAddPaymentMethods,
+  IParamsAddShippingAddress,
+  IParamsAddShippingMethods,
+  IPaymentMethods,
+  IShippingMethods,
+} from '@interfaces/checkout'
 import { IAddProductInWishListParams } from '@interfaces/wishlist'
 import apiClient from '@network/apiClient'
+import apiServer from '@network/apiServer'
+import { getFilterCriteria, getPageCriteria, getSortCriteria } from '@utils/helper'
 import { AxiosError } from 'axios'
 
 export const getCustomerInfo = async () => {
@@ -178,6 +198,248 @@ export const signOut = async ({}) => {
   const { post } = apiClient()
   try {
     const responsive = await post(APIS.SIGN_OUT)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const loginByEmail = async (user: IUserLoginByEmail) => {
+  const { post } = apiClient()
+  try {
+    const responsive = await post(APIS.LOGIN_BY_EMAIL, user)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const registerByEmail = async (body: IUserRegisterByEmail) => {
+  const { post } = apiClient()
+  try {
+    const responsive = await post(APIS.REGISTER_BY_EMAIL, body)
+
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const checkCartIsAuth = async (params: { cart_id: string }) => {
+  const { post } = apiClient()
+
+  try {
+    let url = `${APIS.CHECK_CART_IS_AUTH}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const getSortProductsInCategory = async ({
+  id,
+  page_size,
+  current_page,
+  order_name,
+  order_value,
+  filter,
+}: IProductsListSortAndFilter) => {
+  const { get } = apiClient()
+
+  try {
+    let url = `${APIS.PRODUCTS_IN_CATEGORY}?id=${id}`
+    url += getPageCriteria(page_size, current_page)
+    url += getSortCriteria(order_name, order_value)
+    url += getFilterCriteria(filter)
+    const responsive = await get(url)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addCoupon = async (params: { code: string; cart_id: string }) => {
+  const { post } = apiClient()
+
+  try {
+    let url = `${APIS.ADD_COUPON}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+export const removeCoupon = async ({ cart_id }: { cart_id: string }) => {
+  const { remove } = apiClient()
+
+  try {
+    let url = `${APIS.REMOVE_COUPON}?cart_id=${cart_id}`
+    const responsive = await remove(url)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addToCartCart = async (params: IAddProductToCart) => {
+  const { post } = apiClient()
+  try {
+    let url = `${APIS.ADD_TO_CART}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+export const removeToCartCart = async ({ cart_id, product_id }: { cart_id: string; product_id: number }) => {
+  const { remove } = apiClient()
+
+  try {
+    let url = `${APIS.REMOVE_PRODUCT_TO_CART}?cart_id=${cart_id}&&product_id=${product_id}`
+    const responsive = await remove(url)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const updateProductToCart = async (params: {
+  cart_id: string
+  product: {
+    product_id: number
+    quantity: number
+  }
+}) => {
+  const { put } = apiClient()
+
+  try {
+    let url = `${APIS.ADD_TO_CART}`
+    const responsive = await put(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addReviews = async (params: IProductReviewsItem) => {
+  const { post } = apiClient()
+  try {
+    const url = `${APIS.REVIEWS}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    const axiosError = error as AxiosError<unknown, any>
+    return axiosError
+  }
+}
+
+export const fetchResolveUrl = async ({ url, type }: IResolverUrl) => {
+  const { get } = apiClient()
+  try {
+    const responsive: IResolveData = await get(`${APIS.RESOLVE_URL}?type_url=${type}&url=${url}`)
+
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const getSeoPagesData = async () => {
+  const { get } = apiServer()
+  try {
+    let url = `${APIS.SEO_PAGES}`
+    const responsive = await get(`${url}`)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const getReviews = async ({ productId }: { productId: number }) => {
+  const { get } = apiClient()
+  try {
+    const url = `${APIS.REVIEWS}/${productId}`
+    const responsive = await get(url)
+    return responsive
+  } catch (error) {
+    const axiosError = error as AxiosError<unknown, any>
+    return axiosError
+  }
+}
+
+
+export const getShippingMethods = async () => {
+  const { get } = apiClient()
+  try {
+    let url = `${APIS.SHIPPING_METHOD}`
+    const responsive: IShippingMethods = await get(url)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const getPaymentMethods = async () => {
+  const { get } = apiClient()
+  try {
+    let url = `${APIS.PAYMENT_METHOD}`
+    const responsive: IPaymentMethods = await get(url)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addShippingMethods = async (params: IParamsAddShippingMethods) => {
+  const { post } = apiClient()
+  try {
+    let url = `${APIS.SHIPPING_METHOD}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addPaymentMethods = async (params: IParamsAddPaymentMethods) => {
+  const { post } = apiClient()
+  try {
+    let url = `${APIS.PAYMENT_METHOD}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addShippingAddress = async (params: IParamsAddShippingAddress) => {
+  const { post } = apiClient()
+  try {
+    let url = `${APIS.SHIPPING_ADDRESS}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const submitOrder = async (params: { cart_id: string }) => {
+  const { post } = apiClient()
+  try {
+    let url = `${APIS.SUBMIT_ORDER}`
+    const responsive = await post(url, params)
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const addNote = async (params: IParamsAddNotes) => {
+  const { post } = apiClient()
+  try {
+    let url = `${APIS.NOTES}`
+    const responsive = await post(url, params)
     return responsive
   } catch (error) {
     return error as AxiosError

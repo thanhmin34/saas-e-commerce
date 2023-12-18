@@ -1,20 +1,6 @@
 'use client'
-import { AxiosError } from 'axios'
-import { useQuery, useQueryClient } from 'react-query'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
-
-const getReviews = async ({ productId }: { productId: number }) => {
-  const { get } = apiClient()
-  try {
-    const url = `${APIS.REVIEWS}/${productId}`
-    const responsive = await get(url)
-    return responsive
-  } catch (error) {
-    const axiosError = error as AxiosError<unknown, any>
-    return axiosError
-  }
-}
+import { useQuery } from 'react-query'
+import { getReviews } from '@lib/service'
 
 const useReviews = ({ productId }: { productId: number }) => {
   const { isLoading, error, data, refetch } = useQuery(['reviews', productId], () => getReviews({ productId }), {
@@ -23,7 +9,6 @@ const useReviews = ({ productId }: { productId: number }) => {
   })
 
   const handleRefetchReviews = () => {
-    // todo
     refetch()
   }
 

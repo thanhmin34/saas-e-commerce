@@ -1,10 +1,7 @@
-import { AxiosError } from 'axios'
-import { useMutation, useQuery } from 'react-query'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
-import LocalStorageManager from '@utils/simplePersistence'
+import { useMutation } from 'react-query'
 import STORAGE_KEYS from '@constants/storageKeys'
 import { createCart } from '@lib/service'
+import LocalStorageManager from '@utils/simplePersistence'
 
 const useCreateCart = () => {
   const storage = new LocalStorageManager()
