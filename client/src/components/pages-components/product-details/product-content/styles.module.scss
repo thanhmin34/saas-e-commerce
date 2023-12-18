@@ -479,7 +479,7 @@
   tr {
     td {
       padding-top: 30px;
-      @include respond(lang-mobile) {
+      @include respond(large-mobile) {
         padding-top: 20px !important;
       }
       .formGroupOne {

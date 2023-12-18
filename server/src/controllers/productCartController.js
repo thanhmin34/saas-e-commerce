@@ -55,10 +55,7 @@ const addProductToCart = asyncHandler(async (req, res) => {
       where: { cart_id: cart?.id, product_id: id },
     });
     if (+product?.quantity < +quantity) {
-      return notificationMessageError(res, {
-        status: false,
-        message: "You reach the max QTY for order",
-      });
+      return notificationMessageError(res, "You reach the max QTY for order");
     }
     if (!checkCartItem) {
       const item = await CartItem.create({
@@ -157,10 +154,7 @@ const updateProductToCart = asyncHandler(async (req, res) => {
 
     const quantityProduct = cart?.listCartItem[0]?.productCartItem?.quantity;
     if (quantityProduct < quantity)
-      return notificationMessageSuccess(res, {
-        status: false,
-        message: "You reach the max QTY for order",
-      });
+      return notificationMessageSuccess(res, "You reach the max QTY for order");
 
     await CartItem.update(
       {

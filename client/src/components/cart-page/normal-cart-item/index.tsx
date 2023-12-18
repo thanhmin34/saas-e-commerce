@@ -28,7 +28,7 @@ const NormalCartItem = (props: Props) => {
           </div>
         </div>
         <div className={styles.subtotal}>
-          <Price value={Math.round(price) || 0} />
+          <Price className={styles.priceSubtotal} value={Math.round(price) || 0} />
         </div>
       </div>
     </li>

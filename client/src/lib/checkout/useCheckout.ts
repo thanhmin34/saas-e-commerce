@@ -13,15 +13,7 @@ import {
   IShippingAddress,
   IShippingMethodsItem,
 } from '@interfaces/checkout'
-import {
-  addNote,
-  addPaymentMethods,
-  addShippingAddress,
-  addShippingMethods,
-  getPaymentMethods,
-  getShippingMethods,
-  submitOrder,
-} from './checkoutLib'
+
 import useIntl from '@hooks/useIntl'
 import { useRouter } from 'next/navigation'
 import { ROUTER_PATHS } from '@constants/routerPaths'
@@ -31,6 +23,15 @@ import STORAGE_KEYS from '@constants/storageKeys'
 import LocalStorageManager from '@utils/simplePersistence'
 import { PAYMENT_METHODS } from '@constants/checkout'
 import { IUserInfo } from '@interfaces/redux/userInfo'
+import {
+  addNote,
+  addPaymentMethods,
+  addShippingAddress,
+  addShippingMethods,
+  getPaymentMethods,
+  getShippingMethods,
+  submitOrder,
+} from '@lib/service'
 
 const useCheckout = () => {
   const { push } = useRouter()

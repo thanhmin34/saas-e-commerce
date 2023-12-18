@@ -1,50 +1,12 @@
 'use client'
-import { AxiosError } from 'axios'
-import { useMutation, useQuery } from 'react-query'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
+import { useMutation } from 'react-query'
 import { IAddProductItem, IAddProductToCart } from '@interfaces/cart'
 import { useSelector } from 'react-redux'
 import { RootState } from '@redux/reducers'
 import useToastMessage from '@hooks/useToastMessage'
 import { useCartContext } from '@context/cartContextProvider'
 import useCart from '@lib/cart/useCartDetails'
-const { post, remove, put } = apiClient()
-
-export const addToCartCart = async (params: IAddProductToCart) => {
-  try {
-    let url = `${APIS.ADD_TO_CART}`
-    const responsive = await post(url, params)
-    return responsive
-  } catch (error) {
-    return error as AxiosError
-  }
-}
-export const removeToCartCart = async ({ cart_id, product_id }: { cart_id: string; product_id: number }) => {
-  try {
-    let url = `${APIS.REMOVE_PRODUCT_TO_CART}?cart_id=${cart_id}&&product_id=${product_id}`
-    const responsive = await remove(url)
-    return responsive
-  } catch (error) {
-    return error as AxiosError
-  }
-}
-
-export const updateProductToCart = async (params: {
-  cart_id: string
-  product: {
-    product_id: number
-    quantity: number
-  }
-}) => {
-  try {
-    let url = `${APIS.ADD_TO_CART}`
-    const responsive = await put(url, params)
-    return responsive
-  } catch (error) {
-    return error as AxiosError
-  }
-}
+import { addToCartCart, removeToCartCart, updateProductToCart } from '@lib/service'
 
 const useUpdateCart = () => {
   const { refetchCart } = useCart()

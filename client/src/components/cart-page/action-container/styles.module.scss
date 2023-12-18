@@ -6,13 +6,24 @@
   grid-area: name;
   flex-direction: column;
   @include flex(flex-start, space-between);
-
+  gap: 10px;
   .productName {
     @include text-overflow(2);
     font-size: 16px;
     font-weight: 500;
     line-height: 20.8px;
     color: $black;
+    @include respond(large-mobile) {
+      // @include text-overflow(1);
+    }
+    @include respond(small-mobile) {
+      font-size: 14px;
+      font-weight: 400;
+    }
+    @include breakpoint-max(410px) {
+      font-size: 12px;
+      font-weight: 300;
+    }
   }
 
   .remaining {
@@ -60,6 +71,11 @@
           height: 20px;
           display: flex;
           align-items: center;
+        }
+        span {
+          @include breakpoint-max(400px) {
+            display: none;
+          }
         }
       }
     }

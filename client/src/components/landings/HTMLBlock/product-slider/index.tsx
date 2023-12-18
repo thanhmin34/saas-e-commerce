@@ -23,7 +23,7 @@ const ProductSliders = ({ item }: { item: IProductSliders }) => {
 
   const renderUi = map(products, (item: ProductItemInterface, index) => (
     <Fragment key={`${_id}_${position}_${item?.sku}`}>
-      <SwiperSlide>
+      <SwiperSlide key={`${_id}_${position}_${item?.sku}`}>
         <ProductItem item={item} />
       </SwiperSlide>
     </Fragment>

@@ -8,14 +8,22 @@
 
   .imageContainer {
     overflow: contain;
-
     @media (max-width: 1215px) {
-      min-height: 20vw;
+      min-height: 210px;
     }
     @media (min-width: 1216px) {
       min-height: 240px;
     }
     position: relative;
+    span {
+      height: 100% !important;
+      width: 100% !important;
+      img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: contain;
+      }
+    }
   }
 
   .image {
@@ -47,4 +55,6 @@
       display: none;
     }
   }
+}
+.cartBannerTablet {
 }

@@ -31,6 +31,18 @@ export interface ISeoPages {
   }
 }
 
+export interface IResolverUrl {
+  url: string
+  type: string
+}
+export interface IResolveData {
+  resolve_url: {
+    id: number
+    url: string
+  }
+  status: boolean
+}
+
 export interface ITamaraProductWidget {
   init(config: { lang: string; currency: string; price: number }): void
   render(): void

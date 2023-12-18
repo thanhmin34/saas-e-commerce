@@ -11,6 +11,10 @@ export interface User {
   phone: string
 }
 
+export type IUserLoginByEmail = Pick<User, 'email' | 'password'>
+
+export type IUserRegisterByEmail = Omit<User, 'phone'>
+
 export interface IUserInformationParams {
   firstname: string
   lastname: string

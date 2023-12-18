@@ -2,10 +2,10 @@ import { Poppins, Roboto } from 'next/font/google'
 import type { Metadata, ResolvingMetadata } from 'next'
 import '@scss/global.scss'
 
-import { getSeoPagesData } from '@lib/seo'
 import { GOOGLE_APP_ID, HOST } from '@constants/variables'
 import ReduceProvider from '@utils/ReduceProvider'
 import { ISeoPages } from '@interfaces/global'
+import { getSeoPagesData } from '@lib/service'
 
 export const poppins = Poppins({
   subsets: ['latin'],

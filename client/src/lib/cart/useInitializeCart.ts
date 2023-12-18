@@ -1,25 +1,11 @@
 'use client'
 import { get } from 'lodash'
-import { AxiosError } from 'axios'
 import { useMutation } from 'react-query'
 import useCreateCart from './useCreateCart'
-import apiClient from '@network/apiClient'
-import { APIS } from '@constants/apis'
 import STORAGE_KEYS from '@constants/storageKeys'
 import LocalStorageManager from '@utils/simplePersistence'
 import useCart from './useCartDetails'
-
-export const checkCartIsAuth = async (params: { cart_id: string }) => {
-  const { post } = apiClient()
-
-  try {
-    let url = `${APIS.CHECK_CART_IS_AUTH}`
-    const responsive = await post(url, params)
-    return responsive
-  } catch (error) {
-    return error as AxiosError
-  }
-}
+import { checkCartIsAuth } from '@lib/service'
 
 const useInitializeCart = () => {
   const storage = new LocalStorageManager()
