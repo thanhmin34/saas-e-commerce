@@ -28,4 +28,5 @@ export const APIS = {
   MY_ADDRESS: 'my-address',
   MY_WISHLIST: 'wishlist',
   SEARCH: 'search',
+  SIGN_OUT: 'logout',
 }

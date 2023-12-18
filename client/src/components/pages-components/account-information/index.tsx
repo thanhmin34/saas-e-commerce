@@ -69,7 +69,7 @@ const AccountInformation = () => {
       <div className={styles.privateAccountPageContainer}>
         <div className={styles.privateAccountMenuContainer}>
           <Suspense fallback={<Loading />}>
-            <PrivateAccountMenu onSignOut={() => {}} />
+            <PrivateAccountMenu />
           </Suspense>
         </div>
         {/* {device === DEVICE.MOBILE && <AccountInfomationBreadcrumbs name={renderNameBreadcrumb()} />} */}

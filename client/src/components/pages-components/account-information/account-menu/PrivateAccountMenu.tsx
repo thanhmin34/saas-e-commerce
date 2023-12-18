@@ -16,6 +16,7 @@ import { LIST_ACCOUNT_MENU } from '@constants/account'
 import CloseIcon from '@mui/icons-material/Close'
 import PrivateAccountMenuItem from './PrivateAccountMenuItem'
 import { usePrivateAccountMenuContext } from '@context/PrivateAccountContext'
+import useSignOut from '@lib/auth/useSignOut'
 
 //constants
 
@@ -23,13 +24,10 @@ const DEFAULT_ICON_SIZE = {
   widthIcon: SIZE_ICON.WIDTH_DEFAULT,
   heightIcon: SIZE_ICON.HEIGHT_DEFAULT,
 }
-interface IProps {
-  onSignOut: () => void
-}
 
-export default function PrivateAccountMenu(props: IProps) {
+export default function PrivateAccountMenu() {
   const { localizeMessage } = useIntl()
-  const { onSignOut } = props || {}
+  const { onSignOut } = useSignOut()
   const { device } = useDetectDevice()
   const { isMenuSidebarShowed, handleToggleSidebar, selectedTabId, handleSelectedTab } = usePrivateAccountMenuContext()
 
