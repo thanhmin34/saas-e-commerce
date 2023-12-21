@@ -8,7 +8,10 @@ import {
   IMyAddressList,
   IUserInformationParams,
   IUserLoginByEmail,
+  IUserLoginByPhone,
   IUserRegisterByEmail,
+  IUserRegisterByPhone,
+  IVerifyByPhone,
   TCreateAddressParams,
 } from '@interfaces/user'
 import {
@@ -225,6 +228,39 @@ export const registerByEmail = async (body: IUserRegisterByEmail) => {
   }
 }
 
+export const registerByPhone = async (body: IUserLoginByPhone) => {
+  const { post } = apiClient()
+  try {
+    const responsive = await post(APIS.REGISTER_BY_PHONE, body)
+
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const loginByPhone = async (body: IUserLoginByPhone) => {
+  const { post } = apiClient()
+  try {
+    const responsive = await post(APIS.LOGIN_BY_PHONE, body)
+
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
+export const verifyOTP = async (body: IVerifyByPhone) => {
+  const { post } = apiClient()
+  try {
+    const responsive = await post(APIS.VERIFY_OTP, body)
+
+    return responsive
+  } catch (error) {
+    return error as AxiosError
+  }
+}
+
 export const checkCartIsAuth = async (params: { cart_id: string }) => {
   const { post } = apiClient()
 
@@ -367,7 +403,6 @@ export const getReviews = async ({ productId }: { productId: number }) => {
     return axiosError
   }
 }
-
 
 export const getShippingMethods = async () => {
   const { get } = apiClient()

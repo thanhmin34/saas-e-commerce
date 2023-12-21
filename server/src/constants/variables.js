@@ -13,6 +13,16 @@ const BANNER_SMALL_CATEGORY_IDS = [
   "https://media-mid-prod.9ten.cloud/media/pagebuilder/homepage/tanmiah/tanmiah/Tanmiah_best_sellers_1688377882909.png",
 ];
 
+const PHONE_TWILIO_DEMO = "+15005550001";
+const VERIFICATION_TYPES = {
+  APPROVED: "approved",
+};
+
+const AUTH_PHONES_TYPES = {
+  LOGIN: "login",
+  REGISTER: "register",
+};
+
 module.exports = {
   DEFAULT_ORDER_NUMBER,
   TAX_AMOUNT,
@@ -24,4 +34,7 @@ module.exports = {
   CATEGORY_IDS_SHOW_HOME_PAGES,
   BANNER_SMALL_CATEGORY_IDS,
   ROOT_CATEGORY,
+  PHONE_TWILIO_DEMO,
+  VERIFICATION_TYPES,
+  AUTH_PHONES_TYPES,
 };

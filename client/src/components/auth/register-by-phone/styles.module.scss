@@ -1,8 +1,12 @@
-@import "@scss/variables";
-@import "@scss/mixins";
+@import '@scss/variables';
+@import '@scss/mixins';
 
 .loginPhoneNumber {
   margin-top: 24px;
+  margin-bottom: 120px;
+  @include respond(large-mobile) {
+    margin-bottom: 80px;
+  }
 }
 .subTitle {
   text-align: center;
@@ -21,6 +25,7 @@
   min-height: 30px;
 }
 .inputPhone {
+  margin-top: 12px;
   margin-bottom: 16px;
 }
 .button {

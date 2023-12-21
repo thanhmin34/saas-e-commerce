@@ -10,6 +10,21 @@ const {
 const { generateToken } = require("../config/verifyToken.js");
 const { getToken } = require("../utils//getToken.js");
 
+const {
+  VERIFICATION_TYPES,
+  AUTH_PHONES_TYPES,
+} = require("../constants/variables.js");
+const {
+  handleLoginByPhone,
+  handleRegisterByPhone,
+} = require("../utils/auth.js");
+
+const accountSid = process.env.ACCOUNT_SID_TWILIO;
+const authToken = process.env.AUTH_TOKEN_TWILIO;
+const verifySid = process.env.VERIFY_SID_TWILIO;
+
+const client = require("twilio")(accountSid, authToken);
+
 // validateField
 const createUserSchema = Joi.object({
   firstName: Joi.string().trim().required(),
@@ -50,8 +65,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
     });
     return res.status(200).json(users);
   } catch (error) {
-    console.error("Error fetching users:", error);
-    res.status(500).json({ error: "Internal server error" });
+    return notificationMessageError(res, "Internal server error");
   }
 });
 
@@ -151,7 +165,6 @@ const editUserInformation = asyncHandler(async (req, res) => {
       },
     });
   } catch (error) {
-    console.log("error", error);
     return notificationMessageError(res, "Internal server error");
   }
 });
@@ -256,6 +269,120 @@ const logOut = asyncHandler(async (req, res) => {
   }
 });
 
+const logInByPhone = asyncHandler(async (req, res) => {
+  const { headers, body } = req || {};
+  const { phone } = body || {};
+  try {
+    const user = await User.findOne({
+      where: {
+        phone_number: phone,
+      },
+    });
+
+    if (!user) {
+      return notificationMessageError(res, "incorrect phone number");
+    }
+
+    const results = await client.verify.v2
+      .services(verifySid)
+      .verifications.create({ to: "+84395998092", channel: "sms" });
+
+    if (!results.status) {
+      return notificationMessageError(res, "Internal Server Error");
+    }
+    return notificationMessageSuccess(res, {
+      status: true,
+      message: "Sent OTP successfully",
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
+const registerByPhone = asyncHandler(async (req, res) => {
+  const { body } = req || {};
+  const { phone } = body || {};
+
+  try {
+    const user = await User.findOne({
+      where: {
+        phone_number: phone,
+      },
+    });
+
+    if (user) {
+      return notificationMessageError(res, "Phone number already exists");
+    }
+
+    const results = await client.verify.v2
+      .services(verifySid)
+      .verifications.create({ to: "+84395998092", channel: "sms" });
+
+    if (!results.status) {
+      return notificationMessageError(res, "Internal Server Error");
+    }
+    return notificationMessageSuccess(res, {
+      status: true,
+      message: "Sent OTP successfully",
+    });
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
+const verifyOTP = asyncHandler(async (req, res) => {
+  const { body } = req || {};
+  const { phone, otp, firstName, lastName, type } = body || {};
+  try {
+    if (!phone || !otp || !type) {
+      return notificationMessageError(res, "Invalid field");
+    }
+    const verification = await client.verify.v2
+      .services(verifySid)
+      .verificationChecks.create({ to: "+84395998092", code: otp });
+
+    const { valid, status } = verification || {};
+    if (!valid || status !== VERIFICATION_TYPES.APPROVED) {
+      return notificationMessageError(res, "Invalid OTP");
+    }
+
+    const typeVerify = {
+      [AUTH_PHONES_TYPES.LOGIN]: handleLoginByPhone,
+      [AUTH_PHONES_TYPES.REGISTER]: handleRegisterByPhone,
+    };
+
+    const typeMessage = {
+      [AUTH_PHONES_TYPES.LOGIN]: "Login successfully",
+      [AUTH_PHONES_TYPES.REGISTER]: "Create account successfully",
+    };
+
+    if (type && typeVerify[type]) {
+      const params = {
+        phone,
+        firstName,
+        lastName,
+      };
+      const results = typeVerify[type](params);
+      if (!results) {
+        return notificationMessageError(res, "Internal Server Error");
+      }
+
+      const resParams = {
+        status: true,
+        message: typeMessage[type] ? typeMessage[type] : "",
+      };
+
+      if (type === AUTH_PHONES_TYPES.LOGIN) {
+        resParams.token = results;
+      }
+
+      return notificationMessageSuccess(res, resParams);
+    }
+  } catch (error) {
+    return notificationMessageError(res, error);
+  }
+});
+
 module.exports = {
   getAllUsers,
   registerByEmail,
@@ -263,4 +390,7 @@ module.exports = {
   getUserInformation,
   logOut,
   editUserInformation,
+  logInByPhone,
+  registerByPhone,
+  verifyOTP,
 };

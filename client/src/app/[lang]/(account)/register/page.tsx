@@ -5,8 +5,8 @@ const RegisterAccount = dynamic(() => import('@components/auth/register'), {
   ssr: false,
 })
 
-const page = () => {
+const RegisterPage = () => {
   return <RegisterAccount />
 }
 
-export default page
+export default RegisterPage
