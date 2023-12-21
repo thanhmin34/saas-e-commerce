@@ -29,4 +29,7 @@ export const APIS = {
   MY_WISHLIST: 'wishlist',
   SEARCH: 'search',
   SIGN_OUT: 'logout',
+  REGISTER_BY_PHONE: 'register-by-phone',
+  LOGIN_BY_PHONE: 'login-by-phone',
+  VERIFY_OTP: 'verify-otp',
 }

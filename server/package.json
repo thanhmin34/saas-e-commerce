@@ -24,14 +24,17 @@
     "joi": "^17.10.2",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",
+    "redis": "^4.6.12",
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.1",
     "square": "^33.0.0",
     "stripe": "^14.7.0",
+    "twilio": "^4.20.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

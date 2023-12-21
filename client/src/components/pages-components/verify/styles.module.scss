@@ -1,0 +1,137 @@
+@import '@scss/variables';
+@import '@scss/mixins';
+
+.verificationSection {
+  margin-bottom: 80px;
+}
+
+.verification {
+  outline: none;
+  @include flex(center, center);
+  padding: 50px 30px 0px;
+
+  width: 100%;
+  max-width: 1216px;
+  margin: 100px auto 0;
+
+  max-width: 560px;
+  @include respond(large-mobile) {
+    max-width: 550px;
+    margin: 50px 0 120px;
+  }
+  @include respond(small-mobile) {
+    max-width: 550px;
+  }
+  .content {
+    margin: 0;
+    max-width: 100%;
+    &::before {
+      display: none;
+    }
+  }
+  .description {
+    text-align: center;
+    width: 100%;
+    max-width: 384px;
+    margin: 0 auto;
+  }
+  .title {
+    color: $black;
+    text-transform: capitalize;
+    text-align: center;
+    h2 {
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 39px;
+      margin-bottom: 10px;
+    }
+    span {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 21px;
+    }
+  }
+
+  .form {
+    margin-top: 26px;
+    display: flex;
+    width: 100%;
+    max-width: 384px;
+    margin: 26px auto 0;
+
+    .invisible-input {
+      // visibility: hidden;
+      width: 0;
+      height: 0;
+      border: none;
+    }
+
+    flex-direction: column;
+
+    .otp {
+      width: 100%;
+      height: 100%;
+      @include flex(center, center);
+
+      gap: 10px;
+      margin: 0 auto;
+      max-width: 220px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 8px 0;
+      background: $black;
+      color: $white;
+    }
+    .errorMessage {
+      text-align: center;
+      margin: 20px 0 30px;
+      margin: 20px auto 0;
+      color: $redFour;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  .body {
+    @include flex(center, space-between);
+    width: 100%;
+    max-width: 384px;
+    margin: 32px auto 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 15.4px;
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+    .buttonSubmit {
+      cursor: pointer;
+      &:disabled {
+        cursor: default;
+        color: $disabled;
+      }
+    }
+  }
+}
+.otp {
+  input {
+    width: 40px !important;
+    height: 40px !important;
+    @include flex(center, center);
+  }
+  span {
+    display: none !important;
+  }
+  div {
+    @include flex(center, center);
+    gap: 10px;
+  }
+}

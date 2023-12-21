@@ -14,6 +14,17 @@ export interface User {
 export type IUserLoginByEmail = Pick<User, 'email' | 'password'>
 
 export type IUserRegisterByEmail = Omit<User, 'phone'>
+export type IUserLoginByPhone = Pick<User, 'phone'>
+export type IUserRegisterByPhone = Omit<User, 'email' | 'password'>
+type ITypesVerify = 'login' | 'register'
+export interface IVerifyLoginPhone {
+  phone: string
+  otp: string
+  type: 'login' | 'register'
+}
+
+export interface IVerifyRegisterPhone extends IVerifyLoginPhone, Pick<User, 'firstName' | 'lastName'> {}
+export type IVerifyByPhone = IVerifyLoginPhone | IVerifyRegisterPhone
 
 export interface IUserInformationParams {
   firstname: string

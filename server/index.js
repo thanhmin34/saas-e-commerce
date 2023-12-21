@@ -4,7 +4,6 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const renderRouters = require("./src/routers/index.js");
 const { corsOptions } = require("./src/constants/corsOptions.js");
-
 const port = process.env.PORT || 5004;
 
 const app = express();
