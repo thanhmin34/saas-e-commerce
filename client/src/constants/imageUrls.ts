@@ -24,5 +24,6 @@ export const imageUrls = {
   iconEdit: '/assets/icon/icon-edit.png',
   iconFlagUsa: '/assets/icon/flag-usa.png',
   iconCheckoutStripe: '/assets/icon/stripe.webp',
+  iconVN: '/assets/icon/vn.webp',
   errorBackground: '/assets/icon/error-background.png',
 }
