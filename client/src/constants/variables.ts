@@ -3,7 +3,7 @@ import { IFilterByProducts } from '@interfaces/global'
 export const CACHE_TIME = 10 * 60 * 1000
 export const STALE_TIME = 10 * 60 * 1000
 
-export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL
+export const BACKEND_URL = 'http://localhost:5000/' || process.env.NEXT_PUBLIC_BACKEND_URL
 export const BE_IMAGE_DOMAIN = process.env.NEXT_PUBLIC_BE_IMAGE_DOMAIN
 export const HOST = process.env.NEXT_PUBLIC_HOST
 // ttl 2 day

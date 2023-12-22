@@ -34,6 +34,7 @@ export default function PrivateAccountMenu() {
   const { userInfo } = useSelector((state: RootState) => state.userInfo)
   const { address } = useSelector((state: RootState) => state.addressData)
   const { wishlist } = useSelector((state: RootState) => state.wishlistData)
+  const { orders } = useSelector((state: RootState) => state.ordersData)
 
   const { firstname = '', lastname = '', email = '' } = userInfo as IUserInfo
   const fullname = `${firstname} ${lastname}`
@@ -74,7 +75,7 @@ export default function PrivateAccountMenu() {
       id: LIST_ACCOUNT_MENU.MY_ORDERS,
       icon: imageUrls.iconAccountOrder,
       ...DEFAULT_ICON_SIZE,
-      title: createTitle('My Orders', `Orders`, 2),
+      title: createTitle('My Orders', `Orders`, orders?.length || 0),
     },
     {
       id: LIST_ACCOUNT_MENU.MY_WISHLIST,

@@ -1,5 +1,5 @@
-@import "@scss/variables";
-@import "@scss/mixins";
+@import '@scss/variables';
+@import '@scss/mixins';
 
 .loginPhoneNumber {
   margin-top: 24px;
@@ -25,4 +25,5 @@
 }
 .button {
   margin-top: 28px;
+  max-width: 500px !important;
 }

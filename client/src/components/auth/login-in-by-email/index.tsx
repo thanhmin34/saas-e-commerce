@@ -42,7 +42,9 @@ const LoginByEmail = () => {
       <div className={styles.forgotPassword}>
         <Link href={ROUTER_PATHS.FORGOT_PASSWORD}>{localizeMessage('Forgot your password?')}</Link>
       </div>
-      <Button disabled={isLoading}>{localizeMessage('Sign In')}</Button>
+      <Button className={styles.button} disabled={isLoading}>
+        {localizeMessage('Sign In')}
+      </Button>
     </form>
   )
 }
