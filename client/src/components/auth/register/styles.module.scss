@@ -1,5 +1,5 @@
-@import "@scss/variables";
-@import "@scss/mixins";
+@import '@scss/variables';
+@import '@scss/mixins';
 
 .rootPage {
   width: 100%;
@@ -27,9 +27,12 @@
   background: $greyLight;
   height: 300px;
   margin-top: 132px;
-  @media (max-width: 767px) {
+  @include respond(large-mobile) {
     margin: 0;
     height: auto;
+  }
+  @include respond(extra-large-mobile) {
+    display: none;
   }
 }
 

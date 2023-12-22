@@ -29,7 +29,7 @@ const InputPhone = (props: InputProps) => {
   const placeholderCountry = place_holder_country || DEFAULT_PLACE_HOLDER_INPUT
 
   const [mask, updateMask] = useState(phoneInputMaskCountry)
-  const url = image_country_input || imageUrls.iconFlagUsa
+  const url = image_country_input || imageUrls.iconVnPhone
 
   function beforeMaskedValueChange(beforeMask: BeforeMaskedStateChangeStates) {
     let { previousState, currentState, nextState } = beforeMask || {}

@@ -6,7 +6,7 @@ export const imageUrls = {
   iconPrev: '/assets/icon/prev.svg',
   iconEnglish: '/assets/icon/en.png',
   iconSaudiArabian: '/assets/icon/ar.svg',
-  iconVn: '/assets/icon/vn.webp',
+  iconVnPhone: '/assets/icon/icon-vn.webp',
   iconSort: '/assets/icon/sort_in.jpg',
   dropdown: '/assets/icon/dropdown.png',
   loading: '/assets/icon/loading-small.svg',
@@ -24,5 +24,6 @@ export const imageUrls = {
   iconEdit: '/assets/icon/icon-edit.png',
   iconFlagUsa: '/assets/icon/flag-usa.png',
   iconCheckoutStripe: '/assets/icon/stripe.webp',
+  iconVN: '/assets/icon/vn.webp',
   errorBackground: '/assets/icon/error-background.png',
 }

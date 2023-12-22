@@ -8,7 +8,7 @@ export const SELECT_TAB_ID = {
 export const TITLE_NAME = ['Login', 'Sign Up']
 
 export const PHONE_INPUT_MASK_DEFAULT = '999-999-9999'
-export const DEFAULT_COUNTRY_CODE = '+1'
+export const DEFAULT_COUNTRY_CODE = '+84'
 export const DEFAULT_PLACE_HOLDER_INPUT = '50-000-0000'
 
 export const AUTH_PHONE_TYPES = {

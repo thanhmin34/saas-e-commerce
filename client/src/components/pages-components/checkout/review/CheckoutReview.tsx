@@ -1,15 +1,14 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import { RootState } from '@redux/reducers'
 import { useSelector } from 'react-redux'
-import { ICart } from '@interfaces/redux/cart'
 import styles from './styles.module.scss'
 import useIntl from '@hooks/useIntl'
 import ReviewLineItem from './ReviewLineItem'
 import PlaceOrderButton from './PlaceOrderButton'
 import WrapperToggle from './WrapperToggle'
 import CheckoutNote from './CheckoutNote'
-import DiscountForm from '@components/cart-page/cart-calculation-area/DiscountForm'
+import DiscountForm from '@components/pages-components/cart-page/cart-calculation-area/DiscountForm'
 
 interface INotesProps {
   onAddNotes: (notes: string) => void
@@ -72,77 +71,14 @@ const CheckoutReview = (props: INotesProps) => {
   ]
 
   // * Implement this for keep data in Checkout page when create cart after checkout
-  const [cart, updateCart] = useState<ICart | null>(null)
-
-  useEffect(() => {
-    if (cartFromRedux && cartFromRedux.cart_id && cartFromRedux.total_quantity === 0) {
-      return
-    }
-    updateCart(cartFromRedux)
-  }, [cartFromRedux])
-
-  //TODO: Should revert code after delete top header banner
-  // useEffect(() => {
-  //   if (window && typeof window !== 'undefined' && typeof window.getComputedStyle === 'function') {
-  //     if (checkoutContainer) {
-  //       if (headerElement) {
-  //         const heightHeader = parseInt(window.getComputedStyle(headerElement).getPropertyValue('height'))
-  //         const rect = checkoutContainer.getBoundingClientRect()
-  //         const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-
-  //         // Number 15 is subtracted from top style 200 set statically on the class checkout review
-  //         // and real top space with that element to the top of the site
-  //         const numberOffset = rect.top + scrollTop - heightHeader - 15
-  //         setNumberOffset(numberOffset)
-  //       }
-  //     }
-  //   }
-  // }, [checkoutContainer, headerElement])
-
-  // const discountsFormatted =
-  //   discounts?.length > 0 &&
-  //   discounts.map((item) => {
-  //     return {
-  //       label: item.label,
-  //       price: item.amount,
-  //       strong: false,
-  //     }
-  //   })
-
-  // handle scroll down
-  // const handleStyleInBlockCheckoutReview = useCallback(() => {
-  //   if (checkoutContainer && checkoutContainer?.offsetHeight) {
-  //     if (window.scrollY < numberOffset) {
-  //       containerRef.current.classList.remove('bottom-container')
-  //       containerRef.current.classList.remove('sticky-container')
-  //       return
-  //     }
-
-  //     if (window.scrollY < checkoutContainer?.offsetHeight + numberOffset - containerRef.current.clientHeight) {
-  //       containerRef.current.classList.remove('bottom-container')
-  //       containerRef.current.classList.add('sticky-container')
-  //       return
-  //     }
-
-  //     containerRef.current.classList.add('bottom-container')
-  //     containerRef.current.classList.remove('sticky-container')
-  //   }
-  // }, [containerRef, checkoutContainer, numberOffset])
+  // const [cart, updateCart] = useState<ICart | null>(null)
 
   // useEffect(() => {
-  //   handleStyleInBlockCheckoutReview()
-  //   function handleScroll() {
-  //     if (typeof window !== 'undefined') {
-  //       handleStyleInBlockCheckoutReview()
-  //     }
+  //   if (cartFromRedux && cartFromRedux.cart_id && cartFromRedux.total_quantity === 0) {
+  //     return
   //   }
-
-  //   // Bind the event listener
-  //   document.addEventListener('scroll', handleScroll)
-  //   return () => {
-  //     document.removeEventListener('scroll', handleScroll)
-  //   }
-  // }, [containerRef, checkoutContainer, paymentMethodSelected, handleStyleInBlockCheckoutReview])
+  //   updateCart(cartFromRedux)
+  // }, [cartFromRedux])
 
   return (
     <div className={styles.review} id="checkoutReviewContainer" ref={containerRef}>
