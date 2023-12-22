@@ -47,7 +47,7 @@ const useLoginByPhone = () => {
           const { message = '', status = true } = data || {}
           if (status) {
             showToast(message, typeToast.success)
-            push(`${ROUTER_PATHS.VERIFY_OTP}?phone=${_phone}&&type=${AUTH_PHONE_TYPES.LOGIN}`)
+            push(`${ROUTER_PATHS.VERIFY_OTP}?phone=${_phone?.slice(1)}&&type=${AUTH_PHONE_TYPES.LOGIN}`)
           }
           return
         }

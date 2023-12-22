@@ -63,7 +63,9 @@ const useRegisterByPhone = () => {
             if (status) {
               showToast(message, typeToast.success)
               push(
-                `${ROUTER_PATHS.VERIFY_OTP}?phone=${_phone}firstName=${firstName}&&lastName=${lastName}&&type=${AUTH_PHONE_TYPES.REGISTER}`
+                `${ROUTER_PATHS.VERIFY_OTP}?phone=${_phone?.slice(
+                  1
+                )}&&firstName=${firstName}&&lastName=${lastName}&&type=${AUTH_PHONE_TYPES.REGISTER}`
               )
             }
             return

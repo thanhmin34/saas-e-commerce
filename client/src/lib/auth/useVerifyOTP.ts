@@ -1,4 +1,4 @@
-import { get } from 'lodash'
+import { get, isEmpty } from 'lodash'
 import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { IVerifyByPhone } from '@interfaces/user'
@@ -81,16 +81,20 @@ const useVerifyOTP = () => {
     mutate(params, {
       onSuccess: (data) => {
         if (data && 'status' in data) {
-          const { message = '', status = true } = data || {}
+          const { message = '', status = true, token } = data || {}
           if (status) {
             showToast(message, typeToast.success)
             const typeResend = {
-              [AUTH_PHONE_TYPES.REGISTER]: () => {},
+              [AUTH_PHONE_TYPES.REGISTER]: () => {
+                push(ROUTER_PATHS.LOGIN)
+              },
               [AUTH_PHONE_TYPES.LOGIN]: async () => {
-                localStorageManager.setItem(STORAGE_KEYS.TOKEN, data.token, TTL)
-                const results = await handleCartAfterLogin()
-                if (results) {
-                  push(ROUTER_PATHS.ACCOUNT_INFORMATION)
+                if (!isEmpty(token)) {
+                  localStorageManager.setItem(STORAGE_KEYS.TOKEN, token, TTL)
+                  const results = await handleCartAfterLogin()
+                  if (results) {
+                    push(ROUTER_PATHS.ACCOUNT_INFORMATION)
+                  }
                 }
               },
             }

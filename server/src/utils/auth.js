@@ -12,8 +12,8 @@ const handleLoginByPhone = async (params) => {
     }
     const token = generateToken(user?.id);
     user.token = token;
-    await user.save();
-    return token;
+    const saveUser = await user.save();
+    return saveUser ? token : false;
   } catch (error) {
     return notificationMessageError(res, error);
   }

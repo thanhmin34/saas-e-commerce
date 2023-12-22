@@ -273,6 +273,8 @@ const logInByPhone = asyncHandler(async (req, res) => {
   const { headers, body } = req || {};
   const { phone } = body || {};
   try {
+    if (!phone)
+      return notificationMessageError(res, "Phone number already exists");
     const user = await User.findOne({
       where: {
         phone_number: phone,
@@ -285,7 +287,7 @@ const logInByPhone = asyncHandler(async (req, res) => {
 
     const results = await client.verify.v2
       .services(verifySid)
-      .verifications.create({ to: "+84395998092", channel: "sms" });
+      .verifications.create({ to: phone, channel: "sms" });
 
     if (!results.status) {
       return notificationMessageError(res, "Internal Server Error");
@@ -304,6 +306,8 @@ const registerByPhone = asyncHandler(async (req, res) => {
   const { phone } = body || {};
 
   try {
+    if (!phone)
+      return notificationMessageError(res, "Phone number already exists");
     const user = await User.findOne({
       where: {
         phone_number: phone,
@@ -316,7 +320,7 @@ const registerByPhone = asyncHandler(async (req, res) => {
 
     const results = await client.verify.v2
       .services(verifySid)
-      .verifications.create({ to: "+84395998092", channel: "sms" });
+      .verifications.create({ to: phone, channel: "sms" });
 
     if (!results.status) {
       return notificationMessageError(res, "Internal Server Error");
@@ -339,7 +343,7 @@ const verifyOTP = asyncHandler(async (req, res) => {
     }
     const verification = await client.verify.v2
       .services(verifySid)
-      .verificationChecks.create({ to: "+84395998092", code: otp });
+      .verificationChecks.create({ to: phone, code: otp });
 
     const { valid, status } = verification || {};
     if (!valid || status !== VERIFICATION_TYPES.APPROVED) {
@@ -362,7 +366,8 @@ const verifyOTP = asyncHandler(async (req, res) => {
         firstName,
         lastName,
       };
-      const results = typeVerify[type](params);
+      const results = await typeVerify[type](params);
+
       if (!results) {
         return notificationMessageError(res, "Internal Server Error");
       }

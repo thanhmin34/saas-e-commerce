@@ -45,7 +45,7 @@ const getConfig = asyncHandler(async (req, res) => {
         url_media_backend: "https://media.9ten.cloud/media/",
         prefix_url_media: "snaptec/pwa/",
         national_flags_image: "",
-        country_code: "+1",
+        country_code: "+84",
         mask_input_phone: "999-999-9999",
         place_holder_country: "50-000-0000",
         image_country_input: "",
