@@ -1,34 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Natural
 
-## Getting Started
+## Table of contents
 
-First, run the development server:
+- [Introduction](#introduction)
+- [Demo](#demo)
+- [Run](#run)
+- [Packages](#Packages)
+
+## Introduction
+
+A virtual e-commerce website using Node js, Express js, and Reactjs Nextjs.
+
+NOTE: Please read the RUN section before opening an issue.
+
+## Demo
+
+![demo image](demo1.png)
+![demo image](demo2.png)
+
+The application has not been deployed for display in a real environment
+
+on the backend side has been implemented
+
+The website resembles a real store and you can add products to your cart and pay for them. If you want to try the checkout process, you can use the dummy card number provided by stripe for testing which is 4242 4242 4242 4242 with 11/24 expiration date, 123 CVC, and any zip codes. Please <u><b>DO NOT</b></u> provide real card number and data.
+
+## Run
+
+The application is divided into 2 parts
+
+To run this application, you have to set your own environmental variables. For security reasons, some variables have been hidden from view and used as environmental variables with the help of dotenv package. Below are the variables that you need to set in order to run the application:
+
+First, create a new `.env` file based on `.env.example` and change the value of `NEXT_PUBLIC_BACKEND_URL` to point to your version of "https://a-tuxl.onrender.com/", without having to run the server part code.
+
+Install dependencies by running `npm install` or `yarn install`
+
+Run the development server:
 
 ```bash
-npm run dev
+npm start
 # or
 yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install dependencies by running `npm install` or `yarn install`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run the development server:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+npm start
+# or
+yarn dev
+```
 
-## Learn More
+### Packages
 
-To learn more about Next.js, take a look at the following resources:
+This repository includes the following packages:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Packages
+| Directory | Content |
+| :--------------------------- | :---------------------------------------------------------- |
+| `src/app/[lang]/` | Defined pages with React Functional Components |
+| `src/app/[lang]/layout.tsx` | Component used for initializing pages |
+| `src/pages/(marketing)/[product]/page.tsx` | Page that resolve URL and return specific page from backend |
+| `src/components/` | Project UI functional components |
+| `src/scss/` | Project global styles |
+| `src/network/apiClient/` | APIs that connect with Magento BE |
+| `src/network/apiServer/ ` | APIs that only run at server side |
+| `src/context/` | Project contexts |
+| `src/lang/` | Folder that supports multiple language |
+| `src/constants/` | Project configuration variables |
+| `src/redux/` | Redux configurations, defined actions and stores |
+| `src/utils/` | Utility functions |
+| `src/hooks/` | Some utilities but use React Hooks |
+| `next.config.js` | Custom advanced configuration of Next.js |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- MIT License
+- Copyright 2020 © [le van minh hoang](https://github.com/thanhmin34)
