@@ -1,11 +1,11 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react'
+import Link from 'next/link'
 // styles
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss'
 
-import useIntl from "@hooks/useIntl";
-import Button from "@components/button";
-import TitleAuthentication from "../title-authen";
+import useIntl from '@hooks/useIntl'
+import Button from '@components/button'
+import TitleAuthentication from '../title-authen'
 
 const QuestionRegister = ({
   title,
@@ -13,29 +13,26 @@ const QuestionRegister = ({
   buttonText,
   router,
 }: {
-  title: string;
-  description: string;
-  buttonText: string;
-  router: string;
+  title: string
+  description: string
+  buttonText: string
+  router: string
 }) => {
-  const { localizeMessage } = useIntl();
+  const { localizeMessage } = useIntl()
 
   return (
     <div className={styles.blockNavigateLoginPage}>
       <div className={styles.blockBody}>
-        <TitleAuthentication
-          title={localizeMessage(title)}
-          description={localizeMessage(description)}
-        />
+        <TitleAuthentication title={localizeMessage(title)} description={localizeMessage(description)} />
         <Link href={router}>
-        <Button className={styles.button} onClick={() => {}}>
-          {localizeMessage(buttonText)}
-        </Button>
+          <Button className={styles.button} onClick={() => {}}>
+            {localizeMessage(buttonText)}
+          </Button>
         </Link>
         {/* <LoginWithSocial /> */}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default QuestionRegister;
+export default QuestionRegister
